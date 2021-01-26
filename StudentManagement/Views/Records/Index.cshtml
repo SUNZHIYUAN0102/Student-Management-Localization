@@ -1,0 +1,27 @@
+﻿@model IEnumerable<StudentManagement.Models.Record>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>@localizer["title"]</h1>
+
+
+@foreach (var item in Model.OrderByDescending(x => x.Created))
+{
+    <div class="card mb-3">
+        <div class="card-header">
+            <h3>
+                @item.Project.Title
+            </h3>
+            <div>@item.Creator.FullName | @item.Created</div>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">@item.LogTime @localizer["hour"]</h5>
+            @item.StudentEmail
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">@localizer["delete"]</a>
+        </div>
+    </div>
+}

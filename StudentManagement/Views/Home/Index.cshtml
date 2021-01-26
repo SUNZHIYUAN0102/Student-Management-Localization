@@ -1,0 +1,10 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">@localizer["title"]</h1>
+    <p>Student Management system is a web application<br> which allow teachers to create reports and make notes recording student's practice.</p>
+</div>

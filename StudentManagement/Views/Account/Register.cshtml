@@ -1,0 +1,49 @@
+﻿@model StudentManagement.Models.AccountViewModel.RegisterViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/_AuthLayout.cshtml";
+}
+
+
+<div class="col-md-10 offset-md-1">
+    <hr />
+    <form asp-controller="Account" asp-action="Register" method="post" class="form-horizontal">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>@localizer["Firstname"]</label>
+                <input asp-for="FirstName" class="form-control" placeholder="FirstName" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label>@localizer["Lastname"]</label>
+                <input asp-for="LastName" class="form-control" placeholder="LastName" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>@localizer["Email"]</label>
+            <input asp-for="Email" class="form-control" placeholder="email@example.com" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>@localizer["Password"]</label>
+            <input asp-for="Password" class="form-control" placeholder="Password!" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>@localizer["ConfirmPassword"]</label>
+            <input asp-for="ConfirmPassword" class="form-control" placeholder="Password!" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">@localizer["Register"]</button>
+        </div>
+
+    </form>
+</div>
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

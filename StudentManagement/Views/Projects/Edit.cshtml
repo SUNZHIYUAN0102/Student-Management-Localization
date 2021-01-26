@@ -1,0 +1,68 @@
+﻿@model StudentManagement.Models.ProjectViewModel.ProjectEditViewModel
+
+@using StudentManagement.Service
+
+@inject IUserPermission Userpermission
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>@localizer["title"]</h1>
+
+<form method="post">
+    <div class="form-group col-4">
+        <label class="control-label">@localizer["title2"]</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="form-group col-8">
+        <label class="control-label">@localizer["description"]</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group col-3">
+        <label class="control-label">@localizer["startTime"]</label>
+        <input type="date" asp-for="StartTime" class="form-control">
+        <span asp-validation-for="StartTime" class="text-danger"></span>
+    </div>
+    <div class="form-group col-3">
+        <label class="control-label">@localizer["deadLine"]</label>
+        <input type="date" asp-for="DeadLine" class="form-control">
+        <span asp-validation-for="DeadLine" class="text-danger"></span>
+    </div>
+
+    <div class="form-group col-3">
+        <label class="control-label">@localizer["isPrivate"]</label>
+        <div class="radio">
+            <label>
+                <input type="radio" asp-for="IsPrivate" value="True" class="form-control">
+                @localizer["yes"]
+            </label>
+            <label>
+                <input type="radio" asp-for="IsPrivate" value="False" class="form-control">
+                @localizer["no"]
+            </label>
+        </div>
+        <span asp-validation-for="IsPrivate" class="text-danger"></span>
+    </div>
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group col-3">
+        <input type="submit" value="@localizer["save"]" class="btn btn-primary" />
+    </div>
+
+    <div class="form-group col-3">
+        <a asp-action="Index">@localizer["back"]</a>
+    </div>
+</form>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script src="~/js/ckeditor/ckeditor.js"></script>
+<script>CKEDITOR.replace('Description');</script>

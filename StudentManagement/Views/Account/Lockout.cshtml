@@ -1,0 +1,7 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+<h3 class="text-danger">
+    @localizer["title"]
+    <a asp-action="ForgotPassword" asp-controller="Account">
+        @localizer["reset"]
+    </a>
+</h3>
