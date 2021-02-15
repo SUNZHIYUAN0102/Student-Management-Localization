@@ -59,7 +59,10 @@
 
                       <button type="submit" class="btn btn-primary btn-block">@localizer["Login"]</button>
 
+                      <span class="d-block text-left my-4 text-muted">Still don't have an account?&nbsp;&nbsp;<a asp-action="Register" asp-controller="Account">Go Register!</a></span>
+
                       <span class="d-block text-left my-4 text-muted">&mdash; or login with &mdash;</span>
+
                   </form>
 
                   <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">

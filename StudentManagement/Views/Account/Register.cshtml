@@ -1,49 +1,81 @@
 ﻿@model StudentManagement.Models.AccountViewModel.RegisterViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
-@{
-    ViewData["Title"] = "Register";
-    Layout = "~/Views/_AuthLayout.cshtml";
-}
 
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
-<div class="col-md-10 offset-md-1">
-    <hr />
-    <form asp-controller="Account" asp-action="Register" method="post" class="form-horizontal">
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="row">
-            <div class="col-md-6">
-                <label>@localizer["Firstname"]</label>
-                <input asp-for="FirstName" class="form-control" placeholder="FirstName" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+    <link rel="stylesheet" href="~/Login/fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="~/Login/css/owl.carousel.min.css">
+
+    <link rel="stylesheet" href="~/Login/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="~/Login/css/style.css">
+</head>
+<body>
+
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="~/Login/images/undraw_remotely_2j6y.svg" alt="Image" class="img-fluid">
+                </div>
+                <div class="col-md-6 contents">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="mb-4">
+                                <h3>@localizer["Title"]</h3>
+                                <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
+                            </div>
+                            <form asp-controller="Account" asp-action="Register" method="post" class="form-horizontal">
+                                <div class="form-group first">
+                                    <label asp-for="FirstName">@localizer["Firstname"]</label>
+                                    <input asp-for="FirstName" class="form-control" id="username">
+                                </div>
+                                <div class="form-group last mb-4">
+                                    <label asp-for="LastName">@localizer["Lastname"]</label>
+                                    <input asp-for="LastName" class="form-control" id="username">
+                                </div>
+                                <div class="form-group last mb-4">
+                                    <label asp-for="Email">@localizer["Email"]</label>
+                                    <input asp-for="Email" class="form-control" id="username">
+                                </div>
+                                <div class="form-group last mb-4">
+                                    <label asp-for="Password">@localizer["Password"]</label>
+                                    <input asp-for="Password" class="form-control" id="password">
+                                </div>
+                                <div class="form-group last mb-4">
+                                    <label asp-for="ConfirmPassword">@localizer["ConfirmPassword"]</label>
+                                    <input asp-for="ConfirmPassword" class="form-control" id="password">
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-block">@localizer["Register"]</button>
+
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
-            <div class="col-md-6">
-                <label>@localizer["Lastname"]</label>
-                <input asp-for="LastName" class="form-control" placeholder="LastName" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
         </div>
+    </div>
 
-        <div class="form-group">
-            <label>@localizer["Email"]</label>
-            <input asp-for="Email" class="form-control" placeholder="email@example.com" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label>@localizer["Password"]</label>
-            <input asp-for="Password" class="form-control" placeholder="Password!" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label>@localizer["ConfirmPassword"]</label>
-            <input asp-for="ConfirmPassword" class="form-control" placeholder="Password!" />
-            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block">@localizer["Register"]</button>
-        </div>
 
-    </form>
-</div>
+
+    <script src="~/Login/js/jquery-3.3.1.min.js"></script>
+    <script src="~/Login/js/popper.min.js"></script>
+    <script src="~/Login/js/bootstrap.min.js"></script>
+    <script src="~/Login/js/main.js"></script>
+</body>
+</html>
+
+
+
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
