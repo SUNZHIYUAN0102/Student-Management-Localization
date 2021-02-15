@@ -5,63 +5,101 @@
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 @inject Microsoft.AspNetCore.Identity.SignInManager<StudentManagement.Models.User> SignInManager
 
-@{ ViewData["Title"] = "Log in";
-   Layout = "~/Views/_AuthLayout.cshtml"; 
-}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
-<div class="col-md-10 offset-md-1">
-    <hr />
-    <form asp-controller="Account" asp-action="Login" method="post" class="form-horizontal">
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="form-group">
-            <label>@localizer["Email"]</label>
-            <input asp-for="Email" class="form-control" placeholder="email@example.com" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label>@localizer["Password"]</label>
-            <div class="input-group">
-                <div class="input-group-append">
-                    <span asp-validation-for="Password" class="input-group-text" ></span>
-                </div>
+    <link rel="stylesheet" href="~/Login/fonts/icomoon/style.css">
 
-                <input asp-for="Password" class="form-control" placeholder="Password!"/>
-            </div>
+    <link rel="stylesheet" href="~/Login/css/owl.carousel.min.css">
 
-        </div>
-        <div class="form-group">
-            <div class="checkbox">
-                <label asp-for="RememberMe">
-                    <input asp-for="RememberMe" />
-                    @Html.DisplayNameFor(m => m.RememberMe)
-                </label>
-            </div>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block">@localizer["Login"]</button>
-        </div>
-        <p>
-            <a asp-action="Register" asp-controller="Account">@localizer["Register"]</a>
-        </p>
-        <p>
-            <a asp-action="ForgotPassword" asp-controller="Account">@localizer["ForgotPassword"]</a>
-        </p>
-    </form>
-</div>
+    <link rel="stylesheet" href="~/Login/css/bootstrap.min.css">
 
-<div class="col-md-10 offset-md-1">
-    <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl"> 
-        <div>
-            @foreach (var provider in Model.ExternalLogins)
-            {
-            <button type="submit" class="btn btn-primary"
-                    name="provider" value="@provider.Name">
-                @provider.DisplayName
-            </button>
-            }
+    <link rel="stylesheet" href="~/Login/css/style.css">
+</head>
+  <body>
+  
+  <div class="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <img src="~/Login/images/undraw_remotely_2j6y.svg" alt="Image" class="img-fluid">
         </div>
-    </form>
-</div>
+        <div class="col-md-6 contents">
+          <div class="row justify-content-center">
+              <div class="col-md-8">
+                  <div class="mb-4">
+                      <h3>@localizer["Title"]</h3>
+                      <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
+                  </div>
+                  <form asp-controller="Account" asp-action="Login" method="post" class="form-horizontal">
+                      <div class="form-group first">
+                          <label asp-for="Email">@localizer["Email"]</label>
+                          <input asp-for="Email" class="form-control" id="username">
+                      </div>
+                      <div class="form-group last mb-4">
+                          <label asp-for="Password">@localizer["Password"]</label>
+                          <input asp-for="Password" class="form-control" id="password">
+                      </div>
+
+
+                      <div class="d-flex mb-5 align-items-center">
+                          <label class="control control--checkbox mb-0">
+                              <span class="caption">Remember me</span>
+                              <input asp-for="RememberMe" type="checkbox" checked="checked" />
+                              <div class="control__indicator"></div>
+                          </label>
+                          <span class="ml-auto"><a asp-action="ForgotPassword" asp-controller="Account" class="forgot-pass">Forgot Password</a></span>
+                      </div>
+
+
+
+                      <button type="submit" class="btn btn-primary btn-block">@localizer["Login"]</button>
+
+                      <span class="d-block text-left my-4 text-muted">&mdash; or login with &mdash;</span>
+                  </form>
+
+                  <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
+                      <div class="social-login">
+
+                          @foreach (var provider in Model.ExternalLogins)
+                          {
+                              if (provider.Name == "Facebook")
+                              {
+                                  <button type="submit" value="@provider.Name" name="provider">
+                                      <span class="icon-facebook mr-3"></span>
+                                  </button>
+                              }
+
+                              if (provider.Name == "Google")
+                              {
+                                  <button class="google" type="submit" value="@provider.Name" name="provider">
+                                      <span class="icon-google mr-3"></span>
+                                  </button>
+                              }
+                          }
+                      </div>
+                  </form>
+              </div>
+          </div>
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+  
+    <script src="~/Login/js/jquery-3.3.1.min.js"></script>
+    <script src="~/Login/js/popper.min.js"></script>
+    <script src="~/Login/js/bootstrap.min.js"></script>
+    <script src="~/Login/js/main.js"></script>
+  </body>
+</html>
 
 
 @section Scripts {
