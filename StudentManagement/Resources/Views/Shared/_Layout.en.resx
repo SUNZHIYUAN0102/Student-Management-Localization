@@ -123,11 +123,17 @@
   <data name="contact" xml:space="preserve">
     <value>Contact Us</value>
   </data>
+  <data name="language" xml:space="preserve">
+    <value>Language</value>
+  </data>
   <data name="manage" xml:space="preserve">
     <value>Manage</value>
   </data>
   <data name="note" xml:space="preserve">
     <value>Notes</value>
+  </data>
+  <data name="profile" xml:space="preserve">
+    <value>Profile</value>
   </data>
   <data name="project" xml:space="preserve">
     <value>Project</value>

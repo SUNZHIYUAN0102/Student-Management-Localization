@@ -20,7 +20,7 @@
     <a class="btn btn-primary mb-3" style="width:auto" asp-action="Create" asp-controller="Projects">@localizer["add"]</a>
 }
 
-@foreach (var item in Model.OrderByDescending(x => x.Created))
+@foreach (var item in Model)
 {
     @if (Userpermission.CanSeeProject(item))
     {
@@ -54,6 +54,7 @@
 <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)" asp-route-search="@ViewBag.Search" class="btn btn-default @nextDisabled">
     Next
 </a>
+
 
 
 @section Scripts {

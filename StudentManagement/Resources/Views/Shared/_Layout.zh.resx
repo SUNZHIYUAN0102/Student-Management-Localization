@@ -123,11 +123,17 @@
   <data name="contact" xml:space="preserve">
     <value>联系我们</value>
   </data>
+  <data name="language" xml:space="preserve">
+    <value>语言</value>
+  </data>
   <data name="manage" xml:space="preserve">
     <value>管理</value>
   </data>
   <data name="note" xml:space="preserve">
     <value>评论</value>
+  </data>
+  <data name="profile" xml:space="preserve">
+    <value>主页</value>
   </data>
   <data name="project" xml:space="preserve">
     <value>项目</value>

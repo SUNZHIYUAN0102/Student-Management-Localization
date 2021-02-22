@@ -10,7 +10,7 @@ namespace StudentManagement.Service
     public class UserService
     {
         private readonly UserManager<User> userManager;
-
+       
         public UserService(UserManager<User> userManager)
         {
             this.userManager = userManager;
@@ -33,6 +33,23 @@ namespace StudentManagement.Service
             var Picture = user.ImagePath;
 
             return Picture;
+        }
+
+        public async Task<string> GetRole(string username)
+        {
+
+            var user = await this.userManager.FindByNameAsync(username);
+
+            var RoleName = await userManager.GetRolesAsync(user);
+
+            List<string> name = new List<string>();
+
+            foreach(var role in RoleName)
+            {
+                name.Add(role);
+            }
+
+            return null;
         }
     }
 }

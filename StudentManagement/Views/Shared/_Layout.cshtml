@@ -1,91 +1,217 @@
-﻿@inject Microsoft.AspNetCore.Identity.SignInManager<User> signInManager
-@inject Microsoft.AspNetCore.Identity.UserManager<User> userManager
+﻿@using Microsoft.AspNetCore.Identity
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@inject StudentManagement.Service.UserService UserService
+@inject Microsoft.Extensions.Options.IOptions<Microsoft.AspNetCore.Builder.RequestLocalizationOptions> locOptions
+
+@{ 
+    var culture = Context.Features.Get<Microsoft.AspNetCore.Localization.IRequestCultureFeature>();
+
+    var cultureList = locOptions.Value.SupportedUICultures.Select(x => new SelectListItem { Value = x.Name, Text = localizer.GetString(x.Name)}).ToList();
+
+    var returnUrl = string.IsNullOrWhiteSpace(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}{Context.Request.QueryString}";
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - StudentManagement</title>
+    <title>@ViewData["Title"] - SildeBar</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">*@
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="~/css/Bar.css" rel="stylesheet" />
+
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@localizer["title"]</a>
-                <img src="~/images/star.png" style="height:40px; width:40px" />
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
+    <div class="page-wrapper chiller-theme toggled">
+        <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+            <i class="fas fa-bars"></i>
+        </a>
+        <nav id="sidebar" class="sidebar-wrapper">
+            <div class="sidebar-content">
+                <div class="sidebar-brand">
+                    <a asp-controller="Home" asp-action="Index">Management System</a>
+                    <div id="close-sidebar">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                <div class="sidebar-header">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        @if (await UserService.GetPicture(User.Identity.Name) != null)
+                        {
+                            <div class="user-pic">
+                                <img class="img-responsive img-rounded" src="~/uploads/@await UserService.GetPicture(User.Identity.Name)"
+                                     alt="User picture">
+                            </div>
+                            <div class="user-info">
+                                <span class="user-name">
+                                    <strong>
+                                        @await UserService.GetFullName(User.Identity.Name)
+                                    </strong>
+                                </span>
+                                <span class="user-status">
+                                    <i class="fa fa-circle">
+                                        <span>
+                                            Online
+                                        </span>
+                                    </i>
+                                </span>
+                            </div>
 
-                        <li class="nav-link">
-                            <partial name="_Culture" />
+                        }
+                        else
+                        {
+                            <div>
+                                <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg" 
+                                     alt="User picture">
+                            </div>
+                        }
+                    }
+                </div>
+            
+                <div class="sidebar-menu">
+                    <ul>
+                        <li class="header-menu">
+                            <span>General</span>
                         </li>
-                        @if (signInManager.IsSignedIn(User))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Projects" asp-action="Index">@localizer["project"]</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="AddPassword">@localizer["addPassword"]</a>
-                            </li>
-
-                        }
-
-                        @if (signInManager.IsSignedIn(User) && User.IsInRole("Administrators"))
-                        {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@localizer["manage"]</a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" asp-controller="Admin" asp-action="ListUsers">@localizer["user"]</a>
-                                    <a class="dropdown-item" asp-controller="Admin" asp-action="ListRoles">@localizer["role"]</a>
-                                    <a class="dropdown-item" asp-controller="Notes" asp-action="Index">@localizer["note"]</a>
-                                    <a class="dropdown-item" asp-controller="Records" asp-action="Index">@localizer["record"]</a>
-                                    <a class="dropdown-item" asp-controller="Students" asp-action="Index">@localizer["student"]</a>
-                                </div>
-                            </li>
-                        }
-
-                        @if (signInManager.IsSignedIn(User) && User.IsInRole("Teachers"))
-                        {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@localizer["manage"]</a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" asp-controller="Records" asp-action="Index">@localizer["record"]</a>
-                                    <a class="dropdown-item" asp-controller="Students" asp-action="Index">@localizer["student"]</a>
-                                </div>
-                            </li>
-                        }
+                        <li class="sidebar-dropdown">
+                            <a asp-action="Index" asp-controller="Projects">
+                                <i class="fa fa-tachometer-alt"></i>
+                                <span>@localizer["project"]</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a asp-controller="Manage" asp-action="Index">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>@localizer["profile"]</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="#">
+                                <i class="far fa-gem"></i>
+                                <span>@localizer["manage"]</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a asp-controller="Admin" asp-action="ListUsers">@localizer["user"]</a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="Admin" asp-action="ListRoles">@localizer["role"]</a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="Notes" asp-action="Index">@localizer["note"]</a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="Records" asp-action="Index">@localizer["record"]</a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="Students" asp-action="Index">@localizer["student"]</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    
+                        <li class="sidebar-dropdown">
+                            <a href="#">
+                                <i class="fa fa-globe"></i>
+                                <span>@localizer["language"]</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <form asp-action="CultureManagement" asp-controller="Home" method="post" asp-route-returnUrl="@returnUrl">
+                                    <ul>
+                                        <li>
+                                            <a name="culture" asp-for="@culture.RequestCulture.UICulture.Name" value="cultureList[0]" onchange="this.form.submit();"></a>
+                                        </li>
+                                    </ul>
+                                </form>
+                        
+                            </div>
+                        </li>
+                        <li class="header-menu">
+                            <span>Extra</span>
+                        </li>
+                        <li>
+                            <a asp-controller="Contact" asp-action="Index">
+                                <i class="fa fa-book"></i>
+                                <span>@localizer["contact"]</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
+                <!-- sidebar-menu  -->
+            </div>
+            <!-- sidebar-content  -->
+            <div class="sidebar-footer">
+                <a href="#">
+                    <i class="fa fa-bell"></i>
+                    <span class="badge badge-pill badge-warning notification"></span>
+                </a>
+                <a href="#">
+                    <i class="fa fa-envelope"></i>
+                    <span class="badge badge-pill badge-success notification"></span>
+                </a>
+                <a href="#">
+                    <i class="fa fa-cog"></i>
+                    <span class="badge-sonar"></span>
+                </a>
+
+                <a href="#">
+                    
+                    <i class="fa fa-power-off"></i>
+                </a>
             </div>
         </nav>
-    </header>
+        <!-- sidebar-wrapper  -->
+        <main class="page-content">
+            <div class="container-fluid">
+                @RenderBody()
 
-
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
+            </div>
         </main>
+        <!-- page-content" -->
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - @localizer["title"] - <a asp-area="" asp-controller="Contact" asp-action="Index">@localizer["contact"]</a>
-        </div>
-    </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        $(".sidebar-dropdown > a").click(function () {
+            $(".sidebar-submenu").slideUp(200);
+            if (
+                $(this)
+                    .parent()
+                    .hasClass("active")
+            ) {
+                $(".sidebar-dropdown").removeClass("active");
+                $(this)
+                    .parent()
+                    .removeClass("active");
+            } else {
+                $(".sidebar-dropdown").removeClass("active");
+                $(this)
+                    .next(".sidebar-submenu")
+                    .slideDown(200);
+                $(this)
+                    .parent()
+                    .addClass("active");
+            }
+        });
+
+        $("#close-sidebar").click(function () {
+            $(".page-wrapper").removeClass("toggled");
+        });
+        $("#show-sidebar").click(function () {
+            $(".page-wrapper").addClass("toggled");
+        });
+
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

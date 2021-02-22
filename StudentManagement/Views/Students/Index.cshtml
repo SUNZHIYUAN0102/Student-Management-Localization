@@ -2,9 +2,10 @@
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 <h1>@localizer["title"]</h1>
 
+<a class="btn btn-primary mb-3" style="width:auto" asp-action="CreateStudent" asp-controller="Students">@localizer["add"]</a>
+
 @if (Model.Any())
 {
-    <a class="btn btn-primary mb-3" style="width:auto" asp-action="CreateStudent" asp-controller="Students">@localizer["add"]</a>
     foreach (var student in Model)
     {
         <div class="card mb-3">
