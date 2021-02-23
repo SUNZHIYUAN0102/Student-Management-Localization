@@ -35,7 +35,7 @@ namespace StudentManagement.Service
             return Picture;
         }
 
-        public async Task<string> GetRole(string username)
+        public async Task<List<string>> GetRole(string username)
         {
 
             var user = await this.userManager.FindByNameAsync(username);
@@ -49,7 +49,7 @@ namespace StudentManagement.Service
                 name.Add(role);
             }
 
-            return null;
+            return name;
         }
     }
 }

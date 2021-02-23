@@ -12,6 +12,7 @@ using StudentManagement.Models;
 
 namespace StudentManagement.Controllers
 {
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -21,6 +22,8 @@ namespace StudentManagement.Controllers
             _logger = logger;
         }
 
+
+        [Authorize]
         public IActionResult Index()
         {
             return View();
