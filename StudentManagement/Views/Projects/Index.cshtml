@@ -11,6 +11,7 @@
 <form method="get" class="navbar-right">
     <div class="input-group mb-3">
         <input type="text" id="projectTitle" name="search" class="btn btn-outline-primary" placeholder="Enter your keyword" aria-describedby="basic-addon1" />
+        @Html.DropDownList("sortBy")
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">@localizer["search"]</button>
     </div>
 </form>

@@ -42,16 +42,25 @@ namespace StudentManagement.Controllers
                 projects = projects.Where(p => p.Title.Contains(search));
             }
 
+            var orderByList = new Dictionary<string, string>
+            {
+                { "Oldest to Newest","date"},
+                { "Newest to Oldest","date_desc" },
+                { "My Project", "creator"}
+            };
+
+            ViewBag.sortBy = new SelectList(orderByList, "Value", "Key");
+
             switch (sortBy)
             {
-                case "Date":
+                case "date":
                     projects = projects.OrderBy(x => x.Created);
                     break;
                 case "date_desc":
                     projects = projects.OrderByDescending(x => x.Created);
                     break;
                 case "creator":
-                    projects = projects.OrderByDescending(x => x.Creator);
+                    projects = projects.OrderByDescending(x => x.Creator == user);
                     break;
       
             }
