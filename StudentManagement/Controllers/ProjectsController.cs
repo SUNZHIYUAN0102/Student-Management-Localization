@@ -13,6 +13,7 @@ using StudentManagement.Models.ProjectViewModel;
 using StudentManagement.Service;
 using PagedList.Mvc;
 using PagedList;
+using System.ComponentModel;
 
 namespace StudentManagement.Controllers
 {
@@ -29,7 +30,7 @@ namespace StudentManagement.Controllers
             this.userManager = userManager;
         }
 
-        public async Task<IActionResult> Index([FromQuery]string search, [FromQuery]string sortBy, [FromQuery]int pageNumber = 1)
+        public async Task<IActionResult> Index([FromQuery]string search, [FromQuery]string sortBy, [FromQuery,DefaultValue(3)]int pageSize, [FromQuery]int pageNumber = 1)
         {
             var projects = context.Projects
                 .Include(p => p.Notes)
@@ -44,8 +45,9 @@ namespace StudentManagement.Controllers
 
             var orderByList = new Dictionary<string, string>
             {
-                { "Oldest to Newest","date"},
-                { "Newest to Oldest","date_desc" },
+                { "Newest to Oldest","date_desc"},
+                { "Oldest to Newest","date" },
+                { "Updated","updated-desc"},
                 { "My Project", "creator"}
             };
 
@@ -59,15 +61,17 @@ namespace StudentManagement.Controllers
                 case "date_desc":
                     projects = projects.OrderByDescending(x => x.Created);
                     break;
+                case "updated_desc":
+                    projects = projects.OrderBy(x => x.Modified);
+                    break;
                 case "creator":
                     projects = projects.OrderByDescending(x => x.Creator == user);
                     break;
-      
             }
 
 
             ViewBag.Search = search;
-            return View("Index", await PaginatedList<Project>.CreateAsync(projects, pageNumber, 5));
+            return View("Index", await PaginatedList<Project>.CreateAsync(projects, pageNumber, pageSize));
         }
 
         // GET: Projects/Details/5
