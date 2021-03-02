@@ -65,23 +65,25 @@
 
                   </form>
 
-                  <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
+                  <form id="myForm" method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
                       <div class="social-login">
 
                           @foreach (var provider in Model.ExternalLogins)
                           {
                               if (provider.Name == "Facebook")
                               {
-                                  <button class="facebook" type="submit" value="@provider.Name" name="provider">
+                                  <input type="hidden" value="@provider.Name" name="provider"/>
+                                  <a href="#" onclick="document.getElementById('myForm').submit();" class="facebook">
                                       <span class="icon-facebook mr-3"></span>
-                                  </button>
+                                  </a>
                               }
 
                               if (provider.Name == "Google")
                               {
-                                  <button class="google" type="submit" value="@provider.Name" name="provider">
+                                  <input type="hidden" value="@provider.Name" name="provider"/>
+                                  <a href="#" class="google" onclick="document.getElementById('myForm').submit();" >
                                       <span class="icon-google mr-3"></span>
-                                  </button>
+                                  </a>
                               }
                           }
                       </div>
