@@ -49,11 +49,11 @@
     var nextDisabled = !Model.NextPage ? "disabled" : "";
 }
 
-<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)" asp-route-search="@ViewBag.Search" class="btn btn-default @prevDisabled">
+<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)" asp-route-search="@ViewBag.Search" asp-route-pageSize="@ViewBag.pageSize" class="btn btn-default @prevDisabled">
     Previous
 </a>
 
-<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)" asp-route-search="@ViewBag.Search" class="btn btn-default @nextDisabled">
+<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)" asp-route-search="@ViewBag.Search" asp-route-pageSize="@ViewBag.pageSize" class="btn btn-default @nextDisabled">
     Next
 </a>
 
