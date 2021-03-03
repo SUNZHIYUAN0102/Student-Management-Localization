@@ -133,13 +133,19 @@
                                 <span>@localizer["language"]</span>
                             </a>
                             <div class="sidebar-submenu">
-                                <form asp-action="CultureManagement" asp-controller="Home" method="post" asp-route-returnUrl="@returnUrl">
+                                <form id="switchEn" asp-action="CultureManagement" asp-controller="Home" method="post" asp-route-returnUrl="@returnUrl">
                                     <ul>
                                         <li>
-                                            <a>Chinese</a>
+                                            <input type="hidden" name="culture" asp-for="@culture.RequestCulture.UICulture.Name" value="en"/>
+                                            <a href="#" onchange="this.form.submit();" onclick="document.getElementById('switchEn').submit();">@localizer["en"]</a>
                                         </li>
+                                    </ul>
+                                </form>
+                                <form id="switchZh" asp-action="CultureManagement" asp-controller="Home" method="post" asp-route-returnUrl="@returnUrl">
+                                    <ul>
                                         <li>
-                                            <a>English</a>
+                                            <input type="hidden" name="culture" asp-for="@culture.RequestCulture.UICulture.Name" value="zh" />
+                                            <a href="#" onchange="this.form.submit();" onclick="document.getElementById('switchZh').submit();">@localizer["zh"]</a>
                                         </li>
                                     </ul>
                                 </form>
@@ -162,25 +168,27 @@
             </div>
             <!-- sidebar-content  -->
             
-            <div class="sidebar-footer">
-                <a href="#">
-                    <i class="fa fa-bell"></i>
-                    <span class="badge badge-pill badge-warning notification"></span>
-                </a>
-                <a href="#">
-                    <i class="fa fa-envelope"></i>
-                    <span class="badge badge-pill badge-success notification"></span>
-                </a>
-                <a href="#">
-                    <i class="fa fa-cog"></i>
-                    <span class="badge-sonar"></span>
-                </a>
+            <form asp-controller="Account" asp-action="Logout" method="post" id="logoutForm">
+                <div class="sidebar-footer">
+                    <a href="#">
+                        <i class="fa fa-bell"></i>
+                        <span class="badge badge-pill badge-warning notification"></span>
+                    </a>
+                    <a href="#">
+                        <i class="fa fa-envelope"></i>
+                        <span class="badge badge-pill badge-success notification"></span>
+                    </a>
+                    <a href="#">
+                        <i class="fa fa-cog"></i>
+                        <span class="badge-sonar"></span>
+                    </a>
 
-                <a>
-                    <partial name="_LoginPartial" />
-                    <i class="fa fa-power-off"></i>
-                </a>
-            </div>
+                    <a href="#" onclick="document.getElementById('logoutForm').submit();">
+                        <i class="fa fa-power-off"></i>
+                    </a>
+                </div>
+            </form>
+           
         </nav>
         <!-- sidebar-wrapper  -->
         <main class="page-content">

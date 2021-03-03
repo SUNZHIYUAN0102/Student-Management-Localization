@@ -123,6 +123,9 @@
   <data name="contact" xml:space="preserve">
     <value>联系我们</value>
   </data>
+  <data name="en" xml:space="preserve">
+    <value>英语</value>
+  </data>
   <data name="language" xml:space="preserve">
     <value>语言</value>
   </data>
@@ -152,5 +155,8 @@
   </data>
   <data name="user" xml:space="preserve">
     <value>用户</value>
+  </data>
+  <data name="zh" xml:space="preserve">
+    <value>简体中文</value>
   </data>
 </root>
