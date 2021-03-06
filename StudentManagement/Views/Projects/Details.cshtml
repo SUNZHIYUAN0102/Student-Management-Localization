@@ -66,19 +66,36 @@
     }
 </div>
 
-<h3>@localizer["record"]</h3>
+@if(Model.Records.Any())
+{
+    <h3>@localizer["record"]</h3>
 
-<div class="card mb-3">
-    @foreach (var item in Model.Records.OrderByDescending(x => x.Created))
+    <table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Student Name</th>
+            
+            <th scope="col">Hours</th>
+            <th scope="col">Week</th>
+        </tr>
+    </thead>
+  <tbody>
+    @foreach(var item in Model.Records.OrderByDescending(x=>x.Created))
     {
-        <div class="card-header">
-            <div>
-                @item.StudentEmail | @item.Created | @item.LogTime @localizer["hour"] | @item.Week
-            </div>
-        </div>
+        <tr>
+            <th scope="row">
+                <a asp-action="Edit" asp-controller="Records" asp-route-projectId="@Model.Id" asp-route-Id="@item.Id">@item.Id</a>
+            </th>
+            <td>@item.StudentEmail</td>
+            <td>@item.LogTime</td>
+            <td>@item.Week</td>
+        </tr>
     }
-
-</div>
+    
+  </tbody>
+</table>
+}
 
 @section Scripts{
     <script src="~/js/site.js"></script>

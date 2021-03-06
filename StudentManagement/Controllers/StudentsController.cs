@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentManagement.Data;
@@ -10,6 +11,7 @@ using StudentManagement.Models.StudentViewModel;
 
 namespace StudentManagement.Controllers
 {
+    [Authorize(Roles = "Administrators")]
     public class StudentsController : Controller
     {
         private readonly ApplicationDbContext context;
@@ -19,9 +21,14 @@ namespace StudentManagement.Controllers
             this.context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index([FromQuery] string search)
         {
-            var student = context.Students;
+            var student = context.Students.AsQueryable();
+
+            if (search != null)
+            {
+                student = student.Where(p => p.StudentName.Contains(search));
+            }
             return View(student);
         }
 

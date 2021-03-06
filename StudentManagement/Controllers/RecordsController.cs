@@ -34,8 +34,6 @@ namespace StudentManagement.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-
-
         // GET: Records/Create
         public async Task<IActionResult> Create(Guid? projectId)
         {
@@ -103,6 +101,54 @@ namespace StudentManagement.Controllers
                 return this.RedirectToAction("Details", "Projects", new { id = project.Id });
             }
             this.ViewBag.Project = project;
+            return View(model);
+        }
+
+        public async Task<IActionResult> Edit(Guid? projectId, Guid? id)
+        {
+            if(id == null)
+            {
+                return this.NotFound();
+            }
+
+            var project = await this.context.Projects.SingleOrDefaultAsync(m => m.Id == projectId);
+
+            var record = await context.Records.FindAsync(id);
+
+            var model = new RecordCreateViewModel
+            {
+                StudentName = record.StudentEmail,
+                LogTime = record.LogTime,
+                Week = record.Week
+            };
+
+            ViewBag.StudentName = new SelectList(context.Students, "StudentName", "StudentName");
+
+            var GetWeek = Week.Split(project.StartTime, project.DeadLine);
+            ViewBag.Week = new SelectList(GetWeek);
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Guid? projectId, Guid? id, RecordCreateViewModel model)
+        {
+            var record = await this.context.Records.FindAsync(id);
+            var project = await this.context.Projects.SingleOrDefaultAsync(m => m.Id == projectId);
+
+            if(this.ModelState.IsValid)
+            {
+                record.StudentEmail = model.StudentName;
+                record.LogTime = model.LogTime;
+                record.Week = model.Week;
+                await this.context.SaveChangesAsync();
+                return RedirectToAction("Details", "Projects", new { id = record.ProjectId });
+            }
+
+
+            ViewBag.StudentName = new SelectList(context.Students, "StudentName", "StudentName");
+
+            var GetWeek = Week.Split(project.StartTime, project.DeadLine);
+            ViewBag.Week = new SelectList(GetWeek);
             return View(model);
         }
 
