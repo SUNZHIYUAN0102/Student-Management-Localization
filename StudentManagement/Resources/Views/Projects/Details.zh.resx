@@ -156,6 +156,12 @@
   <data name="start" xml:space="preserve">
     <value>开始日期</value>
   </data>
+  <data name="student" xml:space="preserve">
+    <value>学生姓名</value>
+  </data>
+  <data name="week" xml:space="preserve">
+    <value>星期</value>
+  </data>
   <data name="yes" xml:space="preserve">
     <value>是</value>
   </data>

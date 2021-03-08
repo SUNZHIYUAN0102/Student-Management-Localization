@@ -156,6 +156,12 @@
   <data name="start" xml:space="preserve">
     <value>StartTime</value>
   </data>
+  <data name="student" xml:space="preserve">
+    <value>Student Name</value>
+  </data>
+  <data name="week" xml:space="preserve">
+    <value>Week</value>
+  </data>
   <data name="yes" xml:space="preserve">
     <value>Yes</value>
   </data>

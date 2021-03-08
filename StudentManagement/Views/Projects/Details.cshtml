@@ -66,6 +66,7 @@
     }
 </div>
 
+
 @if(Model.Records.Any())
 {
     <h3>@localizer["record"]</h3>
@@ -74,10 +75,9 @@
     <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Student Name</th>
-            
-            <th scope="col">Hours</th>
-            <th scope="col">Week</th>
+            <th scope="col">@localizer["student"]</th>
+            <th scope="col">@localizer["hour"]</th>
+            <th scope="col">@localizer["week"]</th>
         </tr>
     </thead>
   <tbody>
@@ -85,17 +85,17 @@
     {
         <tr>
             <th scope="row">
-                <a asp-action="Edit" asp-controller="Records" asp-route-projectId="@Model.Id" asp-route-Id="@item.Id">@item.Id</a>
+                <a asp-action="Edit" asp-controller="Records" asp-route-Id="@item.Id">@item.Id</a>
             </th>
             <td>@item.StudentEmail</td>
             <td>@item.LogTime</td>
             <td>@item.Week</td>
         </tr>
     }
-    
   </tbody>
 </table>
 }
+
 
 @section Scripts{
     <script src="~/js/site.js"></script>

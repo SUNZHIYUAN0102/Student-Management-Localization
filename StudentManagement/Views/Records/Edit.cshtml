@@ -25,10 +25,12 @@
 
             <div class="form-group">
                 <input type="submit" value="@localizer["edit"]" class="btn btn-primary" />
+                <a asp-action="Delete" asp-controller="Records" asp-route-Id="@ViewBag.Id" class="btn btn-danger">@localizer["delete"]</a>
             </div>
         </form>
     </div>
 </div>
+
 
 
 @section Scripts {

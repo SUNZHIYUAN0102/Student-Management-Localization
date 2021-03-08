@@ -117,8 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="action" xml:space="preserve">
+    <value>行动</value>
+  </data>
   <data name="delete" xml:space="preserve">
     <value>删除</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>更改</value>
+  </data>
+  <data name="project" xml:space="preserve">
+    <value>项目名称</value>
+  </data>
+  <data name="text" xml:space="preserve">
+    <value>文本</value>
   </data>
   <data name="title" xml:space="preserve">
     <value>评论</value>

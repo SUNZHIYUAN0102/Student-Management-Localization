@@ -104,16 +104,18 @@ namespace StudentManagement.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Edit(Guid? projectId, Guid? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if(id == null)
             {
                 return this.NotFound();
             }
 
-            var project = await this.context.Projects.SingleOrDefaultAsync(m => m.Id == projectId);
-
-            var record = await context.Records.FindAsync(id);
+            var record = context.Records
+                .Include(x => x.Project)
+                .SingleOrDefault(x => x.Id == id);
+             
+            var project = record.Project;
 
             var model = new RecordCreateViewModel
             {
@@ -125,15 +127,16 @@ namespace StudentManagement.Controllers
             ViewBag.StudentName = new SelectList(context.Students, "StudentName", "StudentName");
 
             var GetWeek = Week.Split(project.StartTime, project.DeadLine);
+            ViewBag.Id = record.Id;
             ViewBag.Week = new SelectList(GetWeek);
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Guid? projectId, Guid? id, RecordCreateViewModel model)
+        public async Task<IActionResult> Edit(Guid? id, RecordCreateViewModel model)
         {
             var record = await this.context.Records.FindAsync(id);
-            var project = await this.context.Projects.SingleOrDefaultAsync(m => m.Id == projectId);
+            var project = record.Project;
 
             if(this.ModelState.IsValid)
             {
@@ -152,6 +155,7 @@ namespace StudentManagement.Controllers
             return View(model);
         }
 
+
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -163,6 +167,28 @@ namespace StudentManagement.Controllers
                 .Include(r => r.Creator)
                 .Include(r => r.Project)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (record == null)
+            {
+                return NotFound();
+            }
+            context.Records.Remove(record);
+            await context.SaveChangesAsync();
+            return RedirectToAction("Details", "Projects", new { id = record.ProjectId});
+        }
+
+        public async Task<IActionResult> TableDelete(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var record = await context.Records
+                .Include(r => r.Creator)
+                .Include(r => r.Project)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (record == null)
             {
                 return NotFound();

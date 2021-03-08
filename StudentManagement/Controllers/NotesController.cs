@@ -178,6 +178,30 @@ namespace StudentManagement.Controllers
             return RedirectToAction("Details", "Projects", new { id = note.ProjectId });
         }
 
+
+        public async Task<IActionResult> TableDelete(Guid? id)
+        {
+            if (id == null)
+            {
+                return this.NotFound();
+            }
+
+            var note = await this.context.Notes
+                .Include(n => n.Creator)
+                .Include(n => n.Project)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (note == null || !this.userPermission.CanEditNote(note))
+            {
+                return NotFound();
+            }
+
+            this.context.Notes.Remove(note);
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+
         private bool NoteExists(Guid id)
         {
             return context.Notes.Any(e => e.Id == id);

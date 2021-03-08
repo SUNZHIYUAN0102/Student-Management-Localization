@@ -7,21 +7,30 @@
 <h1>@localizer["title"]</h1>
 
 
-@foreach (var item in Model.OrderByDescending(x => x.Created))
-{
-    <div class="card mb-3">
-        <div class="card-header">
-            <h3>
-                @item.Project.Title
-            </h3>
-            <div>@item.Creator.FullName | @item.Created</div>
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">@item.LogTime @localizer["hour"]</h5>
-            @item.StudentEmail
-        </div>
-        <div class="card-footer">
-            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">@localizer["delete"]</a>
-        </div>
-    </div>
-}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">@localizer["student"]</th>
+            <th scope="col">@localizer["hour"]</th>
+            <th scope="col">@localizer["project"]</th>
+            <th scope="col">@localizer["action"]</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model.OrderByDescending(x => x.Created))
+        {
+            <tr>
+                <th scope="row">@item.Id</th>
+                <td>@item.StudentEmail</td>
+                <td>@item.LogTime</td>
+                <td>@item.Project.Title</td>
+                <td>
+                    <a class="btn btn-success" asp-action="Edit" asp-route-id="@item.Id">@localizer["edit"]</a>
+                    <a class="btn btn-danger" asp-action="TableDelete" asp-route-id="@item.Id">@localizer["delete"]</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
