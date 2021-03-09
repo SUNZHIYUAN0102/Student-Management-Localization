@@ -1,4 +1,4 @@
-﻿@model PaginatedList<StudentManagement.Models.Project>
+﻿@model IEnumerable<StudentManagement.Models.Project>
 @using StudentManagement.Service
 
 @inject IUserPermission Userpermission
@@ -8,64 +8,51 @@
 
 <h1>@localizer["title"]</h1>
 
-<form method="get" class="navbar-right">
-    <div class="input-group mb-3">
-        <input type="text" id="projectTitle" name="search" class="btn btn-outline-primary" placeholder="Enter your keyword" aria-describedby="basic-addon1" />
-        @Html.DropDownList("sortBy")
-        <input type="text" name="pageSize" class="btn btn-outline-primary"/>
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">@localizer["search"]</button>
-    </div>
-</form>
+
 
 @if ((User.IsInRole("Teachers")) || (User.IsInRole("Administrators")))
 {
-    <a class="btn btn-primary mb-3" style="width:auto" asp-action="Create" asp-controller="Projects">@localizer["add"]</a>
-}
+<a class="btn btn-primary mb-3" style="width:auto" asp-action="Create" asp-controller="Projects">@localizer["add"]</a>}
 
-@foreach (var item in Model.OrderByDescending(x => x.Created))
-{
-    @if (Userpermission.CanSeeProject(item))
-    {
-        <div class="card mb-3">
-            <div class="card-header">
-                <h3>
-                    <a asp-action="Details" asp-controller="Projects" asp-route-id="@item.Id">@item.Title</a>
-                </h3>
-                <div>@item.Creator.FullName | @item.Created</div>
-            </div>
-            <div class="card-body ">
-                <h5>@Html.Raw(item.Description)</h5>
-                <a asp-action="Details" asp-controller="Projects" asp-route-id="@item.Id" class="btn btn-primary">@localizer["read"]</a>
-            </div>
-            <div class="card-footer">
-                @item.Notes.Count @localizer["note"]
-            </div>
-        </div>
-    }
-}
 
-@{
-    var prevDisabled = !Model.PreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.NextPage ? "disabled" : "";
-}
 
-<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)" asp-route-search="@ViewBag.Search" asp-route-pageSize="@ViewBag.pageSize" class="btn btn-default @prevDisabled">
-    Previous
-</a>
+<table class="table table-striped" id="Exampledatatable">
+    <thead>
+        <tr>
+            <th scope="col">@localizer["project"]</th>
+            <th scope="col">@localizer["creator"]</th>
+            <th scope="col">@localizer["created"]</th>
+            <th scope="col">@localizer["note"]</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+         @if (Userpermission.CanSeeProject(item))
+         {
+             <tr>
+                 <th scope="row"><a asp-action="Details" asp-controller="Projects" asp-route-id="@item.Id">@item.Title</a></th>
+                 <td>@item.Creator.FullName</td>
+                 <td>@item.Created</td>
+                 <td>@item.Notes.Count</td>
+             </tr>
+         }
+        }
 
-<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)" asp-route-search="@ViewBag.Search" asp-route-pageSize="@ViewBag.pageSize" class="btn btn-default @nextDisabled">
-    Next
-</a>
+    </tbody>
+</table>
 
 
 
 @section Scripts {
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.css" />
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
     <script>
+
         $(document).ready(function () {
-            $("#projectTitle").autocomplete({
-                source: 'api/ProjectSearch/search'
-            });
-        });</script>
+            $('#Exampledatatable').DataTable();
+        });
+    </script>
 }

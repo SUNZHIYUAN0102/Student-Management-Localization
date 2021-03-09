@@ -107,7 +107,6 @@ namespace StudentManagement.Controllers
             }
 
             var note = await this.context.Notes
-                .Include(x => x.Project)
                 .SingleOrDefaultAsync(m => m.Id == id);
 
             if (note == null || !this.userPermission.CanEditNote(note))
@@ -137,7 +136,6 @@ namespace StudentManagement.Controllers
             }
 
             var note = await this.context.Notes
-                .Include(x => x.Project)
                 .SingleOrDefaultAsync(m => m.Id == id);
 
             if (note == null || !this.userPermission.CanEditNote(note))

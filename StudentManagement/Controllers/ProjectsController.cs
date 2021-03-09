@@ -30,48 +30,13 @@ namespace StudentManagement.Controllers
             this.userManager = userManager;
         }
 
-        public async Task<IActionResult> Index([FromQuery]string search, [FromQuery]string sortBy, [FromQuery,DefaultValue(2)]int pageSize, [FromQuery]int pageNumber = 1)
+        public async Task<IActionResult> Index()
         {
             var projects = context.Projects
                 .Include(p => p.Notes)
-                .Include(p => p.Creator).AsQueryable();
+                .Include(p => p.Creator);
 
-            var user = await this.userManager.GetUserAsync(this.HttpContext.User);
-
-            if (search != null)
-            {
-                projects = projects.Where(p => p.Title.Contains(search));
-            }
-
-            var orderByList = new Dictionary<string, string>
-            {
-                { "Newest to Oldest","date_desc"},
-                { "Oldest to Newest","date" },
-                { "Updated","updated-desc"},
-                { "My Project", "creator"}
-            };
-
-            ViewBag.sortBy = new SelectList(orderByList, "Value", "Key");
-
-            switch (sortBy)
-            {
-                case "date":
-                    projects = projects.OrderBy(x => x.Created);
-                    break;
-                case "date_desc":
-                    projects = projects.OrderByDescending(x => x.Created);
-                    break;
-                case "updated_desc":
-                    projects = projects.OrderBy(x => x.Modified);
-                    break;
-                case "creator":
-                    projects = projects.OrderByDescending(x => x.Creator == user);
-                    break;
-            }
-
-            ViewBag.pageSize = pageSize;
-            ViewBag.Search = search;
-            return View("Index", await PaginatedList<Project>.CreateAsync(projects, pageNumber, pageSize));
+            return View(await projects.ToListAsync());
         }
 
         // GET: Projects/Details/5

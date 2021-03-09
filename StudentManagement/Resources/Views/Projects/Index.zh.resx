@@ -120,8 +120,17 @@
   <data name="add" xml:space="preserve">
     <value>添加新项目</value>
   </data>
+  <data name="created" xml:space="preserve">
+    <value>创建时间</value>
+  </data>
+  <data name="creator" xml:space="preserve">
+    <value>创建者</value>
+  </data>
   <data name="note" xml:space="preserve">
     <value>评价</value>
+  </data>
+  <data name="project" xml:space="preserve">
+    <value>项目名称</value>
   </data>
   <data name="read" xml:space="preserve">
     <value>阅读更多</value>

@@ -111,9 +111,9 @@ namespace StudentManagement.Controllers
                 return this.NotFound();
             }
 
-            var record = context.Records
+            var record =await context.Records
                 .Include(x => x.Project)
-                .SingleOrDefault(x => x.Id == id);
+                .SingleOrDefaultAsync(x => x.Id == id);
              
             var project = record.Project;
 

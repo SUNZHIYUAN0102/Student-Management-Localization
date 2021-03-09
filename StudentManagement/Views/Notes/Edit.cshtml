@@ -22,9 +22,6 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Details" asp-controller="projects" asp-route-id="@ViewBag.Project.Id">@localizer["back"]</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
