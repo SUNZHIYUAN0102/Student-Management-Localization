@@ -11,6 +11,8 @@ namespace StudentManagement.Service
     {
         Boolean CanEditNote(Note note);
 
+   
+
         Boolean CanSeeProject(Models.Project project);
 
         Boolean CanChangePrivate(Models.Project project);

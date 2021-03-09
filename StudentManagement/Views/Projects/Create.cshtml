@@ -1,8 +1,6 @@
 ﻿@model StudentManagement.Models.ProjectViewModel.ProjectEditViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
-@{
-    ViewData["Title"] = "Create";
-}
+@{ ViewData["Title"] = "Create"; }
 
 <h1>@localizer["title"]</h1>
 
@@ -37,7 +35,7 @@
                 @localizer["yes"]
             </label>
             <label>
-                <input type="radio" asp-for="IsPrivate" value="False"  class="form-control">
+                <input type="radio" asp-for="IsPrivate" value="False" class="form-control">
                 @localizer["no"]
             </label>
         </div>
@@ -54,7 +52,7 @@
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+ 
 }
 
 <script src="~/js/ckeditor/ckeditor.js"></script>

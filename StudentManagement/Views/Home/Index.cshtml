@@ -1,10 +1,20 @@
 ﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 
-@{
-    ViewData["Title"] = "Home Page";
-}
+@{ ViewData["Title"] = "Home Page"; }
 
 <div class="text-center">
     <h1 class="display-4">@localizer["title"]</h1>
     <p>Student Management system is a web application<br> which allow teachers to create reports and make notes recording student's practice.</p>
 </div>
+
+@section Scripts{
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("h1").click(function () {
+                $("p").fadeToggle();
+            });
+        });
+    </script>
+}

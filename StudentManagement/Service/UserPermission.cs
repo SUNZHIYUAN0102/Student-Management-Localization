@@ -21,6 +21,7 @@ namespace StudentManagement.Service
         }
         private HttpContext HttpContext => this.httpContextAccessor.HttpContext;
 
+   
         public bool CanChangePrivate(Models.Project project)
         {
             if ((this.HttpContext.User.IsInRole(UserRoles.Administrators)))

@@ -5,7 +5,7 @@
 <h1>@localizer["title"]</h1>
 
 
-<table class="table table-striped">
+<table class="table table-striped" id="Exampledatatable">
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -17,16 +17,29 @@
     <tbody>
         @foreach (var item in Model.OrderByDescending(x => x.Created))
         {
-            <tr>
-                <th scope="row">@item.Id</th>
-                <td>@item.Text</td>
-                <td>@item.Project.Title</td>
-                <td>
-                    <a class="btn btn-success" asp-action="Edit" asp-route-id="@item.Id">@localizer["edit"]</a>
-                    <a class="btn btn-danger" asp-action="TableDelete" asp-route-id="@item.Id">@localizer["delete"]</a>
-                </td>
-            </tr>
-        }
+<tr>
+    <th scope="row">@item.Id</th>
+    <td>@item.Text</td>
+    <td>@item.Project.Title</td>
+    <td>
+        <a class="btn btn-success" asp-action="Edit" asp-route-id="@item.Id">@localizer["edit"]</a>
+        <a class="btn btn-danger" asp-action="TableDelete" asp-route-id="@item.Id">@localizer["delete"]</a>
+    </td>
+</tr>}
 
     </tbody>
 </table>
+
+
+@section Scripts {
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.css" />
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $("#Exampledatatable").DataTable();
+        });
+    </script>
+}
