@@ -5,58 +5,42 @@
 
 <a class="btn btn-secondary mb-3" style="width:auto" asp-action="CreateStudent" asp-controller="Students">@localizer["add"]</a>
 
-<form method="get" class="navbar-right">
-    <div class="input-group mb-3">
-        <input type="text" name="search" class="btn btn-outline-primary" placeholder="Enter your keyword" aria-describedby="basic-addon1" />
-       
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">@localizer["search"]</button>
-    </div>
-</form>
+<table class="table table-striped" id="Exampledatatable">
+    <thead>
+        <tr>
+            <th scope="col">@localizer["student"]</th>
+            <th scope="col">@localizer["group"]</th>
+            <th scope="col">@localizer["action"]</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+           <tr>
+              <td>@student.StudentName</td>
+              <td>@student.GroupNumber</td>
 
-@if(Model.Any())
-{
-    foreach(var student in Model)
-    {
-        <form method="post" asp-action="DeleteStudent" asp-controller="Students" asp-route-id="@student.Id">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Group Number</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>@student.Id</td>
-                        <td>@student.StudentName</td>
-                        <td>@student.GroupNumber</td>
+              <td>
+                <a asp-action="EditStudent" asp-controller="Students" asp-route-id="@student.Id" class="btn btn-primary">@localizer["edit"]</a>
+                <a asp-action="DeleteStudent" asp-controller="Students" asp-route-id="@student.Id" class="btn btn-danger">@localizer["delete"]</a>
+              </td>
+           </tr>}
 
-                        <td>
-                            <a asp-action="EditStudent" asp-controller="Students" asp-route-id="@student.Id" class="btn btn-primary">@localizer["edit"]</a>
-                            <span id="confirmSpan_@student.Id" style="display:none">
-                                <span>@localizer["deleteSpan"]</span>
-                                <button type="submit" class="btn btn-danger">@localizer["yes"]</button>
-                                <a href="#" class="btn btn-primary" onclick="confirmDelete('@student.Id', false)">@localizer["no"]</a>
-                            </span>
+    </tbody>
+</table>
 
-                            <span id="deleteSpan_@student.Id">
-                                <a href="#" class="btn btn-danger" onclick="confirmDelete('@student.Id', true)">@localizer["delete"]</a>
-                            </span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </form>
-    }
+
+@section Scripts {
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.css" />
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $("#Exampledatatable").DataTable();
+        });
+    </script>
 }
-
-
-@section Scripts{
-    <script src="~/js/site.js"></script>
-}
-
-
 
 

@@ -117,25 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="action" xml:space="preserve">
+    <value>行动</value>
+  </data>
   <data name="add" xml:space="preserve">
     <value>添加学生</value>
   </data>
   <data name="delete" xml:space="preserve">
     <value>删除</value>
   </data>
-  <data name="deleteSpan" xml:space="preserve">
-    <value>你确定删除当前内容？</value>
-  </data>
   <data name="edit" xml:space="preserve">
     <value>更改</value>
   </data>
-  <data name="no" xml:space="preserve">
-    <value>否</value>
+  <data name="group" xml:space="preserve">
+    <value>组号</value>
+  </data>
+  <data name="student" xml:space="preserve">
+    <value>学生姓名</value>
   </data>
   <data name="title" xml:space="preserve">
     <value>所有学生</value>
-  </data>
-  <data name="yes" xml:space="preserve">
-    <value>是</value>
   </data>
 </root>

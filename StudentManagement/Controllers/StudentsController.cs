@@ -21,14 +21,9 @@ namespace StudentManagement.Controllers
             this.context = context;
         }
 
-        public IActionResult Index([FromQuery] string search)
+        public IActionResult Index()
         {
-            var student = context.Students.AsQueryable();
-
-            if (search != null)
-            {
-                student = student.Where(p => p.StudentName.Contains(search));
-            }
+            var student = context.Students;
             return View(student);
         }
 
