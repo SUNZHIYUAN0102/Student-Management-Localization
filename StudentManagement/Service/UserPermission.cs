@@ -21,7 +21,13 @@ namespace StudentManagement.Service
         }
         private HttpContext HttpContext => this.httpContextAccessor.HttpContext;
 
-   
+        public bool CanAddNote(Models.Project project)
+        {
+            var currentUser = this.userManager.GetUserId(this.httpContextAccessor.HttpContext.User);
+            return !project.Notes.Any(x => x.CreatorId == currentUser);
+            
+        }
+
         public bool CanChangePrivate(Models.Project project)
         {
             if ((this.HttpContext.User.IsInRole(UserRoles.Administrators)))

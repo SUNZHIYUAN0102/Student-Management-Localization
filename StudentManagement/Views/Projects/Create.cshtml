@@ -18,12 +18,12 @@
     </div>
     <div class="form-group col-3">
         <label class="control-label">@localizer["startTime"]</label>
-        <input type="date" asp-for="StartTime" class="form-control">
+        <input type="date" asp-for="StartTime" value="2021-01-01" class="form-control">
         <span asp-validation-for="StartTime" class="text-danger"></span>
     </div>
     <div class="form-group col-3">
         <label class="control-label">@localizer["deadLine"]</label>
-        <input type="date" asp-for="DeadLine" class="form-control">
+        <input type="date" value="2021-01-01" asp-for="DeadLine" class="form-control">
         <span asp-validation-for="DeadLine" class="text-danger"></span>
     </div>
 

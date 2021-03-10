@@ -76,6 +76,7 @@ namespace StudentManagement.Controllers
         public async Task<IActionResult> Create(ProjectEditViewModel model)
         {
             var user = await this.userManager.GetUserAsync(this.HttpContext.User);
+           
             if (ModelState.IsValid)
             {
                 var now = DateTime.UtcNow;
@@ -90,6 +91,8 @@ namespace StudentManagement.Controllers
                     DeadLine = model.DeadLine,
                     IsPrivate = model.IsPrivate
                 };
+
+
 
                 this.context.Projects.Add(project);
                 await context.SaveChangesAsync();

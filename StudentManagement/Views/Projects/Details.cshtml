@@ -43,6 +43,7 @@
     <a asp-action="Create" asp-controller="Notes" asp-route-projectId="@Model.Id" class="btn btn-primary">@localizer["create"]</a>
 </p>
 
+
 <div class="card mb-3">
     @foreach (var item in Model.Notes.OrderByDescending(x => x.Created))
     {
