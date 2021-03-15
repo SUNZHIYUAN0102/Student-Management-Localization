@@ -96,8 +96,75 @@ div.card-content {
     padding: 10px 20px;
 }
 
-.registericon{
+.meow {
+    height:40px;
+    width: 40px;
     border-radius: 50%;
 }
 
+.card-container {
+    width: 1000px;
+    overflow-x: scroll;
+    display: flex;
+    background-color: #100e17;
+    padding: 3rem;
+}
 
+.cardx {
+    min-width: 300px;
+    height: 350px;
+    border-radius: 16px;
+    background-color: #17141d;
+    box-shadow: -1rem 0 3rem #000;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    transition: 0.2s;
+}
+
+.date {
+    color: #8a8a8a;
+}
+
+.note-tag {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1rem 0 1rem;
+}
+
+    .note-tag div {
+        font-size: 9px;
+        font-weight: 700;
+        color: #fff;
+        padding: 4px 10px;
+        border: 3px solid #28242f;
+        border-radius: 2rem;
+    }
+
+.cardx .note-title {
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.cardx .note-content {
+    font-size: 20px;
+    color: #fff;
+    font-weight: 700;
+}
+
+.cardx .article-header {
+    margin-bottom: auto;
+}
+
+.cardx:not(:first-child) {
+    margin-left: -130px;
+}
+
+.cardx:hover {
+    transform: translateY(-1rem);
+}
+
+    .cardx:hover ~ .cardx {
+        transform: translateX(130px);
+    }

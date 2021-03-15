@@ -35,6 +35,16 @@ namespace StudentManagement.Service
             return Picture;
         }
 
+        public async Task<string> GetNoteCreatorProfile(string email)
+        {
+            var user = await this.userManager.FindByEmailAsync(email);
+
+            var Picture = user.ImagePath;
+
+            return Picture;
+        }
+
+
         public async Task<List<string>> GetRole(string username)
         {
 
