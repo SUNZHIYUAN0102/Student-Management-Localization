@@ -52,6 +52,7 @@ namespace StudentManagement
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.Configure<SMTPConfigModel>(Configuration.GetSection("SMTPConfig"));
             services.Configure<DataProtectionTokenProviderOptions>(o => o.TokenLifespan = TimeSpan.FromHours(5));
             services.AddScoped<IUserPermission, UserPermission>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
