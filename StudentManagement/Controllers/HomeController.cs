@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StudentManagement.Models;
+using StudentManagement.Service;
 
 namespace StudentManagement.Controllers
 {
@@ -16,16 +17,23 @@ namespace StudentManagement.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IEmailService _emailService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IEmailService emailSerice)
         {
             _logger = logger;
+            _emailService = emailSerice;
         }
 
-
-        [Authorize]
-        public IActionResult Index()
+   
+        public async Task<ViewResult> Index()
         {
+            UserEmailOptions options = new UserEmailOptions
+            {
+                ToEmails = new List<string>() { "test@gmail.com" }
+            };
+
+            await _emailService.SendTestEmail(options);
             return View();
         }
 

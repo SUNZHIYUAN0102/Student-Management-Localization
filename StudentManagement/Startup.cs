@@ -57,6 +57,7 @@ namespace StudentManagement
             services.AddScoped<IUserPermission, UserPermission>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddScoped<UserService>();
+            services.AddScoped<IEmailService, EmailService>();
             services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
 
             services.Configure<RequestLocalizationOptions>(
@@ -121,7 +122,7 @@ namespace StudentManagement
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Projects}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     } 

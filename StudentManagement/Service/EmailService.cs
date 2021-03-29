@@ -11,10 +11,16 @@ using System.Threading.Tasks;
 
 namespace StudentManagement.Service
 {
-    public class EmailService
+    public class EmailService : IEmailService
     {
         private const string templatePath = @"EmailTemplate/{0}.html";
         private readonly SMTPConfigModel _smtpConfig;
+        public async Task SendTestEmail(UserEmailOptions userEmailOptions)
+        {
+            userEmailOptions.Subject = "Duck suck my dick";
+            userEmailOptions.Body = GetEmailBody("TestEmail");
+            await SendEmail(userEmailOptions);
+        }
 
         public EmailService(IOptions<SMTPConfigModel> smtpConfig)
         {
@@ -31,7 +37,7 @@ namespace StudentManagement.Service
                 IsBodyHtml = _smtpConfig.IsBodyHTML
             };
 
-            foreach(var toEmail in userEmailOptions.ToEmails)
+            foreach (var toEmail in userEmailOptions.ToEmails)
             {
                 mail.To.Add(toEmail);
             }
