@@ -34,15 +34,19 @@
                   <div class="mb-4">
                       <h3>@localizer["Title"]</h3>
                       <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
+                  
                   </div>
                   <form asp-controller="Account" asp-action="Login" method="post" class="form-horizontal">
+                      <div asp-validation-summary="All" class="text-danger"></div>
                       <div class="form-group first">
                           <label asp-for="Email">@localizer["Email"]</label>
                           <input asp-for="Email" class="form-control" id="username">
+                          
                       </div>
                       <div class="form-group last mb-4">
                           <label asp-for="Password">@localizer["Password"]</label>
                           <input asp-for="Password" class="form-control" id="password">
+                         
                       </div>
 
 

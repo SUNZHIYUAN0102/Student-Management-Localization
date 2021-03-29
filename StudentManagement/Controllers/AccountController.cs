@@ -64,6 +64,7 @@ namespace StudentManagement.Controllers
                 var user = await userManager.FindByEmailAsync(model.Email);
                 if (user != null && !user.EmailConfirmed && (await userManager.CheckPasswordAsync(user, model.Password)))
                 {
+                    
                     this.ModelState.AddModelError(String.Empty, "Email not confirmed yet.");
                     return this.View(model);
                 }

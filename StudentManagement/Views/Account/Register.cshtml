@@ -35,22 +35,27 @@
                                 <div class="form-group first">
                                     <label asp-for="FirstName">@localizer["Firstname"]</label>
                                     <input asp-for="FirstName" class="form-control" id="username">
+                                    <span asp-validation-for="FirstName"></span>
                                 </div>
                                 <div class="form-group last mb-4">
                                     <label asp-for="LastName">@localizer["Lastname"]</label>
                                     <input asp-for="LastName" class="form-control" id="username">
+                                    <span asp-validation-for="LastName"></span>
                                 </div>
                                 <div class="form-group last mb-4">
                                     <label asp-for="Email">@localizer["Email"]</label>
                                     <input asp-for="Email" class="form-control" id="username">
+                                    <span asp-validation-for="Email"></span>
                                 </div>
                                 <div class="form-group last mb-4">
                                     <label asp-for="Password">@localizer["Password"]</label>
-                                    <input asp-for="Password" class="form-control" id="password">
+                                    <input asp-for="Password" class="form-control" id="password">   
+                                    <span asp-validation-for="Password"></span>
                                 </div>
                                 <div class="form-group last mb-4">
                                     <label asp-for="ConfirmPassword">@localizer["ConfirmPassword"]</label>
                                     <input asp-for="ConfirmPassword" class="form-control" id="password">
+                                    <span asp-validation-for="ConfirmPassword"></span>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary btn-block">@localizer["Register"]</button>
