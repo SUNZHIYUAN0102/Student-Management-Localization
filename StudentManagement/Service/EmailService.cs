@@ -17,8 +17,8 @@ namespace StudentManagement.Service
         private readonly SMTPConfigModel _smtpConfig;
         public async Task SendTestEmail(UserEmailOptions userEmailOptions)
         {
-            userEmailOptions.Subject = "Duck suck my dick";
-            userEmailOptions.Body = GetEmailBody("TestEmail");
+            userEmailOptions.Subject = UpdatePlaceHolders("Hello {{UserName}}, This is the subject from student management system", userEmailOptions.PlaceHolders);
+            userEmailOptions.Body = UpdatePlaceHolders(GetEmailBody("TestEmail"), userEmailOptions.PlaceHolders);
             await SendEmail(userEmailOptions);
         }
 
@@ -61,6 +61,22 @@ namespace StudentManagement.Service
         {
             var body = File.ReadAllText(string.Format(templatePath, templateName));
             return body;
+        }
+
+        private string UpdatePlaceHolders(string text, List<KeyValuePair<string, string>> keyValuePairs)
+        {
+            if(!string.IsNullOrEmpty(text) && keyValuePairs != null)
+            {
+                foreach(var placeholder in keyValuePairs)
+                {
+                    if(text.Contains(placeholder.Key))
+                    {
+                        text = text.Replace(placeholder.Key, placeholder.Value);
+                    }
+                }
+            }
+
+            return text;
         }
     }
 }
