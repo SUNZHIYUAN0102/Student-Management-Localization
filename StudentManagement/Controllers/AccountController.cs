@@ -13,6 +13,7 @@ using System.Security.Claims;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.AspNetCore.Http;
 using StudentManagement.Service;
+using Microsoft.Extensions.Configuration;
 
 namespace StudentManagement.Controllers
 {
@@ -23,6 +24,8 @@ namespace StudentManagement.Controllers
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
+        private readonly IEmailService emailService;
+        private readonly IConfiguration configuration;
         private readonly ILogger logger;
         private readonly IUnitOfWork unitOfWork;
 
@@ -30,10 +33,14 @@ namespace StudentManagement.Controllers
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             ILoggerFactory loggerFactory,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            IEmailService emailService,
+            IConfiguration configuration)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.emailService = emailService;
+            this.configuration = configuration;
             this.logger = loggerFactory.CreateLogger<AccountController>();
         }
         // GET: /Account/Login
@@ -217,6 +224,7 @@ namespace StudentManagement.Controllers
                 {
                     var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
                     var confirmationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, Request.Scheme);
+                    await SendEmailConfirmationEmail(user, confirmationLink);
 
                     logger.Log(LogLevel.Warning, confirmationLink);
 
@@ -234,6 +242,21 @@ namespace StudentManagement.Controllers
 
             // If we got this far, something failed, redisplay form
             return this.View(model);
+        }
+
+        private async Task SendEmailConfirmationEmail(User user, string confirmationLink)
+        {
+            UserEmailOptions userEmailOptions = new UserEmailOptions
+            {
+                ToEmails = new List<string>() { user.Email },
+                PlaceHolders = new List<KeyValuePair<string, string>>()
+                {
+                    new KeyValuePair<string, string>("{{UserName}}", user.FullName),
+                    new KeyValuePair<string, string>("{{Link}}", confirmationLink)
+                }
+
+            };
+            await emailService.SendEmailForEmailConfirmation(userEmailOptions);
         }
 
         [HttpGet]

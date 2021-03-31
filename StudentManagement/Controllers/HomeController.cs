@@ -31,18 +31,18 @@ namespace StudentManagement.Controllers
    
         public async Task<ViewResult> Index()
         {
-            var user = await this.userManager.GetUserAsync(this.HttpContext.User);
-            var username = user.FullName;
-            UserEmailOptions options = new UserEmailOptions
-            {
-                ToEmails = new List<string>() { "test@gmail.com" },
-                PlaceHolders = new List<KeyValuePair<string, string>>()
-                {
-                    new KeyValuePair<string, string>("{{UserName}}", username)
-                }
-            };
+            //var user = await this.userManager.GetUserAsync(this.HttpContext.User);
+            //var username = user.FullName;
+            //UserEmailOptions options = new UserEmailOptions
+            //{
+            //    ToEmails = new List<string>() { "test@gmail.com" },
+            //    PlaceHolders = new List<KeyValuePair<string, string>>()
+            //    {
+            //        new KeyValuePair<string, string>("{{UserName}}", username)
+            //    }
+            //};
 
-            await _emailService.SendTestEmail(options);
+            //await _emailService.SendTestEmail(options);
             return View();
         }
 
