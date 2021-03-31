@@ -24,8 +24,15 @@ namespace StudentManagement.Service
 
         public async Task SendEmailForEmailConfirmation(UserEmailOptions userEmailOptions)
         {
-            userEmailOptions.Subject = UpdatePlaceHolders("Hello {{UserName}}, Confirm your email address", userEmailOptions.PlaceHolders);
+            userEmailOptions.Subject = UpdatePlaceHolders("Hello {{UserName}}, Please confirm your email address", userEmailOptions.PlaceHolders);
             userEmailOptions.Body = UpdatePlaceHolders(GetEmailBody("ConfirmEmail"), userEmailOptions.PlaceHolders);
+            await SendEmail(userEmailOptions);
+        }
+
+        public async Task SendEmailForForgettenPassword(UserEmailOptions userEmailOptions)
+        {
+            userEmailOptions.Subject = UpdatePlaceHolders("Hello {{UserName}}, this email is for password reset", userEmailOptions.PlaceHolders);
+            userEmailOptions.Body = UpdatePlaceHolders(GetEmailBody("ResetPasswordEmail"), userEmailOptions.PlaceHolders);
             await SendEmail(userEmailOptions);
         }
 

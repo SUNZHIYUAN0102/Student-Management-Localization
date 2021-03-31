@@ -234,7 +234,8 @@ namespace StudentManagement.Controllers
                     }
 
                     this.logger.LogInformation(3, "User created a new account with password.");
-                    return this.RedirectToAction("Login", "Account");
+             
+                    return this.RedirectToAction("Register", "Account");
                 }
 
                 this.AddErrors(result);
@@ -311,6 +312,16 @@ namespace StudentManagement.Controllers
                     var passwordResetLink = Url.Action("ResetPassword", "Account",
                             new { email = model.Email, token = token }, Request.Scheme);
 
+                    UserEmailOptions userEmailOptions = new UserEmailOptions
+                    {
+                        ToEmails = new List<string>() { user.Email },
+                        PlaceHolders = new List<KeyValuePair<string, string>>()
+                        {
+                            new KeyValuePair<string, string>("{{UserName}}", user.FullName),
+                            new KeyValuePair<string, string>("{{Link}}", passwordResetLink)
+                        }
+                    };
+                    await emailService.SendEmailForForgettenPassword(userEmailOptions);
                     // Log the password reset link
                     logger.Log(LogLevel.Warning, passwordResetLink);
 
