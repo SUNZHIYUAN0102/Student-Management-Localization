@@ -71,8 +71,10 @@ namespace StudentManagement.Controllers
                 var user = await userManager.FindByEmailAsync(model.Email);
                 if (user != null && !user.EmailConfirmed && (await userManager.CheckPasswordAsync(user, model.Password)))
                 {
-                    
-                    this.ModelState.AddModelError(String.Empty, "Email not confirmed yet.");
+                    var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var confirmationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, Request.Scheme);
+                    await SendEmailConfirmationEmail(user, confirmationLink);
+                    this.ModelState.AddModelError(String.Empty, "Email not confirmed yet.We already resent new confirmation email to your email address.");
                     return this.View(model);
                 }
                 // This doesn't count login failures towards account lockout
@@ -80,14 +82,11 @@ namespace StudentManagement.Controllers
                 var result = await this.signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
-
-                    this.logger.LogInformation(1, "User logged in.");
                     return this.RedirectToAction("Index", "Projects");
                 }
 
                 if (result.IsLockedOut)
                 {
-                    this.logger.LogWarning(2, "User account locked out.");
                     return this.View("Lockout");
                 }
 
@@ -205,8 +204,11 @@ namespace StudentManagement.Controllers
         // GET: /Account/Register
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Register()
+        public IActionResult Register(ManageMessageId? message = null)
         {
+            this.ViewData["StatusMessage"] =
+                message == ManageMessageId.AccountCreatedSuccess ? "Your account has been created succesfully. Also we sent one confirmation email to your email address. Please go and vertify it"
+                    : "";
             return this.View();
         }
 
@@ -226,16 +228,11 @@ namespace StudentManagement.Controllers
                     var confirmationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, Request.Scheme);
                     await SendEmailConfirmationEmail(user, confirmationLink);
 
-                    logger.Log(LogLevel.Warning, confirmationLink);
-
                     if (signInManager.IsSignedIn(User) && User.IsInRole("Administrators"))
                     {
                         return RedirectToAction("ListUsers", "Admin");
                     }
-
-                    this.logger.LogInformation(3, "User created a new account with password.");
-             
-                    return this.RedirectToAction("Register", "Account");
+                    return this.RedirectToAction("Register", "Account", new { Message = ManageMessageId.AccountCreatedSuccess});
                 }
 
                 this.AddErrors(result);
@@ -299,16 +296,13 @@ namespace StudentManagement.Controllers
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
-            {
-                // Find the user by email
+            {              
                 var user = await userManager.FindByEmailAsync(model.Email);
-                // If the user is found AND Email is confirmed
+
                 if (user != null && await userManager.IsEmailConfirmedAsync(user))
                 {
-                    // Generate the reset password token
                     var token = await userManager.GeneratePasswordResetTokenAsync(user);
 
-                    // Build the password reset link
                     var passwordResetLink = Url.Action("ResetPassword", "Account",
                             new { email = model.Email, token = token }, Request.Scheme);
 
@@ -322,15 +316,10 @@ namespace StudentManagement.Controllers
                         }
                     };
                     await emailService.SendEmailForForgettenPassword(userEmailOptions);
-                    // Log the password reset link
-                    logger.Log(LogLevel.Warning, passwordResetLink);
 
-                    // Send the user to Forgot Password Confirmation view
                     return View("ForgotPasswordConfirmation");
                 }
 
-                // To avoid account enumeration and brute force attacks, don't
-                // reveal that the user does not exist or is not confirmed
                 return View("ForgotPasswordConfirmation");
             }
 
@@ -422,7 +411,6 @@ namespace StudentManagement.Controllers
         public async Task<IActionResult> Logout()
         {
             await this.signInManager.SignOutAsync();
-            this.logger.LogInformation(4, "User logged out.");
             return this.Redirect("/");
         }
 
@@ -439,6 +427,12 @@ namespace StudentManagement.Controllers
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        public enum ManageMessageId
+        {
+            AccountCreatedSuccess,
+
         }
     }
 }

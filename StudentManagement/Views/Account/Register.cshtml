@@ -30,10 +30,11 @@
                             <div class="mb-4">
                                 <h3>@localizer["Title"]</h3>
                                 <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
+                                <p class="text-success">@ViewData["StatusMessage"]</p>
                             </div>
                             
                             <form asp-controller="Account" asp-action="Register" method="post" class="form-horizontal">
-                                <p>@ViewBag.ConfirmEmail</p>
+
                                 <div class="form-group first">
                                     <label asp-for="FirstName">@localizer["Firstname"]</label>
                                     <input asp-for="FirstName" class="form-control" id="username">
