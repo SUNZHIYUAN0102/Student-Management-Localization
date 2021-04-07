@@ -168,3 +168,4 @@ div.card-content {
     .cardx:hover ~ .cardx {
         transform: translateX(130px);
     }
+
