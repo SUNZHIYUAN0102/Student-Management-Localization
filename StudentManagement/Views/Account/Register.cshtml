@@ -19,7 +19,7 @@
 </head>
 <body>
 
-    <div class="content">
+    <div class="content" style="padding-top:0">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -101,10 +101,9 @@
         const medium = document.querySelector(".medium");
         const strong = document.querySelector(".strong");
         const text = document.querySelector(".text");
-        const showBtn = document.querySelector(".showBtn");
         let regExpWeak = /[a-z]/;
         let regExpMedium = /\d+/;
-        let regExpStrong = /.[!,#,$,%,^,&,*,?,_,~,-,(,)]/;
+        let regExpStrong = /.[!,@@,#,$,%,^,&,*,?,_,~,-,(,)]/;
         function trigger() {
             if (input.value != "") {
                 indicator.style.display = "block";
@@ -140,7 +139,6 @@
             else {
                 indicator.style.display = "none";
                 text.style.display = "none";
-                showBtn.style.display = "none";
             }
         }
     </script>
