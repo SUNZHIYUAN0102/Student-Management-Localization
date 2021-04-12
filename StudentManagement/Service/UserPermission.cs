@@ -30,7 +30,7 @@ namespace StudentManagement.Service
 
         public bool CanChangePrivate(Models.Project project)
         {
-            if ((this.HttpContext.User.IsInRole(UserRoles.Administrators)))
+            if ((this.HttpContext.User.IsInRole(UserRoles.Administrator)))
             {
                 return true;
             }
@@ -52,7 +52,7 @@ namespace StudentManagement.Service
                 return false;
             }
 
-            if ((this.HttpContext.User.IsInRole(UserRoles.Administrators)))
+            if ((this.HttpContext.User.IsInRole(UserRoles.Administrator)))
             {
                 return true;
             }
@@ -67,7 +67,7 @@ namespace StudentManagement.Service
                 return true;
             }
 
-            if ((this.HttpContext.User.IsInRole(UserRoles.Administrators)))
+            if ((this.HttpContext.User.IsInRole(UserRoles.Administrator)))
             {
                 return true;
             }

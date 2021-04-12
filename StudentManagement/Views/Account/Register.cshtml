@@ -67,9 +67,9 @@
                                 </div>
                                 <div class="form-group last mb-4">
                                     <label asp-for="ConfirmPassword">@localizer["ConfirmPassword"]</label>
-                                    <input asp-for="ConfirmPassword" class="form-control" id="password">
+                                    <input asp-for="ConfirmPassword" class="form-control" id="password2">
                                     <span style="right: 15px; position: absolute; cursor: pointer; top: 35%;">
-                                        <i class="fa fa-eye" aria-hidden="true" id="eye" onclick="toggle()"></i>
+                                        <i class="fa fa-eye" aria-hidden="true" id="eye2" onclick="toggle2()"></i>
                                     </span>
                                     <span asp-validation-for="ConfirmPassword"></span>
                                 </div>
@@ -85,7 +85,6 @@
             </div>
         </div>
     </div>
-    <hr />
 
 
     <script src="~/Login/js/jquery-3.3.1.min.js"></script>
@@ -170,7 +169,28 @@
                 state = true;
             }
         }
-    </script>
 
+        var state2 = false;
+        function toggle2() {
+            if (state2) {
+                document.getElementById(
+                    "password2").
+                    setAttribute("type",
+                        "password");
+                document.getElementById(
+                    "eye2").style.color = '#7a797e';
+                state2 = false;
+            }
+            else {
+                document.getElementById(
+                    "password2").
+                    setAttribute("type",
+                        "text");
+                document.getElementById("eye2")
+                    .style.color = '#58874f';
+                state2 = true;
+            }
+        }
+    </script>
    
 }

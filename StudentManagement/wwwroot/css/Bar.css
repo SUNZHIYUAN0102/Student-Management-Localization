@@ -324,6 +324,7 @@ body {
     width: 100%;
     bottom: 0;
     display: flex;
+    margin-top: 500px;
 }
 
     .sidebar-footer > a {

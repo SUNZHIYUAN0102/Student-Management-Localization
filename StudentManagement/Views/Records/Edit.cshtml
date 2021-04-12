@@ -1,38 +1,60 @@
 ﻿@model StudentManagement.Models.RecordViewModel.RecordCreateViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 
-<h1>@localizer["title"]</h1>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label class="control-label">@localizer["studentname"]</label>
-                <select asp-for="StudentName" class="form-control" asp-items="ViewBag.StudentName"></select>
-            </div>
+    <link rel="stylesheet" href="~/Login/fonts/icomoon/style.css">
 
-            <div class="form-group">
-                <label class="control-label">@localizer["logtime"]</label>
-                <input asp-for="LogTime" class="form-control" />
-                <span asp-validation-for="LogTime" class="text-danger"></span>
-            </div>
+    <link rel="stylesheet" href="~/Login/css/owl.carousel.min.css">
 
-            <div class="form-group">
-                <label class="control-label">@localizer["week"]</label>
-                <select asp-for="Week" class="form-control" asp-items="ViewBag.Week"></select>
-            </div>
+    <link rel="stylesheet" href="~/Login/css/bootstrap.min.css">
 
-            <div class="form-group">
-                <input type="submit" value="@localizer["edit"]" class="btn btn-primary" />
-                <a asp-action="Delete" asp-controller="Records" asp-route-Id="@ViewBag.Id" class="btn btn-danger">@localizer["delete"]</a>
-            </div>
-        </form>
+    <link rel="stylesheet" href="~/Login/css/style.css">
+</head>
+
+<div class="container" style="border-style: dashed; width: 500px; height: auto; margin-top: 80px">
+    <p>
+        <h1>@localizer["title"]</h1>
+    </p>
+    <div class="row">
+        <div class="col-8">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="control-label">@localizer["studentname"]</label>
+                    <select asp-for="StudentName" class="form-control" asp-items="ViewBag.StudentName"></select>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">@localizer["logtime"]</label>
+                    <input asp-for="LogTime" class="form-control" />
+                    <span asp-validation-for="LogTime" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">@localizer["week"]</label>
+                    <select asp-for="Week" class="form-control" asp-items="ViewBag.Week"></select>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="@localizer["edit"]" class="btn btn-primary" />
+                    <a asp-action="Delete" asp-controller="Records" asp-route-Id="@ViewBag.Id" class="btn btn-danger">@localizer["delete"]</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-
 
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script src="~/Login/js/jquery-3.3.1.min.js"></script>
+<script src="~/Login/js/popper.min.js"></script>
+<script src="~/Login/js/bootstrap.min.js"></script>
+<script src="~/Login/js/main.js"></script>

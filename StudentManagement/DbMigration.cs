@@ -31,16 +31,16 @@ namespace StudentManagement
             var roleManager = scope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
             var userManager = scope.ServiceProvider.GetService<UserManager<User>>();
 
-            var adminsRole = await roleManager.FindByNameAsync(UserRoles.Administrators);
+            var adminsRole = await roleManager.FindByNameAsync(UserRoles.Administrator);
             if (adminsRole == null)
             {
-                var roleResult = await roleManager.CreateAsync(new IdentityRole(UserRoles.Administrators));
+                var roleResult = await roleManager.CreateAsync(new IdentityRole(UserRoles.Administrator));
                 if (!roleResult.Succeeded)
                 {
-                    throw new InvalidOperationException($"Unable to create {UserRoles.Administrators} role.");
+                    throw new InvalidOperationException($"Unable to create {UserRoles.Administrator} role.");
                 }
 
-                adminsRole = await roleManager.FindByNameAsync(UserRoles.Administrators);
+                adminsRole = await roleManager.FindByNameAsync(UserRoles.Administrator);
             }
 
             var adminUser = await userManager.FindByNameAsync("meowww@qq.com");

@@ -3,113 +3,132 @@
 
 @{ ViewData["Title"] = "Manage your account";}
 
-<p class="text-success">@ViewData["StatusMessage"]</p>
 
 
-<h2>@localizer["title"]</h2>
-
-
-<!doctype html>
-<html lang="en">
 <head>
-    <link rel="stylesheet" href="~/css/manage.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <link rel="stylesheet" href="~/Login/fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="~/Login/css/owl.carousel.min.css">
+
+    <link rel="stylesheet" href="~/Login/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="~/Login/css/style.css">
 </head>
+
+
 <body>
-    <div class="row">
-        <div class="col-md">
-            <div class="list-group" id="myList" role="tablist">
-                <a class="list-group-item list-group-item-action active" data-toggle="list" href="#changePassword" role="tab">@localizer["changePassword"]</a>
-                <a class="list-group-item list-group-item-action" data-toggle="list" href="#changeEmail" role="tab">@localizer["changeEmail"]</a>
-                <a class="list-group-item list-group-item-action" data-toggle="list" href="#profilePhoto" role="tab">@localizer["profilePhoto"]</a>
-                <a class="list-group-item list-group-item-action" data-toggle="list" href="#changeUsername" role="tab">@localizer["changeUsername"]</a>
+    <div class="container" style="border-style: dashed; width: 800px; height: 600px; margin-top: 80px">
+        <p>
+            <h2>@localizer["title"]</h2>
+        </p>
+        
+        <p class="text-success">@ViewData["StatusMessage"]</p>
+        <div class="row">
+            <div class="col-md">
+                <div class="list-group" id="myList" role="tablist">
+                    <a class="list-group-item list-group-item-action active" data-toggle="list" href="#changePassword" role="tab">@localizer["changePassword"]</a>
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#changeEmail" role="tab">@localizer["changeEmail"]</a>
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#profilePhoto" role="tab">@localizer["profilePhoto"]</a>
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#changeUsername" role="tab">@localizer["changeUsername"]</a>
+                </div>
             </div>
-        </div>
-        <div class="col-8">
-            <div class="tab-content">
-                <div class="tab-pane active" id="changePassword" role="tabpanel">
-                    <form asp-controller="Manage" asp-action="ChangePassword" method="post" class="form-horizontal">
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                        <div class="form-group col-md-4">
-                            <label>@localizer["oldPassword"]</label>
-                            <input asp-for="@Model.changePasswordViewModel.OldPassword" class="form-control" />
-                            <span asp-validation-for="@Model.changePasswordViewModel.OldPassword" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>@localizer["newPassword"]</label>
-                            <input asp-for="@Model.changePasswordViewModel.NewPassword" class="form-control" />
-                            <span asp-validation-for="@Model.changePasswordViewModel.NewPassword" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>@localizer["confirmPassword"]</label>
-                            <input asp-for="@Model.changePasswordViewModel.ConfirmPassword" class="form-control" />
-                            <span asp-validation-for="@Model.changePasswordViewModel.ConfirmPassword" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <button type="submit" class="btn btn-primary btn-block">@localizer["changePassword"]</button>
-                        </div>
-                    </form>
-                </div>
+            <div class="col-8">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="changePassword" role="tabpanel">
+                        <form asp-controller="Manage" asp-action="ChangePassword" method="post" class="form-horizontal">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="form-group col-md-8">
+                                <label>@localizer["oldPassword"]</label>
+                                <input asp-for="@Model.changePasswordViewModel.OldPassword" class="form-control" />
+                                <span asp-validation-for="@Model.changePasswordViewModel.OldPassword" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label>@localizer["newPassword"]</label>
+                                <input asp-for="@Model.changePasswordViewModel.NewPassword" class="form-control" />
+                                <span asp-validation-for="@Model.changePasswordViewModel.NewPassword" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label>@localizer["confirmPassword"]</label>
+                                <input asp-for="@Model.changePasswordViewModel.ConfirmPassword" class="form-control" />
+                                <span asp-validation-for="@Model.changePasswordViewModel.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <button type="submit" class="btn btn-primary btn-block">@localizer["changePassword"]</button>
+                            </div>
+                        </form>
+                    </div>
 
-                <div class="tab-pane" id="changeEmail" role="tabpanel">
-                    <form asp-controller="Manage" asp-action="ChangeEmail" method="post" class="form-horizontal">
-                        <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="tab-pane" id="changeEmail" role="tabpanel">
+                        <form asp-controller="Manage" asp-action="ChangeEmail" method="post" class="form-horizontal">
+                            <div asp-validation-summary="All" class="text-danger"></div>
 
-                        <div class="form-group col-md-4">
-                            <label>@localizer["email"]</label>
-                            <input asp-for="@Model.changeEmailViewModel.NewEmail" class="form-control" />
-                            <span asp-validation-for="@Model.changeEmailViewModel.NewEmail" class="text-danger"></span>
-                        </div>
+                            <div class="form-group col-md-8">
+                                <label>@localizer["email"]</label>
+                                <input asp-for="@Model.changeEmailViewModel.NewEmail" class="form-control" />
+                                <span asp-validation-for="@Model.changeEmailViewModel.NewEmail" class="text-danger"></span>
+                            </div>
 
-                        <div class="form-group col-md-3">
-                            <button type="submit" class="btn btn-primary btn-block">@localizer["changeEmail"]</button>
-                        </div>
-                    </form>
-                </div>
+                            <div class="form-group col-md-6">
+                                <button type="submit" class="btn btn-primary btn-block">@localizer["changeEmail"]</button>
+                            </div>
+                        </form>
+                    </div>
 
-                <div class="tab-pane" id="profilePhoto" role="tabpanel">
-                    <form asp-controller="Manage" asp-action="AddPhoto" method="post" class="form-horizontal" enctype="multipart/form-data">
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                        <div class="form-group col-md-4">
-                            <img src="~/uploads/@ViewBag.ImagePath" class="img-thumbnail" />
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>@localizer["imagePath"]</label>
+                    <div class="tab-pane" id="profilePhoto" role="tabpanel">
+                        <form asp-controller="Manage" asp-action="AddPhoto" method="post" class="form-horizontal" enctype="multipart/form-data">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="form-group col-md-8">
+                                <img src="~/uploads/@ViewBag.ImagePath" class="img-thumbnail" />
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label>@localizer["imagePath"]</label>
 
-                            <input type="file" name="file" class="form-control" />
-                            <span asp-validation-for="@Model.user.ImagePath" class="text-danger"></span>
-                        </div>
+                                <input type="file" name="file" class="form-control" />
+                                <span asp-validation-for="@Model.user.ImagePath" class="text-danger"></span>
+                            </div>
 
-                        <div class="form-group col-md-3">
-                            <button type="submit" class="btn btn-primary btn-block">@localizer["upload"]</button>
-                        </div>
-                    </form>
-                </div>
+                            <div class="form-group col-md-6">
+                                <button type="submit" class="btn btn-primary btn-block">@localizer["upload"]</button>
+                            </div>
+                        </form>
+                    </div>
 
-                <div class="tab-pane" id="changeUsername" role="tabpanel">
-                    <form asp-controller="Manage" asp-action="ChangeUsername" method="post" class="form-horizontal">
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                        <div class="form-group col-md-4">
-                            <label>@localizer["firstName"]</label>
-                            <input asp-for="@Model.changeUserNameViewModel.FirstName" class="form-control" value="@Model.changeUserNameViewModel.FirstName" />
-                            <span asp-validation-for="@Model.changeUserNameViewModel.FirstName" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>@localizer["lastName"]</label>
-                            <input asp-for="@Model.changeUserNameViewModel.LastName" class="form-control" />
-                            <span asp-validation-for="@Model.changeUserNameViewModel.LastName" class="text-danger"></span>
-                        </div>
+                    <div class="tab-pane" id="changeUsername" role="tabpanel">
+                        <form asp-controller="Manage" asp-action="ChangeUsername" method="post" class="form-horizontal">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="form-group col-md-8">
+                                <label>@localizer["firstName"]</label>
+                                <input asp-for="@Model.changeUserNameViewModel.FirstName" class="form-control" value="@Model.changeUserNameViewModel.FirstName" />
+                                <span asp-validation-for="@Model.changeUserNameViewModel.FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label>@localizer["lastName"]</label>
+                                <input asp-for="@Model.changeUserNameViewModel.LastName" class="form-control" />
+                                <span asp-validation-for="@Model.changeUserNameViewModel.LastName" class="text-danger"></span>
+                            </div>
 
-                        <div class="form-group col-md-3">
-                            <button type="submit" class="btn btn-primary btn-block">@localizer["changeUsername"]</button>
-                        </div>
-                    </form>
+                            <div class="form-group col-md-6">
+                                <button type="submit" class="btn btn-primary btn-block">@localizer["changeUsername"]</button>
+                            </div>
+                        </form>
 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
-</html>
+
+
+<script src="~/Login/js/jquery-3.3.1.min.js"></script>
+<script src="~/Login/js/popper.min.js"></script>
+<script src="~/Login/js/bootstrap.min.js"></script>
+<script src="~/Login/js/main.js"></script>
 
 
 
