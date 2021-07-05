@@ -52,7 +52,8 @@ namespace StudentManagement.Controllers
             await this.HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             LoginViewModel model = new LoginViewModel
-            { ReturnUrl = returnUrl,
+            {
+                ReturnUrl = returnUrl,
                 ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
 
             };
@@ -134,16 +135,13 @@ namespace StudentManagement.Controllers
             if (info == null)
             {
                 ModelState.AddModelError(string.Empty, "Error loading external login information.");
-
                 return View("Login", loginViewModel);
             }
-
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
             User user = null;
             if (email != null)
             {
                 user = await userManager.FindByEmailAsync(email);
-
                 if (user != null && !user.EmailConfirmed)
                 {
                     this.ModelState.AddModelError(string.Empty, "Email not confirmed yet");
@@ -220,7 +218,7 @@ namespace StudentManagement.Controllers
         {
             if (this.ModelState.IsValid)
             {
-                var user = new User { Email = model.Email, UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName, ImagePath = "icon.png"};
+                var user = new User { Email = model.Email, UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName, ImagePath = "icon.png" };
                 var result = await this.userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -232,7 +230,7 @@ namespace StudentManagement.Controllers
                     {
                         return RedirectToAction("ListUsers", "Admin");
                     }
-                    return this.RedirectToAction("Register", "Account", new { Message = ManageMessageId.AccountCreatedSuccess});
+                    return this.RedirectToAction("Register", "Account", new { Message = ManageMessageId.AccountCreatedSuccess });
                 }
 
                 this.AddErrors(result);
@@ -296,7 +294,7 @@ namespace StudentManagement.Controllers
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
-            {              
+            {
                 var user = await userManager.FindByEmailAsync(model.Email);
 
                 if (user != null && await userManager.IsEmailConfirmedAsync(user))
@@ -330,7 +328,7 @@ namespace StudentManagement.Controllers
         [AllowAnonymous]
         public IActionResult ResetPassword(string token, string email)
         {
-            if(token == null || email == null)
+            if (token == null || email == null)
             {
                 this.ModelState.AddModelError("", "Invalid Password Reset Token");
             }
@@ -341,21 +339,21 @@ namespace StudentManagement.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var user = await userManager.FindByEmailAsync(model.Email);
-                if(user != null)
+                if (user != null)
                 {
                     var result = await userManager.ResetPasswordAsync(user, model.Token, model.Password);
-                    if(result.Succeeded)
+                    if (result.Succeeded)
                     {
-                        if(await userManager.IsLockedOutAsync(user))
+                        if (await userManager.IsLockedOutAsync(user))
                         {
                             await userManager.SetLockoutEndDateAsync(user, DateTimeOffset.UtcNow);
                         }
                         return View("ResetPasswordConfirmation");
                     }
-                    foreach(var error in result.Errors)
+                    foreach (var error in result.Errors)
                     {
                         this.ModelState.AddModelError("", error.Description);
 
@@ -373,9 +371,9 @@ namespace StudentManagement.Controllers
             var user = await userManager.GetUserAsync(User);
             var userHasPassword = await userManager.HasPasswordAsync(user);
 
-            if(userHasPassword)
+            if (userHasPassword)
             {
-                return RedirectToAction("Index","Manage");
+                return RedirectToAction("Index", "Manage");
             }
 
             return View();
@@ -384,15 +382,15 @@ namespace StudentManagement.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPassword(AddPasswordViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var user = await userManager.GetUserAsync(User);
 
                 var result = await userManager.AddPasswordAsync(user, model.NewPassword);
 
-                if(!result.Succeeded)
+                if (!result.Succeeded)
                 {
-                    foreach(var error in result.Errors)
+                    foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError(string.Empty, error.Description);
                     }

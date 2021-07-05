@@ -75,7 +75,6 @@
 
                             <form id="myForm" method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
                                 <div class="social-login">
-
                                     @foreach (var provider in Model.ExternalLogins)
                                     {
                                         if (provider.Name == "Facebook")
@@ -84,7 +83,6 @@
                                             <a href="#" onclick="document.getElementById('myForm').submit();" class="facebook">
                                                 <span class="icon-facebook mr-3"></span>
                                             </a> }
-
                                         if (provider.Name == "Google")
                                         {
                                             <input type="hidden" value="@provider.Name" name="provider" />

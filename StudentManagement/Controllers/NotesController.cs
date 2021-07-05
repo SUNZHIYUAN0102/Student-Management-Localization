@@ -28,7 +28,7 @@ namespace StudentManagement.Controllers
             this.userManager = userManager;
         }
 
-        [Authorize(Roles = "Administrators")]
+        [Authorize(Roles = "Administrator")]
         // GET: Notes
         public async Task<IActionResult> Index()
         {

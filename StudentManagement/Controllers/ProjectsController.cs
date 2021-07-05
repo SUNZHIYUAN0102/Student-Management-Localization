@@ -62,7 +62,7 @@ namespace StudentManagement.Controllers
         }
 
         // GET: Projects/Create
-        [Authorize(Roles = "Administrators, Teachers")]
+        [Authorize(Roles = "Administrator, Teacher")]
         public IActionResult Create()
         {
             return View(new ProjectEditViewModel());
@@ -103,7 +103,7 @@ namespace StudentManagement.Controllers
         }
 
         // GET: Projects/Edit/5
-        [Authorize(Roles = "Administrators, Teachers")]
+        [Authorize(Roles = "Administrator, Teacher")]
         public async Task<IActionResult> Edit(Guid id)
         {
             if (id == null)
@@ -160,7 +160,7 @@ namespace StudentManagement.Controllers
         }
 
  
-        [Authorize(Roles = "Administrators, Teachers")]
+        [Authorize(Roles = "Administrator, Teacher")]
         public async Task<IActionResult> Delete(Guid id)
         {
             try

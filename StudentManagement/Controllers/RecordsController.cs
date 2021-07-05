@@ -14,7 +14,7 @@ using StudentManagement.Service;
 
 namespace StudentManagement.Controllers
 {
-    [Authorize(Roles = "Administrators, Teachers")]
+    [Authorize(Roles = "Administrator, Teacher")]
     public class RecordsController : Controller
     {
         private readonly ApplicationDbContext context;
@@ -47,15 +47,11 @@ namespace StudentManagement.Controllers
             {
                 return this.NotFound();
             }
-
-            var GetWeek = Week.Split(project.StartTime, project.DeadLine);
-
-
-            this.ViewBag.Project = project;
+            var GetWeek = Week.Split(project.StartTime, project.DeadLine);    
             ViewBag.StudentName = new SelectList(context.Students, "StudentName", "StudentName");
+            this.ViewBag.Project = project;
             ViewBag.Week = new SelectList(GetWeek);
             return View(new RecordCreateViewModel());
-
         }
 
         // POST: Records/Create
@@ -71,12 +67,10 @@ namespace StudentManagement.Controllers
             }
             var project = await this.context.Projects
                 .SingleOrDefaultAsync(m => m.Id == projectId);
-
             if (project == null)
             {
                 return this.NotFound();
             }
-
             var user = await this.userManager.GetUserAsync(this.HttpContext.User);
 
             if (this.ModelState.IsValid)
@@ -86,13 +80,11 @@ namespace StudentManagement.Controllers
                 {
                     ProjectId = project.Id,
                     CreatorId = user.Id,
-
                     Created = now,
                     LogTime = model.LogTime,
                     StudentEmail = model.StudentName,
                     Week = model.Week
                 };
-
                 this.context.Add(record);
                 await this.context.SaveChangesAsync();
                 ViewBag.StudentName = new SelectList(context.Students, "StudentName", "StudentName");

@@ -11,7 +11,7 @@ using StudentManagement.Models.StudentViewModel;
 
 namespace StudentManagement.Controllers
 {
-    [Authorize(Roles = "Administrators")]
+    [Authorize(Roles = "Administrator")]
     public class StudentsController : Controller
     {
         private readonly ApplicationDbContext context;

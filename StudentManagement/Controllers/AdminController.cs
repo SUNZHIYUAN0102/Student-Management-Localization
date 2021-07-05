@@ -11,7 +11,7 @@ using StudentManagement.Models.CreateRoleViewModel;
 
 namespace StudentManagement.Controllers
 {
-    [Authorize(Roles = "Administrators")]
+    [Authorize(Roles = "Administrator")]
     public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;

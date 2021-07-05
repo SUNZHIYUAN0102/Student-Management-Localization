@@ -38,7 +38,7 @@ namespace StudentManagement
         {
 
             services.AddControllersWithViews();
-            services.AddLocalization(opt => { opt.ResourcesPath = "Resources"; });
+       
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -67,8 +67,9 @@ namespace StudentManagement
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddScoped<UserService>();
             services.AddScoped<IEmailService, EmailService>();
-            services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
 
+            services.AddLocalization(opt => { opt.ResourcesPath = "Resources"; });
+            services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
             services.Configure<RequestLocalizationOptions>(
                 opt =>
                 {
@@ -81,6 +82,7 @@ namespace StudentManagement
                     opt.SupportedCultures = supportedCultures;
                     opt.SupportedUICultures = supportedCultures;
                 });
+
             services.AddAuthentication()
                 .AddGoogle(options =>
                 {

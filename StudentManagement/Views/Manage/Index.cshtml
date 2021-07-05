@@ -1,8 +1,10 @@
-﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+﻿
 @model StudentManagement.Models.ManageViewModel.ProfileViewModel
 
 @{ ViewData["Title"] = "Manage your account";}
 
+
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 
 
 <head>
@@ -26,7 +28,7 @@
         <p>
             <h2>@localizer["title"]</h2>
         </p>
-        
+
         <p class="text-success">@ViewData["StatusMessage"]</p>
         <div class="row">
             <div class="col-md">
