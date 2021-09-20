@@ -23,7 +23,6 @@ namespace StudentManagement.Controllers
         private readonly ApplicationDbContext context;
         private readonly UserManager<User> userManager;
 
-
         public ProjectsController(ApplicationDbContext context, UserManager<User> userManager)
         {
             this.context = context;
@@ -91,8 +90,6 @@ namespace StudentManagement.Controllers
                     DeadLine = model.DeadLine,
                     IsPrivate = model.IsPrivate
                 };
-
-
 
                 this.context.Projects.Add(project);
                 await context.SaveChangesAsync();
