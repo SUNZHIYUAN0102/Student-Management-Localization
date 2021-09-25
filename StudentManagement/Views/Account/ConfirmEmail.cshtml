@@ -1,6 +1,37 @@
 ﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
-<h3>@localizer["notice"]</h3>
 
-<p>
-    <a asp-action="Login" asp-controller="Account">@localizer["login"]</a>
-</p>
+@{
+    ViewData["Title"] = "Confirm Email Successfully";
+}
+
+<div class="container">
+
+    <div class="row justify-content-center">
+
+        <div class="col-xl-10 col-lg-12 col-md-9">
+
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div style=" background: url(https://i.ibb.co/Ks71FvV/erda-estremera-D1wi-HCov-GJ0-unsplash.jpg); background-size: cover; background-position: center;" class="col-lg-6 d-none d-lg-block"></div>
+                        <div class="col-lg-6">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-2">Thank you for confirming your email!</h1>
+                                </div>
+                                <form>
+                                    <a asp-action="Login" asp-controller="Account" class="btn btn-primary btn-user btn-block">
+                                        Login In Now?
+                                    </a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

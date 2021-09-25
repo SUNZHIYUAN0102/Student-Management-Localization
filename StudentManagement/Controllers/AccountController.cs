@@ -75,7 +75,7 @@ namespace StudentManagement.Controllers
                     var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
                     var confirmationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, Request.Scheme);
                     await SendEmailConfirmationEmail(user, confirmationLink);
-                    this.ModelState.AddModelError(String.Empty, "Email not confirmed yet.We already resent new confirmation email to your email address.");
+                    this.ModelState.AddModelError(String.Empty, "Email not confirmed yet. We already resent new confirmation email to your email address.");
                     return this.View(model);
                 }
                 // This doesn't count login failures towards account lockout
@@ -284,8 +284,10 @@ namespace StudentManagement.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult ForgotPassword()
+        public IActionResult ForgotPassword(ManageMessageId? message = null)
         {
+            this.ViewData["StatusMessage"] =
+               message == ManageMessageId.ResetPasswordEmailSentSuccess ? "If you have an account with us, we have sent an email with the instructions to reset your password" : "";
             return View();
         }
 
@@ -315,10 +317,10 @@ namespace StudentManagement.Controllers
                     };
                     await emailService.SendEmailForForgettenPassword(userEmailOptions);
 
-                    return View("ForgotPasswordConfirmation");
+                    return this.RedirectToAction("ForgotPassword", "Account", new { Message = ManageMessageId.ResetPasswordEmailSentSuccess});
                 }
 
-                return View("ForgotPasswordConfirmation");
+                return this.RedirectToAction("ForgotPassword", "Account", new { Message = ManageMessageId.ResetPasswordEmailSentSuccess });
             }
 
             return View(model);
@@ -430,6 +432,7 @@ namespace StudentManagement.Controllers
         public enum ManageMessageId
         {
             AccountCreatedSuccess,
+            ResetPasswordEmailSentSuccess
 
         }
     }

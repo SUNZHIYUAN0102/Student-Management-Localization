@@ -3828,6 +3828,7 @@ input[type="button"].btn-block {
         background: 50% / 50% 50% no-repeat;
     }
 
+
 .custom-checkbox .custom-control-label::before {
     border-radius: 0.35rem;
 }
@@ -11739,6 +11740,7 @@ a:focus {
     background-position: center;
     background-size: cover;
 }
+
 
 form.user .custom-checkbox.small label {
     line-height: 1.5rem;

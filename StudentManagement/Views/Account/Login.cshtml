@@ -5,133 +5,83 @@
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 @inject Microsoft.AspNetCore.Identity.SignInManager<StudentManagement.Models.User> SignInManager
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+@{ ViewData["Title"] = "Log in"; }
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
-    <link rel="stylesheet" href="~/Login/fonts/icomoon/style.css">
+<div class="container">
 
-    <link rel="stylesheet" href="~/Login/css/owl.carousel.min.css">
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
 
-    <link rel="stylesheet" href="~/Login/css/bootstrap.min.css">
+        <div class="col-xl-10 col-lg-12 col-md-9">
 
-    <link rel="stylesheet" href="~/Login/css/style.css">
-</head>
-<body>
-
-    <div class="content">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <img src="~/Login/images/undraw_remotely_2j6y.svg" alt="Image" class="img-fluid">
-                </div>
-                <div class="col-md-6 contents">
-                    <div class="row justify-content-center">
-                        <div class="col-md-8">
-                            <div class="mb-4">
-                                <h3>@localizer["Title"]</h3>
-                                <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
-
-                            </div>
-                            <form asp-controller="Account" asp-action="Login" method="post" class="form-horizontal">
-                                <div asp-validation-summary="All" class="text-danger"></div>
-                                <div class="form-group first">
-                                    <label asp-for="Email">@localizer["Email"]</label>
-                                    <input asp-for="Email" class="form-control" id="username">
-
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+                        <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                        <div class="col-lg-6">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                 </div>
-                                <div class="form-group last mb-4">
-                                    <label asp-for="Password">@localizer["Password"]</label>
-                                    <input asp-for="Password" class="form-control" id="password">
-                                    <span style="right: 15px; position: absolute; cursor: pointer; top: 35%;">
-                                        <i class="fa fa-eye" aria-hidden="true" id="eye" onclick="toggle()"></i>
-                                    </span>
-                                </div>
-
-
-                                <div class="d-flex mb-5 align-items-center">
-                                    <label class="control control--checkbox mb-0">
-                                        <span class="caption">Remember me</span>
-                                        <input asp-for="RememberMe" type="checkbox" checked="checked" />
-                                        <div class="control__indicator"></div>
-                                    </label>
-                                    <span class="ml-auto"><a asp-action="ForgotPassword" asp-controller="Account" class="forgot-pass">Forgot Password</a></span>
-                                </div>
-
-
-
-                                <button type="submit" class="btn btn-primary btn-block">@localizer["Login"]</button>
-
-                                <span class="d-block text-left my-4 text-muted">Still don't have an account?&nbsp;&nbsp;<a asp-action="Register" asp-controller="Account">Go Register!</a></span>
-
-                                <span class="d-block text-left my-4 text-muted">&mdash; or login with &mdash;</span>
-
-                            </form>
-
-                            <form id="myForm" method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
-                                <div class="social-login">
+                                <form asp-action="Login" asp-controller="Account" id="loginform" method="post" class="user">
+                                    <div asp-validation-summary="All" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <input asp-for="Email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="Password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox small">
+                                            <input asp-for="RememberMe" type="checkbox" class="custom-control-input" id="customCheck">
+                                            <label class="custom-control-label" for="customCheck">
+                                                Remember
+                                                Me
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="btn btn-primary btn-user btn-block" onclick="document.getElementById('loginform').submit();">
+                                        Login
+                                    </a>
+                                    <hr>
+                                </form>
+                                <form id="myForm" method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
                                     @foreach (var provider in Model.ExternalLogins)
                                     {
                                         if (provider.Name == "Facebook")
                                         {
                                             <input type="hidden" value="@provider.Name" name="provider" />
-                                            <a href="#" onclick="document.getElementById('myForm').submit();" class="facebook">
-                                                <span class="icon-facebook mr-3"></span>
-                                            </a> }
+                                            <a style="font-size:0.8rem;border-radius:10rem;padding:0.75rem 1rem" href="#" onclick="document.getElementById('myForm').submit();" class="btn btn-google btn-user btn-block">
+                                                <i class="fab fa-google fa-fw"></i> Login with Google
+                                            </a>
+                                        }
+
                                         if (provider.Name == "Google")
                                         {
                                             <input type="hidden" value="@provider.Name" name="provider" />
-                                            <a href="#" class="google" onclick="document.getElementById('myForm').submit();">
-                                                <span class="icon-google mr-3"></span>
-                                            </a>}
+                                            <a style="font-size:0.8rem;border-radius:10rem;padding:0.75rem 1rem" href="#" class="btn btn-facebook btn-user btn-block" onclick="document.getElementById('myForm').submit();">
+                                                <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+                                            </a>
                                         }
+                                    }
+                                </form>
+                                <hr>
+                                <div class="text-center">
+                                    <a asp-action="ForgotPassword" asp-controller="Account" class="small">Forgot Password?</a>
                                 </div>
-                            </form>
+                                <div class="text-center">
+                                    <a asp-action="Register" asp-controller="Account" class="small">Create an Account!</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
                 </div>
-
             </div>
+
         </div>
+
     </div>
 
-
-    <script src="~/Login/js/jquery-3.3.1.min.js"></script>
-    <script src="~/Login/js/popper.min.js"></script>
-    <script src="~/Login/js/bootstrap.min.js"></script>
-    <script src="~/Login/js/main.js"></script>
-</body>
-</html>
-
-
-@section Scripts {
-    <script>
-        var state = false;
-        function toggle() {
-            if (state) {
-                document.getElementById(
-                    "password").
-                    setAttribute("type",
-                        "password");
-                document.getElementById(
-                    "eye").style.color = '#7a797e';
-                state = false;
-            }
-            else {
-                document.getElementById(
-                    "password").
-                    setAttribute("type",
-                        "text");
-                document.getElementById("eye")
-                    .style.color = '#58874f';
-                state = true;
-            }
-        }
-    </script>
-}
+</div>

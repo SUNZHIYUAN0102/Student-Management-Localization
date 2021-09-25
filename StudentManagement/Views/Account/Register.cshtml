@@ -1,197 +1,72 @@
 ﻿@model StudentManagement.Models.AccountViewModel.RegisterViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+@{
+    ViewData["Title"]= "Registration";
 
-    <link rel="stylesheet" href="~/Login/fonts/icomoon/style.css">
+}
 
-    <link rel="stylesheet" href="~/Login/css/owl.carousel.min.css">
+<div class="container">
 
-    <link rel="stylesheet" href="~/Login/css/bootstrap.min.css">
-
-    <link rel="stylesheet" href="~/Login/css/style.css">
-</head>
-<body>
-    <div class="content">
-        <div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
             <div class="row">
-                <div class="col-md-6">
-                    <img src="~/Login/images/undraw_remotely_2j6y.svg" alt="Image" class="img-fluid">
-                </div>
-                <div class="col-md-6 contents">
-                    <div class="row justify-content-center">
-                        <div class="col-md-8">
-                            <div class="mb-4">
-                                <h3>@localizer["Title"]</h3>
-                                <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
-                                <p class="text-success">@ViewData["StatusMessage"]</p>
+                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                        </div>
+                        <form method="post" asp-action="Register" asp-controller="Account" class="user" id="registerform">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <p class="text-success">@ViewData["StatusMessage"]</p>
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input asp-for="FirstName" type="text" class="form-control form-control-user" id="exampleFirstName"
+                                           placeholder="First Name">
+                                </div>
+                                <div class="col-sm-6">
+                                    <input asp-for="LastName" type="text" class="form-control form-control-user" id="exampleLastName"
+                                           placeholder="Last Name">
+                                </div>
                             </div>
-
-                            <form asp-controller="Account" asp-action="Register" method="post" class="form-horizontal">
-
-                                <div class="form-group first">
-                                    <label asp-for="FirstName">@localizer["Firstname"]</label>
-                                    <input asp-for="FirstName" class="form-control" id="username">
-                                    <span asp-validation-for="FirstName"></span>
+                            <div class="form-group">
+                                <input asp-for="Email" type="email" class="form-control form-control-user" id="exampleInputEmail"
+                                       placeholder="Email Address">
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input asp-for="Password" type="password" class="form-control form-control-user"
+                                           id="exampleInputPassword" placeholder="Password">
                                 </div>
-                                <div class="form-group last mb-4">
-                                    <label asp-for="LastName">@localizer["Lastname"]</label>
-                                    <input asp-for="LastName" class="form-control" id="username">
-                                    <span asp-validation-for="LastName"></span>
+                                <div class="col-sm-6">
+                                    <input asp-for="ConfirmPassword" type="password" class="form-control form-control-user"
+                                           id="exampleRepeatPassword" placeholder="Repeat Password">
                                 </div>
-                                <div class="form-group last mb-4">
-                                    <label asp-for="Email">@localizer["Email"]</label>
-                                    <input asp-for="Email" class="form-control" id="username">
-                                    <span asp-validation-for="Email"></span>
-                                </div>
-                                <div class="form-group last mb-4">
-                                    <label asp-for="Password">@localizer["Password"]</label>
-                                    <input onkeyup="trigger()" asp-for="Password" class="form-control" id="password">
-                                    <span style="right: 15px; position: absolute; cursor: pointer; top: 35%;">
-                                        <i class="fa fa-eye" aria-hidden="true" id="eye" onclick="toggle()"></i>
-                                    </span>
-                                    <span asp-validation-for="Password"></span>
-                                </div>
-                                <div class="indicator">
-                                    <span class="weak"></span>
-                                    <span class="medium"></span>
-                                    <span class="strong"></span>
-                                </div>
-                                <div class="text">
-                                </div>
-                                <div class="form-group last mb-4">
-                                    <label asp-for="ConfirmPassword">@localizer["ConfirmPassword"]</label>
-                                    <input asp-for="ConfirmPassword" class="form-control" id="password2">
-                                    <span style="right: 15px; position: absolute; cursor: pointer; top: 35%;">
-                                        <i class="fa fa-eye" aria-hidden="true" id="eye2" onclick="toggle2()"></i>
-                                    </span>
-                                    <span asp-validation-for="ConfirmPassword"></span>
-                                </div>
-
-                                <button type="submit" class="btn btn-primary btn-block">@localizer["Register"]</button>
-
-                            </form>
+                            </div>
+                            <a href="#" class="btn btn-primary btn-user btn-block" onclick="document.getElementById('registerform').submit();">
+                                Register Account
+                            </a>
+                            <hr>
+                            <a href="index.html" class="btn btn-google btn-user btn-block">
+                                <i class="fab fa-google fa-fw"></i> Register with Google
+                            </a>
+                            <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                            </a>
+                        </form>
+                        <hr>
+                        <div class="text-center">
+                            <a class="small" asp-action="ForgotPassword" asp-controller="Account">Forgot Password?</a>
+                        </div>
+                        <div class="text-center">
+                            <a asp-action="Login" asp-controller="Account" class="small">Already have an account? Login!</a>
                         </div>
                     </div>
-
                 </div>
-
             </div>
         </div>
     </div>
 
-
-    <script src="~/Login/js/jquery-3.3.1.min.js"></script>
-    <script src="~/Login/js/popper.min.js"></script>
-    <script src="~/Login/js/bootstrap.min.js"></script>
-    <script src="~/Login/js/main.js"></script>
-
-    <script>
-        const indicator = document.querySelector(".indicator");
-        const input = document.getElementById("password");
-        const weak = document.querySelector(".weak");
-        const medium = document.querySelector(".medium");
-        const strong = document.querySelector(".strong");
-        const text = document.querySelector(".text");
-        let regExpWeak = /[a-z]/;
-        let regExpMedium = /\d+/;
-        let regExpStrong = /.[!,@@,#,$,%,^,&,*,?,_,~,-,(,)]/;
-        function trigger() {
-            if (input.value != "") {
-                indicator.style.display = "block";
-                indicator.style.display = "flex";
-                if (input.value.length <= 3 && (input.value.match(regExpWeak) || input.value.match(regExpMedium) || input.value.match(regExpStrong))) no = 1;
-                if (input.value.length >= 6 && ((input.value.match(regExpWeak) && input.value.match(regExpMedium)) || (input.value.match(regExpMedium) && input.value.match(regExpStrong)) || (input.value.match(regExpWeak) && input.value.match(regExpStrong)))) no = 2;
-                if (input.value.length >= 6 && input.value.match(regExpWeak) && input.value.match(regExpMedium) && input.value.match(regExpStrong)) no = 3;
-                if (no == 1) {
-                    weak.classList.add("active");
-                    text.style.display = "block";
-                    text.textContent = "Your password is too week";
-              
-                    text.classList.add("weak");
-                }
-                if (no == 2) {
-                    medium.classList.add("active");
-                    text.textContent = "Your password is medium";
-                    text.classList.add("medium");
-                } else {
-                    medium.classList.remove("active");
-                    text.classList.remove("medium");
-                }
-                if (no == 3) {
-                    weak.classList.add("active");
-                    medium.classList.add("active");
-                    strong.classList.add("active");
-                    text.textContent = "Your password is strong";
-                    text.classList.add("strong");
-                } else {
-                    strong.classList.remove("active");
-                    text.classList.remove("strong");
-                }
-            }
-            else {
-                indicator.style.display = "none";
-                text.style.display = "none";
-            }
-        }
-    </script>
-
-</body>
-</html>
-
-
-
-@section Scripts {
-    <script>
-        var state = false;
-        function toggle() {
-            if (state) {
-                document.getElementById(
-                    "password").
-                    setAttribute("type",
-                        "password");
-                document.getElementById(
-                    "eye").style.color = '#7a797e';
-                state = false;
-            }
-            else {
-                document.getElementById(
-                    "password").
-                    setAttribute("type",
-                        "text");
-                document.getElementById("eye")
-                    .style.color = '#58874f';
-                state = true;
-            }
-        }
-
-        var state2 = false;
-        function toggle2() {
-            if (state2) {
-                document.getElementById(
-                    "password2").
-                    setAttribute("type",
-                        "password");
-                document.getElementById(
-                    "eye2").style.color = '#7a797e';
-                state2 = false;
-            }
-            else {
-                document.getElementById(
-                    "password2").
-                    setAttribute("type",
-                        "text");
-                document.getElementById("eye2")
-                    .style.color = '#58874f';
-                state2 = true;
-            }
-        }
-    </script>
-   
-}
+</div>

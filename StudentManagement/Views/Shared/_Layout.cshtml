@@ -31,6 +31,8 @@
 </head>
 <body>
     <div id="wrapper">
+        @if (SignInManager.IsSignedIn(User))
+        {
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
@@ -151,9 +153,12 @@
                 <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
             </div>
         </ul>
+        }
 
-        <div id="content-wrapper" class="d-flex flex-column">
-            <div id="content">
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            @if (SignInManager.IsSignedIn(User))
+            {
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
@@ -330,13 +335,15 @@
                         </li>
                     </ul>
                 </nav>
-                <main class="page-content">
-                    <div class="container-fluid">
-                        @RenderBody()
+            }
 
-                    </div>
-                </main>
+            <div class="container-fluid">
+                @RenderBody()
             </div>
+
+        </div>
+        @if (SignInManager.IsSignedIn(User))
+        {
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
@@ -344,7 +351,8 @@
                     </div>
                 </div>
             </footer>
-        </div>
+        }
+    </div>
     </div>
 
     <!-- Bootstrap core JavaScript-->
