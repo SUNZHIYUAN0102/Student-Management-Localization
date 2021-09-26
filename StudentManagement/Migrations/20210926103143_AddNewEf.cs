@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace StudentManagement.Migrations
 {
-    public partial class AddNew : Migration
+    public partial class AddNewEf : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,6 +19,39 @@ namespace StudentManagement.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Groups",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    GroupName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Groups", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<string>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -39,30 +72,20 @@ namespace StudentManagement.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    ImagePath = table.Column<string>(nullable: true),
+                    Registered = table.Column<DateTime>(nullable: false),
+                    GroupId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
+                        name: "FK_AspNetUsers_Groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Groups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -153,6 +176,26 @@ namespace StudentManagement.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Subjects",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    CreatorId = table.Column<string>(nullable: true),
+                    Created = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subjects", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Subjects_AspNetUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Projects",
                 columns: table => new
                 {
@@ -160,9 +203,12 @@ namespace StudentManagement.Migrations
                     CreatorId = table.Column<string>(nullable: true),
                     Created = table.Column<DateTime>(nullable: false),
                     Modified = table.Column<DateTime>(nullable: false),
+                    StartTime = table.Column<DateTime>(nullable: false),
+                    DeadLine = table.Column<DateTime>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: true)
+                    IsPrivate = table.Column<bool>(nullable: false),
+                    SubjectId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -174,7 +220,31 @@ namespace StudentManagement.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Projects_AspNetUsers_UserId",
+                        name: "FK_Projects_Subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserSubjects",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    SubjectId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserSubjects", x => new { x.UserId, x.SubjectId });
+                    table.ForeignKey(
+                        name: "FK_UserSubjects_Subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserSubjects_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -189,8 +259,7 @@ namespace StudentManagement.Migrations
                     ProjectId = table.Column<Guid>(nullable: false),
                     CreatorId = table.Column<string>(nullable: true),
                     Created = table.Column<DateTime>(nullable: false),
-                    Text = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: true)
+                    Text = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -207,8 +276,54 @@ namespace StudentManagement.Migrations
                         principalTable: "Projects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Records",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ProjectId = table.Column<Guid>(nullable: false),
+                    StudentId = table.Column<string>(nullable: true),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Week = table.Column<string>(nullable: true),
+                    LogTime = table.Column<float>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Records", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Notes_AspNetUsers_UserId",
+                        name: "FK_Records_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Records_AspNetUsers_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserProjects",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    ProjectId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserProjects", x => new { x.UserId, x.ProjectId });
+                    table.ForeignKey(
+                        name: "FK_UserProjects_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserProjects_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -243,6 +358,11 @@ namespace StudentManagement.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_GroupId",
+                table: "AspNetUsers",
+                column: "GroupId");
+
+            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -265,19 +385,39 @@ namespace StudentManagement.Migrations
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Notes_UserId",
-                table: "Notes",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Projects_CreatorId",
                 table: "Projects",
                 column: "CreatorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Projects_UserId",
+                name: "IX_Projects_SubjectId",
                 table: "Projects",
-                column: "UserId");
+                column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Records_ProjectId",
+                table: "Records",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Records_StudentId",
+                table: "Records",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Subjects_CreatorId",
+                table: "Subjects",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserProjects_ProjectId",
+                table: "UserProjects",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserSubjects_SubjectId",
+                table: "UserSubjects",
+                column: "SubjectId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -301,13 +441,28 @@ namespace StudentManagement.Migrations
                 name: "Notes");
 
             migrationBuilder.DropTable(
+                name: "Records");
+
+            migrationBuilder.DropTable(
+                name: "UserProjects");
+
+            migrationBuilder.DropTable(
+                name: "UserSubjects");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Projects");
 
             migrationBuilder.DropTable(
+                name: "Subjects");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Groups");
         }
     }
 }

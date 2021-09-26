@@ -15,22 +15,23 @@ namespace StudentManagement.Data
         {
         }
 
-
-        public DbSet<Student> Students { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
         public DbSet<Project> Projects { get; set; }
 
         public DbSet<Note> Notes { get; set; }
 
         public DbSet<Record> Records { get; set; }
+        public DbSet<UserSubject> UserSubjects { get; set; }
+        public DbSet<UserProject> UserProjects { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            
-            modelBuilder.Entity<Project>().HasOne(x => x.Creator).WithMany().OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Note>().HasOne(x => x.Creator).WithMany().OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Record>().HasOne(x => x.Creator).WithMany(x => x.Records).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<UserSubject>()
+                .HasKey(x => new { x.UserId, x.SubjectId });
+            modelBuilder.Entity<UserProject>()
+                .HasKey(x => new { x.UserId, x.ProjectId });
 
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes()
                 .SelectMany(e => e.GetForeignKeys()))

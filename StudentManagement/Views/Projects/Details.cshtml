@@ -74,34 +74,6 @@
     </div>
 }
 
-@if (Model.Records.Any())
-{
-    <p>
-        <h3>@localizer["record"]</h3>
-    </p>
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">@localizer["student"]</th>
-                <th scope="col">@localizer["hour"]</th>
-                <th scope="col">@localizer["week"]</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Records.OrderByDescending(x => x.Created))
-            {
-                <tr>
-                    <td><a asp-action="Edit" asp-controller="Records" asp-route-Id="@item.Id">@item.StudentEmail</a></td>
-                    <td>@item.LogTime</td>
-                    <td>@item.Week</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-
-
 @section Scripts{
     <script src="~/js/site.js"></script>
     <script src="~/js/ckeditor/ckeditor.js"></script>

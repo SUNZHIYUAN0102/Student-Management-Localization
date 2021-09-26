@@ -168,16 +168,11 @@ namespace StudentManagement.Migrations
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CreatorId");
 
                     b.HasIndex("ProjectId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Notes");
                 });
@@ -209,17 +204,17 @@ namespace StudentManagement.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CreatorId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("Projects");
                 });
@@ -233,45 +228,47 @@ namespace StudentManagement.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreatorId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<float>("LogTime")
                         .HasColumnType("real");
 
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("StudentEmail")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("StudentId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Week")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatorId");
-
                     b.HasIndex("ProjectId");
+
+                    b.HasIndex("StudentId");
 
                     b.ToTable("Records");
                 });
 
-            modelBuilder.Entity("StudentManagement.Models.Student", b =>
+            modelBuilder.Entity("StudentManagement.Models.Subject", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("GroupNumber")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("StudentName")
+                    b.Property<string>("CreatorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Students");
+                    b.HasIndex("CreatorId");
+
+                    b.ToTable("Subjects");
                 });
 
             modelBuilder.Entity("StudentManagement.Models.User", b =>
@@ -325,6 +322,9 @@ namespace StudentManagement.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime>("Registered")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -346,6 +346,36 @@ namespace StudentManagement.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("StudentManagement.Models.UserProject", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserId", "ProjectId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("UserProjects");
+                });
+
+            modelBuilder.Entity("StudentManagement.Models.UserSubject", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserId", "SubjectId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("UserSubjects");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -402,7 +432,7 @@ namespace StudentManagement.Migrations
             modelBuilder.Entity("StudentManagement.Models.Note", b =>
                 {
                     b.HasOne("StudentManagement.Models.User", "Creator")
-                        .WithMany()
+                        .WithMany("Notes")
                         .HasForeignKey("CreatorId")
                         .OnDelete(DeleteBehavior.Restrict);
 
@@ -411,11 +441,6 @@ namespace StudentManagement.Migrations
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("StudentManagement.Models.User", null)
-                        .WithMany("Notes")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("StudentManagement.Models.Project", b =>
@@ -425,22 +450,61 @@ namespace StudentManagement.Migrations
                         .HasForeignKey("CreatorId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("StudentManagement.Models.User", null)
+                    b.HasOne("StudentManagement.Models.Subject", "Subject")
                         .WithMany("Projects")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("StudentManagement.Models.Record", b =>
                 {
-                    b.HasOne("StudentManagement.Models.User", "Creator")
-                        .WithMany("Records")
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("StudentManagement.Models.Project", "Project")
                         .WithMany("Records")
                         .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("StudentManagement.Models.User", "Student")
+                        .WithMany("Records")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("StudentManagement.Models.Subject", b =>
+                {
+                    b.HasOne("StudentManagement.Models.User", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("StudentManagement.Models.UserProject", b =>
+                {
+                    b.HasOne("StudentManagement.Models.Project", "Project")
+                        .WithMany("UserProjects")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("StudentManagement.Models.User", "User")
+                        .WithMany("UserProjects")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("StudentManagement.Models.UserSubject", b =>
+                {
+                    b.HasOne("StudentManagement.Models.Subject", "Subject")
+                        .WithMany("UserSubjects")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("StudentManagement.Models.User", "User")
+                        .WithMany("UserSubjects")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

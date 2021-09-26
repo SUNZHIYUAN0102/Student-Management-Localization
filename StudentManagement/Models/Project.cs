@@ -14,10 +14,6 @@ namespace StudentManagement.Models
 
         public User Creator { get; set; }
 
-        public ICollection<Note> Notes { get; set; }
-
-        public ICollection<Record> Records { get; set; }
-
         public DateTime Created { get; set; }
 
         public DateTime Modified { get; set; }
@@ -31,5 +27,14 @@ namespace StudentManagement.Models
         public String Description { get; set; }
 
         public Boolean IsPrivate { get; set; }
+
+        public Guid SubjectId { get; set; }
+        public Subject Subject { get; set; }
+
+        public ICollection<Note> Notes { get; set; }
+
+        public ICollection<Record> Records { get; set; }
+
+        public ICollection<UserProject> UserProjects { get; set; }
     }
 }

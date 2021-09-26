@@ -50,7 +50,6 @@ namespace StudentManagement.Controllers
                 .Include(p => p.Creator)
                 .Include(p => p.Notes)
                 .Include(p => p.Records)
-                .ThenInclude(p => p.Creator)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (project == null)
             {

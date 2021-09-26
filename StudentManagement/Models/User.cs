@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 
 namespace StudentManagement.Models
@@ -11,13 +12,16 @@ namespace StudentManagement.Models
 
         public string ImagePath { get; set; }
 
+        public DateTime Registered { get; set; }
+
         public string FullName
         {
             get { return FirstName + " " + LastName; }
         }
-
-        public ICollection<Project> Projects { get; set; }
         public ICollection<Note> Notes { get; set; }
+
+        public ICollection<UserSubject> UserSubjects { get; set; }
+        public ICollection<UserProject> UserProjects { get; set; }
 
         public ICollection<Record> Records { get; set; }
     }

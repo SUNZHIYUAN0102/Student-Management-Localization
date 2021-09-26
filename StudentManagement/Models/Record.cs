@@ -14,11 +14,9 @@ namespace StudentManagement.Models
 
         public Project Project { get; set; }
 
-        public String CreatorId { get; set; }
+        public string StudentId { get; set; }
 
-        public User Creator { get; set; }
-
-        public string StudentEmail { get; set; }
+        public User Student { get; set; }
 
         public DateTime Created { get; set; }
 
