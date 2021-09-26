@@ -1,0 +1,64 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using StudentManagement.Data;
+using StudentManagement.Models;
+using StudentManagement.Models.SubjectViewModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace StudentManagement.Controllers
+{
+    [Authorize]
+    public class SubjectsController : Controller
+    {
+        private readonly ApplicationDbContext context;
+        private readonly UserManager<User> userManager;
+
+        public SubjectsController(ApplicationDbContext context, UserManager<User> userManager)
+        {
+            this.context = context;
+            this.userManager = userManager;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var subject = this.context.Subjects
+                .Include(x => x.Creator);
+
+            return View(await subject.ToListAsync());
+        }
+
+        [Authorize(Roles = "Administrator, Teacher")]
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            return this.View(new SubjectCreateViewModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(SubjectCreateViewModel model)
+        {
+            var user = await this.userManager.GetUserAsync(this.HttpContext.User);
+
+            if (this.ModelState.IsValid)
+            {
+                var now = DateTime.Now;
+                var subject = new Subject
+                {
+                    Name = model.Name,
+                    Creator = user,
+                    Created = now
+                };
+                this.context.Subjects.Add(subject);
+                await this.context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return this.View(model);
+        }
+    }
+}

@@ -133,7 +133,7 @@ namespace StudentManagement
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Projects}/{action=Index}/{id?}");
+                    pattern: "{controller=Subjects}/{action=Index}/{id?}");
             });
         }
     } 
