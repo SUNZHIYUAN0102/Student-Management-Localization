@@ -31,6 +31,25 @@ namespace StudentManagement.Controllers
             return View(await subject.ToListAsync());
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Detail(Guid? id)
+        {
+            if (id == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+            var subject = await this.context.Subjects
+                .Include(x => x.UserSubjects).ThenInclude(x => x.User)
+                .SingleOrDefaultAsync(x => x.Id == id);
+
+            if (subject == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
+            return this.View(subject);
+        }
+
         [Authorize(Roles = "Administrator, Teacher")]
         [HttpGet]
         public async Task<IActionResult> Create()

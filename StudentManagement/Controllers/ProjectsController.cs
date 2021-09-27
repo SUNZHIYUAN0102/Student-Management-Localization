@@ -72,6 +72,8 @@ namespace StudentManagement.Controllers
                 return View("~/Views/Shared/NotFound.cshtml");
             }
             this.ViewBag.Subject = subject;
+            var now = DateTime.Now;
+            ViewBag.Now = now;
             return View(new ProjectCreateViewModel());
         }
 
@@ -92,10 +94,12 @@ namespace StudentManagement.Controllers
             }
 
             var user = await this.userManager.GetUserAsync(this.HttpContext.User);
-           
+
+            var now = DateTime.Now;
+            ViewBag.Now = now;
+
             if (this.ModelState.IsValid)
             {
-                var now = DateTime.Now;
                 var project = new Project
                 {
                     SubjectId = subject.Id,

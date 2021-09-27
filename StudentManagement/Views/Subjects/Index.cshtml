@@ -33,14 +33,17 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td><a asp-action="Create" asp-controller="Projects" asp-route-subjectId="@item.Id">@item.Name</a></td>
+                            <td><a asp-action="Detail" asp-controller="Subjects" asp-route-id="@item.Id">@item.Name</a></td>
                             <td>@item.Creator.FirstName</td>
                             <td>@item.Created</td>
                             <td>
+                                <form style="display:inline-block;color:white" method="post" asp-action="Join" asp-controller="UserSubjects" asp-route-subjectId="@item.Id">
+                                    <button type="submit" class="btn btn-success">Join</button>
+                                </form>
                                 <a class="btn btn-info" asp-action="Edit" asp-controller="Subjects" asp-route-id="@item.Id">
                                     Edit
                                 </a>
-                                <form style="display:inline-block" method="post" asp-action="Delete" asp-controller="Subjects" asp-route-id="@item.Id" id="deleteForm">
+                                <form style="display:inline-block;color:white" method="post" asp-action="Delete" asp-controller="Subjects" asp-route-id="@item.Id" id="deleteForm">
                                     <a class="btn btn-danger" onclick="document.getElementById('deleteForm').submit()">Delete</a>
                                 </form>
                             </td>

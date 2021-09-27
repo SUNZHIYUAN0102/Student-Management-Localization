@@ -1,0 +1,10 @@
+﻿@model StudentManagement.Models.Subject
+
+<div>
+    <ul>
+        @foreach (var item in Model.UserSubjects)
+        {
+            <p>@item.User.FullName</p>
+        }
+    </ul>
+</div> 
