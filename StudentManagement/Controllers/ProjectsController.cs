@@ -37,9 +37,7 @@ namespace StudentManagement.Controllers
 
             return View(await projects.ToListAsync());
         }
-
-        // GET: Projects/Details/5
-        public async Task<IActionResult> Details(Guid id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
@@ -59,27 +57,48 @@ namespace StudentManagement.Controllers
             return View(project);
         }
 
-        // GET: Projects/Create
         [Authorize(Roles = "Administrator, Teacher")]
-        public IActionResult Create()
+        [HttpGet]
+        public async Task<IActionResult> Create(Guid? subjectId)
         {
-            return View(new ProjectEditViewModel());
+            if (subjectId == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+            var subject = await this.context.Subjects.SingleOrDefaultAsync(x => x.Id == subjectId);
+
+            if (subject == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+            this.ViewBag.Subject = subject;
+            return View(new ProjectCreateViewModel());
         }
 
-        // POST: Projects/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ProjectEditViewModel model)
+        public async Task<IActionResult> Create(Guid? subjectId, ProjectCreateViewModel model)
         {
+            if (subjectId == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
+            var subject = await this.context.Subjects.SingleOrDefaultAsync(x => x.Id == subjectId);
+
+            if (subject == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
             var user = await this.userManager.GetUserAsync(this.HttpContext.User);
            
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
-                var now = DateTime.UtcNow;
+                var now = DateTime.Now;
                 var project = new Project
                 {
+                    SubjectId = subject.Id,
                     CreatorId = user.Id,
                     Created = now,
                     Modified = now,
@@ -94,23 +113,23 @@ namespace StudentManagement.Controllers
                 await context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
-            return View(model);
+            this.ViewBag.Subject = subject;
+            return this.View(model);
         }
 
-        // GET: Projects/Edit/5
         [Authorize(Roles = "Administrator, Teacher")]
-        public async Task<IActionResult> Edit(Guid id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return View("~/Views/Shared/NotFound.cshtml");
             }
 
             var project = await context.Projects.FindAsync(id);
+
             if (project == null)
             {
-                return NotFound();
+                return View("~/Views/Shared/NotFound.cshtml");
             }
 
             var model = new ProjectEditViewModel
@@ -127,19 +146,20 @@ namespace StudentManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, ProjectEditViewModel model)
+        public async Task<IActionResult> Edit(Guid? id, ProjectEditViewModel model)
         {
             if (id == null)
             {
-                return this.NotFound();
+                return View("~/Views/Shared/NotFound.cshtml");
             }
 
             var project = await this.context.Projects.SingleOrDefaultAsync(m => m.Id == id);
 
             if (project == null)
             {
-                return this.NotFound();
+                return View("~/Views/Shared/NotFound.cshtml");
             }
+
             if (this.ModelState.IsValid)
             {
                 project.Title = model.Title;
@@ -147,7 +167,7 @@ namespace StudentManagement.Controllers
                 project.StartTime = model.StartTime;
                 project.DeadLine = model.DeadLine;
                 project.IsPrivate = model.IsPrivate;
-                project.Modified = DateTime.UtcNow;
+                project.Modified = DateTime.Now;
 
                 await this.context.SaveChangesAsync();
                 return this.RedirectToAction("Index");
@@ -157,26 +177,34 @@ namespace StudentManagement.Controllers
 
  
         [Authorize(Roles = "Administrator, Teacher")]
-        public async Task<IActionResult> Delete(Guid id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid? id)
         {
+            if (id == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
+            var project = await this.context.Projects.SingleOrDefaultAsync(x => x.Id == id);
+
+            if (project == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
             try
             {
-                var project = await this.context.Projects.FindAsync(id);
-                context.Projects.Remove(project);
-                await context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                this.context.Projects.Remove(project);
+                await this.context.SaveChangesAsync();
+                return this.RedirectToAction(nameof(Index));
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 ViewBag.ErrorTitle = "Project can't be deleted";
-                ViewBag.ErrorMessage = "Project can't be deleted as there are comments or records in this project. If you want to delete user please remove comments or records from project first";
-                return this.View("DeleteError");
+                ViewBag.ErrorMessage = "Since there are records or notes in this subjects";
+                return View("~/Views/Shared/DeleteError.cshtml");
             }
         }
-
-        private bool ProjectExists(Guid id)
-        {
-            return context.Projects.Any(e => e.Id == id);
-        }
     }
+
 }

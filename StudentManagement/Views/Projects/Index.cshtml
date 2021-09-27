@@ -37,7 +37,7 @@
                         @if (Userpermission.CanSeeProject(item))
                         {
                             <tr>
-                                <td><a asp-action="Details" asp-controller="Projects" asp-route-id="@item.Id">@item.Title</a></td>
+                                <td><a asp-action="Edit" asp-controller="Projects" asp-route-id="@item.Id">@item.Title</a></td>
                                 <td>@item.Creator.FullName</td>
                                 <td>@item.Created</td>
                                 <td>@item.Notes.Count</td>

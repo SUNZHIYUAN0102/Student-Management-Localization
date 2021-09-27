@@ -63,13 +63,13 @@ namespace StudentManagement.Controllers
 
         [Authorize(Roles = "Administrator, Teacher")]
         [HttpGet]
-        public async Task<IActionResult> Edit(Guid? Id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
-            if(Id == null)
+            if(id == null)
             {
                 return View("~/Views/Shared/NotFound.cshtml");
             }
-            var subject = await this.context.Subjects.SingleOrDefaultAsync(x => x.Id == Id);
+            var subject = await this.context.Subjects.SingleOrDefaultAsync(x => x.Id == id);
 
             if(subject == null)
             {
@@ -84,13 +84,13 @@ namespace StudentManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid? Id, SubjectEditViewModel model)
+        public async Task<IActionResult> Edit(Guid? id, SubjectEditViewModel model)
         {
-            if (Id == null)
+            if (id == null)
             {
                 return View("~/Views/Shared/NotFound.cshtml");
             }
-            var subject = await this.context.Subjects.SingleOrDefaultAsync(x => x.Id == Id);
+            var subject = await this.context.Subjects.SingleOrDefaultAsync(x => x.Id == id);
 
             if (subject == null)
             {
@@ -109,14 +109,14 @@ namespace StudentManagement.Controllers
 
         [Authorize(Roles = "Administrator, Teacher")]
         [HttpPost]
-        public async Task<IActionResult> Delete(Guid? Id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
-            if (Id == null)
+            if (id == null)
             {
                 return View("~/Views/Shared/NotFound.cshtml");
             }
 
-            var subject = await this.context.Subjects.SingleOrDefaultAsync(x => x.Id == Id);
+            var subject = await this.context.Subjects.SingleOrDefaultAsync(x => x.Id == id);
 
             if (subject == null)
             {
@@ -133,9 +133,8 @@ namespace StudentManagement.Controllers
             {
                 ViewBag.ErrorTitle = "Subject can't be deleted";
                 ViewBag.ErrorMessage = "Since there are projects in this subjects";
-                return View("~/Views/Shared/DeleteError");
+                return View("~/Views/Shared/DeleteError.cshtml");
             }
         }
-
     }
 }
