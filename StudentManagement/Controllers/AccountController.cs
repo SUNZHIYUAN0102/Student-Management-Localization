@@ -83,7 +83,7 @@ namespace StudentManagement.Controllers
                 var result = await this.signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
-                    return this.RedirectToAction("Index", "Projects");
+                    return this.RedirectToAction("Index", "Subjects");
                 }
 
                 if (result.IsLockedOut)

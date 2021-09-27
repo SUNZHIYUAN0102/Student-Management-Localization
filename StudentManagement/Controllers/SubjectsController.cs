@@ -60,5 +60,82 @@ namespace StudentManagement.Controllers
 
             return this.View(model);
         }
+
+        [Authorize(Roles = "Administrator, Teacher")]
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid? Id)
+        {
+            if(Id == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+            var subject = await this.context.Subjects.SingleOrDefaultAsync(x => x.Id == Id);
+
+            if(subject == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+            var model = new SubjectEditViewModel()
+            {
+                Name = subject.Name
+            };
+            return this.View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid? Id, SubjectEditViewModel model)
+        {
+            if (Id == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+            var subject = await this.context.Subjects.SingleOrDefaultAsync(x => x.Id == Id);
+
+            if (subject == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
+            if (this.ModelState.IsValid)
+            {
+                subject.Name = model.Name;
+                await this.context.SaveChangesAsync();
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            return this.View(model);
+        }
+
+        [Authorize(Roles = "Administrator, Teacher")]
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid? Id)
+        {
+            if (Id == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
+            var subject = await this.context.Subjects.SingleOrDefaultAsync(x => x.Id == Id);
+
+            if (subject == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
+            try
+            {
+                this.context.Subjects.Remove(subject);
+                await this.context.SaveChangesAsync();
+                return this.RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorTitle = "Subject can't be deleted";
+                ViewBag.ErrorMessage = "Since there are projects in this subjects";
+                return View("~/Views/Shared/DeleteError");
+            }
+        }
+
     }
 }

@@ -1,7 +1,10 @@
-﻿
-<h1 class="text-danger">
-    @ViewBag.ErrorTitle
-</h1>
-<h6 class="text-danger">
-    @ViewBag.ErrorMessage
-</h6>
+﻿@{
+    ViewData["Title"] = "Delete Failed";
+}
+
+<div class="text-center">
+    <div class="error mx-auto" data-text="404">Delete Failed</div>
+    <p class="lead text-gray-800 mb-5">@ViewBag.ErrorTitle</p>
+    <p class="text-gray-500 mb-0">@ViewBag.ErrorMessage</p>
+    <a asp-action="Index" asp-controller="Subjects">&larr; Back to Dashboard</a>
+</div>
