@@ -23,6 +23,16 @@ namespace StudentManagement.Controllers
             this.usermanager = usermanager;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> MySubject()
+        {
+            var user = await this.usermanager.GetUserAsync(this.HttpContext.User);
+            var mySubjects = this.context.UserSubjects
+                .Include(x=>x.Subject).ThenInclude(x=>x.Creator)
+                .Where(x => x.UserId == user.Id);
+            return this.View(await mySubjects.ToListAsync());
+        }
+
         [Authorize(Roles = "Administrator, Teacher, Student")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -51,7 +61,7 @@ namespace StudentManagement.Controllers
                 };
                 this.context.UserSubjects.Add(userSubject);
                 await this.context.SaveChangesAsync();
-                return this.RedirectToAction("Index", "Subjects");
+                return this.RedirectToAction(nameof(MySubject));
             }
             return this.View();
         }
@@ -84,7 +94,7 @@ namespace StudentManagement.Controllers
 
             this.context.UserSubjects.Remove(userSubject);
             await this.context.SaveChangesAsync();
-            return RedirectToAction("Index", "Subjects");
+            return RedirectToAction(nameof(MySubject));
         }
     }
 }

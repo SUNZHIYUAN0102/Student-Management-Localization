@@ -8,7 +8,6 @@
 <h1>All Subjects</h1>
 
 
-
 @if ((User.IsInRole("Teacher")) || (User.IsInRole("Administrator")))
 {
     <a class="btn btn-primary mb-3" style="width:auto" asp-action="Create" asp-controller="Subjects">Add Subjects</a>}
