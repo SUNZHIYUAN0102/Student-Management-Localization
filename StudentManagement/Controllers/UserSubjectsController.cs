@@ -55,5 +55,36 @@ namespace StudentManagement.Controllers
             }
             return this.View();
         }
+
+        [Authorize(Roles = "Administrator, Teacher")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Leave(Guid? subjectId)
+        {
+            if (subjectId == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
+            var subject = await this.context.Subjects.SingleOrDefaultAsync(x => x.Id == subjectId);
+
+            if (subject == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
+            var user = await this.usermanager.GetUserAsync(this.HttpContext.User);
+
+            var userSubject = await this.context.UserSubjects.SingleOrDefaultAsync(x => x.SubjectId == subject.Id && x.UserId == user.Id);
+
+            if(userSubject == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
+            this.context.UserSubjects.Remove(userSubject);
+            await this.context.SaveChangesAsync();
+            return RedirectToAction("Index", "Subjects");
+        }
     }
 }

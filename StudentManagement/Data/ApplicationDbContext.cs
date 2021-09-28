@@ -33,11 +33,11 @@ namespace StudentManagement.Data
             modelBuilder.Entity<UserProject>()
                 .HasKey(x => new { x.UserId, x.ProjectId });
 
-            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes()
-                .SelectMany(e => e.GetForeignKeys()))
-            {
-                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
-            }
+            //foreach (var foreignKey in modelBuilder.Model.GetEntityTypes()
+            //    .SelectMany(e => e.GetForeignKeys()))
+            //{
+            //    foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            //}
         }
 
     }
