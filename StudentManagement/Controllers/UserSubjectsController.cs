@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace StudentManagement.Controllers
 {
@@ -52,12 +53,20 @@ namespace StudentManagement.Controllers
 
             var user = await this.usermanager.GetUserAsync(this.HttpContext.User);
 
-            if(this.ModelState.IsValid)
+            var roles = HttpContext.User.Claims
+                    .Where(x => x.Type == ClaimTypes.Role)
+                    .Select(x => x.Value)
+                    .ToArray();
+            
+            var isTeacher = roles.Any(x => x == "Administrator" || x == "Teacher" );
+
+            if (this.ModelState.IsValid)
             {
                 var userSubject = new UserSubject
                 {
                     SubjectId = subject.Id,
-                    UserId = user.Id
+                    UserId = user.Id,
+                    Role = isTeacher ? "Teacher" : "Student"
                 };
                 this.context.UserSubjects.Add(userSubject);
                 await this.context.SaveChangesAsync();

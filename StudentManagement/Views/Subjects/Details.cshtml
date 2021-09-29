@@ -10,7 +10,6 @@
     </div>
 </div>
 
-
 <div class="row" style="justify-content:center">
     <nav class="col-12 col-lg-8">
         <div class="nav nav-tabs" id="nav-tab" role="tablist" style="justify-content:center;">
@@ -46,7 +45,16 @@
                 </div>
             }
         </div>
-        <div class="tab-pane fade" id="nav-user" role="tabpanel" aria-labelledby="nav-user-tab">Placeholder content for the tab panel. This one relates to the contact tab. Her love is like a drug. All my girls vintage Chanel baby. Got a motel and built a fort out of sheets. 'Cause she's the muse and the artist. (This is how we do) So you wanna play with magic. So just be sure before you give it all to me. I'm walking, I'm walking on air (tonight). Skip the talk, heard it all, time to walk the walk. Catch her if you can. Stinging like a bee I earned my stripes.</div>
+        <div class="tab-pane fade" id="nav-user" role="tabpanel" aria-labelledby="nav-user-tab">
+            @foreach(var item in ViewBag.users)
+            {
+            <p>@item.Key</p>
+                @foreach(var data in item)
+                {
+                    @data.User.FullName
+                }
+            }
+        </div>
         <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
 
     </div>

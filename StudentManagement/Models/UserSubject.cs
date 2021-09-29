@@ -14,5 +14,7 @@ namespace StudentManagement.Models
         public Guid SubjectId { get; set; }
 
         public Subject Subject { get; set; }
+
+        public string Role { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using StudentManagement.Models.SubjectViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace StudentManagement.Controllers
@@ -17,11 +18,13 @@ namespace StudentManagement.Controllers
     {
         private readonly ApplicationDbContext context;
         private readonly UserManager<User> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
-        public SubjectsController(ApplicationDbContext context, UserManager<User> userManager)
+        public SubjectsController(ApplicationDbContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             this.context = context;
             this.userManager = userManager;
+            this.roleManager = roleManager;
         }
         public async Task<IActionResult> Index()
         {
@@ -40,8 +43,11 @@ namespace StudentManagement.Controllers
             }
             var subject = await this.context.Subjects
                 .Include(x=>x.Projects)
-                .Include(x => x.UserSubjects).ThenInclude(x => x.User)
+                .Include(x => x.UserSubjects)
+                .ThenInclude(x => x.User)
                 .SingleOrDefaultAsync(x => x.Id == id);
+
+            ViewBag.users = subject.UserSubjects.GroupBy(x => x.Role);
 
             if (subject == null)
             {
