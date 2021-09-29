@@ -32,13 +32,14 @@ namespace StudentManagement.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Detail(Guid? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
                 return View("~/Views/Shared/NotFound.cshtml");
             }
             var subject = await this.context.Subjects
+                .Include(x=>x.Projects)
                 .Include(x => x.UserSubjects).ThenInclude(x => x.User)
                 .SingleOrDefaultAsync(x => x.Id == id);
 

@@ -13,7 +13,9 @@
     {
         <div class="card shadow mb-4 mr-4" style="width:300px;height:294px;cursor: pointer;">
             <div style="height:30%;" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">@item.Subject.Name</h6>
+                <h6 class="m-0 font-weight-bold text-primary">
+                    <a asp-action="Details" asp-controller="Subjects" asp-route-id="@item.SubjectId">@item.Subject.Name</a>
+                </h6>
                 <div class="dropdown no-arrow">
                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>

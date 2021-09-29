@@ -10,7 +10,8 @@
 
 @if ((User.IsInRole("Teacher")) || (User.IsInRole("Administrator")))
 {
-    <a class="btn btn-primary mb-3" style="width:auto" asp-action="Create" asp-controller="Subjects">Add Subjects</a>}
+    <a class="btn btn-primary mb-3" style="width:auto" asp-action="Create" asp-controller="Subjects">Add Subjects</a>
+}
 
 
 <div class="card shadow mb-4">
@@ -32,7 +33,7 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td><a asp-action="Detail" asp-controller="Subjects" asp-route-id="@item.Id">@item.Name</a></td>
+                            <td><a asp-action="Create" asp-controller="Projects" asp-route-subjectId="@item.Id">@item.Name</a></td>
                             <td>@item.Creator.FirstName</td>
                             <td>@item.Created</td>
                             <td>
