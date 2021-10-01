@@ -9,7 +9,7 @@ namespace StudentManagement.Models.ManageViewModel
     {
         public ChangePasswordViewModel changePasswordViewModel { get; set; }
 
-        public ChangeUserNameViewModel changeUserNameViewModel { get; set; }
+        public ChangeInformationViewModel changeInformationViewModel { get; set; }
 
         public ChangeEmailViewModel changeEmailViewModel { get; set; }
 

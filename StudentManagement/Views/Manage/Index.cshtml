@@ -5,7 +5,7 @@
 
 
 <body>
-    <div class="container" style="border-style: dashed; width: 800px; height: 600px; margin-top: 80px">
+    <div class="container">
         <p>
             <h2>@localizer["title"]</h2>
         </p>
@@ -17,7 +17,7 @@
                     <a class="list-group-item list-group-item-action active" data-toggle="list" href="#changePassword" role="tab">@localizer["changePassword"]</a>
                     <a class="list-group-item list-group-item-action" data-toggle="list" href="#changeEmail" role="tab">@localizer["changeEmail"]</a>
                     <a class="list-group-item list-group-item-action" data-toggle="list" href="#profilePhoto" role="tab">@localizer["profilePhoto"]</a>
-                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#changeUsername" role="tab">@localizer["changeUsername"]</a>
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#changeUserInformation" role="tab">Change Information</a>
                 </div>
             </div>
             <div class="col-8">
@@ -81,22 +81,52 @@
                         </form>
                     </div>
 
-                    <div class="tab-pane" id="changeUsername" role="tabpanel">
-                        <form asp-controller="Manage" asp-action="ChangeUsername" method="post" class="form-horizontal">
+                    <div class="tab-pane" id="changeUserInformation" role="tabpanel">
+                        <form asp-controller="Manage" asp-action="ChangeUserInformation" method="post" class="form-horizontal">
                             <div asp-validation-summary="All" class="text-danger"></div>
                             <div class="form-group col-md-8">
                                 <label>@localizer["firstName"]</label>
-                                <input asp-for="@Model.changeUserNameViewModel.FirstName" class="form-control" value="@Model.changeUserNameViewModel.FirstName" />
-                                <span asp-validation-for="@Model.changeUserNameViewModel.FirstName" class="text-danger"></span>
+                                <input asp-for="@Model.changeInformationViewModel.FirstName" class="form-control" value="@Model.changeInformationViewModel.FirstName" />
                             </div>
                             <div class="form-group col-md-8">
                                 <label>@localizer["lastName"]</label>
-                                <input asp-for="@Model.changeUserNameViewModel.LastName" class="form-control" />
-                                <span asp-validation-for="@Model.changeUserNameViewModel.LastName" class="text-danger"></span>
+                                <input asp-for="@Model.changeInformationViewModel.LastName" class="form-control" />
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label>Degree</label>
+                                <input asp-for="@Model.changeInformationViewModel.Degree" class="form-control" />
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label>Exp</label>
+                                <input asp-for="@Model.changeInformationViewModel.Exp" class="form-control" />
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label>Address</label>
+                                <input asp-for="@Model.changeInformationViewModel.Address" class="form-control" />
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label>Phone</label>
+                                <input asp-for="@Model.changeInformationViewModel.Phone" class="form-control" />
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label>FacebookUrl</label>
+                                <input asp-for="@Model.changeInformationViewModel.FaceBookUrl" class="form-control" />
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label>TwitterUrl</label>
+                                <input asp-for="@Model.changeInformationViewModel.TwitterUrl" class="form-control" />
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label>VkUrl</label>
+                                <input asp-for="@Model.changeInformationViewModel.VKUrl" class="form-control" />
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label>InstagramUrl</label>
+                                <input asp-for="@Model.changeInformationViewModel.InstagramUrl" class="form-control" />
                             </div>
 
                             <div class="form-group col-md-6">
-                                <button type="submit" class="btn btn-primary btn-block">@localizer["changeUsername"]</button>
+                                <button type="submit" class="btn btn-primary btn-block">Change Information</button>
                             </div>
                         </form>
 

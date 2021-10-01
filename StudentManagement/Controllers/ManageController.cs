@@ -53,6 +53,12 @@ namespace StudentManagement.Controllers
             return this.View(user);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> MyProfile()
+        {
+            var user = await this.userManager.GetUserAsync(this.HttpContext.User);
+            return this.View(user);
+        }
 
         // GET: /Manage/Index
         [HttpGet]
@@ -61,7 +67,7 @@ namespace StudentManagement.Controllers
             this.ViewData["StatusMessage"] =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.ChangeEmailSuccess ? "Your email has been changed."
-                 : message == ManageMessageId.ChangeUserNameSuccess ? "Your Username has been changed."
+                 : message == ManageMessageId.ChangeUserInformationSuccess ? "Your account information has been changed."
                   : message == ManageMessageId.Error ? "An error has occurred."
                    : message == ManageMessageId.AddPhoto ? "Your Profile Photo has been changed."
                     : "";
@@ -77,10 +83,18 @@ namespace StudentManagement.Controllers
 
             return this.View(new ProfileViewModel
             {
-                changeUserNameViewModel = new ChangeUserNameViewModel
+                changeInformationViewModel = new ChangeInformationViewModel
                 { 
                   FirstName = user.FirstName,
-                  LastName = user.LastName
+                  LastName = user.LastName,
+                  Degree = user.Degree,
+                  Exp = user.Exp,
+                  Address = user.Address,
+                  FaceBookUrl = user.FaceBookUrl,
+                  Phone = user.Phone,
+                  TwitterUrl = user.TwitterUrl,
+                  InstagramUrl = user.InstagramUrl,
+                  VKUrl = user.VKUrl
                 }
             });
         }
@@ -182,36 +196,27 @@ namespace StudentManagement.Controllers
             return this.RedirectToAction("Login","Account");
         }
 
-
-        [HttpGet]
-        public async Task<IActionResult> ChangeUserName()
-        {
-            var user = await this.userManager.GetUserAsync(this.HttpContext.User);
-
-            var model = new ProfileViewModel
-            {
-                changeUserNameViewModel = new ChangeUserNameViewModel
-                { 
-                  FirstName = user.FirstName,
-                  LastName = user.LastName
-                }
-            };
-            return View(model); 
-        }
-
         [HttpPost]
-        public async Task<IActionResult> ChangeUserName(ProfileViewModel model)
+        public async Task<IActionResult> ChangeUserInformation(ProfileViewModel model)
         {
             var user = await this.userManager.GetUserAsync(this.HttpContext.User);
 
             if(ModelState.IsValid)
             {
-                user.FirstName = model.changeUserNameViewModel.FirstName;
-                user.LastName = model.changeUserNameViewModel.LastName;
+                user.FirstName = model.changeInformationViewModel.FirstName;
+                user.LastName = model.changeInformationViewModel.LastName;
+                user.Degree = model.changeInformationViewModel.Degree;
+                user.Exp = model.changeInformationViewModel.Exp;
+                user.Address = model.changeInformationViewModel.Address;
+                user.Phone = model.changeInformationViewModel.Phone;
+                user.FaceBookUrl = model.changeInformationViewModel.FaceBookUrl;
+                user.TwitterUrl = model.changeInformationViewModel.TwitterUrl;
+                user.InstagramUrl = model.changeInformationViewModel.InstagramUrl;
+                user.VKUrl = model.changeInformationViewModel.VKUrl;
                 var result = await userManager.UpdateAsync(user);
                 if(result.Succeeded)
                 {
-                    return RedirectToAction(nameof(ManageController.Index), new { Message = ManageMessageId.ChangeUserNameSuccess });
+                    return RedirectToAction(nameof(ManageController.Index), new { Message = ManageMessageId.ChangeUserInformationSuccess });
                 }
 
             }
@@ -232,7 +237,7 @@ namespace StudentManagement.Controllers
         {
             ChangeEmailSuccess,
             ChangePasswordSuccess,
-            ChangeUserNameSuccess,
+            ChangeUserInformationSuccess,
             Error,
             AddPhoto
         }
