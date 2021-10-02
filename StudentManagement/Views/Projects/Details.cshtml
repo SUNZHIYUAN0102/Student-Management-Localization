@@ -1,4 +1,4 @@
-﻿@model StudentManagement.Models.Project
+﻿@model StudentManagement.Models.ProjectViewModel.ProjectDetailViewModel
 
 @using StudentManagement.Service
 @inject StudentManagement.Service.UserService UserService
@@ -13,14 +13,14 @@
     <div style="width:40px;height:40px;background-color:#4285f4;border-radius:50%;color:#fff;display:flex;justify-content:center;align-items:center;position:absolute;top:15px;left:-15px"><i class="fas fa-award"></i></div>
     <div class="card-header py-3 " style="border-bottom:1px solid #1e8e3e;">
         <div class="row" style="display:flex; justify-content:space-between; align-items:center">
-            <h2 class="m-0 font-weight-bold text-primary" style="color:#137333">@Model.Title</h2>
+            <h2 class="m-0 font-weight-bold text-primary" style="color:#137333">@Model.Project.Title</h2>
             <div class="dropdown no-arrow">
                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                     <div class="dropdown-header">Dropdown Header:</div>
-                    <a class="dropdown-item" asp-action="Edit" asp-controller="Projects" asp-route-id="@Model.Id">Edit</a>
+                    <a class="dropdown-item" asp-action="Edit" asp-controller="Projects" asp-route-id="@Model.Project.Id">Edit</a>
                     <button class="dropdown-item">Delete</button>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Something else here</a>
@@ -29,24 +29,48 @@
         </div>
 
         <div class="row" style="display:flex; justify-content:space-between; align-items: center">
-            <span style="font-size:0.5rem">@Model.Creator.FullName • @Model.Created.ToShortDateString()</span>
-            <span style="font-size:0.5rem">From: @Model.StartTime - @Model.DeadLine</span>
+            <span style="font-size:0.5rem">@Model.Project.Creator.FullName • @Model.Project.Created.ToShortDateString()</span>
+            <span style="font-size:0.5rem">From: @Model.Project.StartTime - @Model.Project.DeadLine</span>
         </div>
     </div>
 
     <div class="card-body" style="border-bottom:1px solid rgba(0,0,0,0.87)">
-        @Html.Raw(Model.Description)
+        @Html.Raw(Model.Project.Description)
     </div>
 
     <div style="padding-top:16px">
         <i class="fas fa-user-friends"></i>
         <span>Comments</span>
+        @foreach (var note in Model.Project.Notes)
+        {
+            <div class="card-header" style="border:none;display:flex;align-items:center">
+                <img class="mr-2" src="~/uploads/@note.Creator.ImagePath" style="width:40px;height:40px;border-radius:50%" />
+                <div>
+                    <p style="margin:0">@note.Creator.FullName @note.Created.ToShortTimeString()</p>
+                    <p style="margin:0">@note.Text</p>
+                </div>
+                <div class="dropdown no-arrow" style="margin-left:auto">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                        <div class="dropdown-header">Dropdown Header:</div>
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
-
-    <div class="mt-2" style="display:flex; justify-content:space-between; align-items:center; position:relative">
-        <img class="mr-2" src="~/uploads/@ViewBag.profileImg" style="width:40px;height:40px;border-radius:50%" />
-        <input class="form-control form-control-user" placeholder="Enter Your Comment...">
-        <a style="position:absolute; right:10px; top:9px;cursor:pointer"><i class="fas fa-paper-plane"></i></a>
-    </div>
+    <hr>
+    <form id="myNote" method="post" asp-controller="Notes" asp-action="Create" asp-route-projectId="@Model.Project.Id">
+        <div class="mt-2" style="display:flex; justify-content:space-between; align-items:center; position:relative">
+            <img class="mr-2" src="~/uploads/@ViewBag.profileImg" style="width:40px;height:40px;border-radius:50%" />
+            <input asp-for="@Model.NoteEditViewModel.Text" class="form-control form-control-user" placeholder="Enter Your Comment...">
+            <a onclick="document.getElementById('myNote').submit();" style="position:absolute; right:10px; top:9px;cursor:pointer"><i class="fas fa-paper-plane"></i></a>
+        </div>
+    </form>
 </div>
 

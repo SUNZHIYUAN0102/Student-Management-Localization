@@ -41,10 +41,11 @@ namespace StudentManagement.Controllers
         {
             if (id == null)
             {
-                return this.NotFound();
+                return View("~/Views/Shared/NotFound.cshtml");
             }
 
             var user = await this.userManager.GetUserAsync(this.HttpContext.User);
+
             ViewBag.profileImg = user.ImagePath;
 
             var project = await context.Projects
@@ -52,12 +53,13 @@ namespace StudentManagement.Controllers
                 .Include(p => p.Notes)
                 .Include(p => p.Records)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (project == null)
             {
-                return this.NotFound();
+                return View("~/Views/Shared/NotFound.cshtml");
             }
 
-            return View(project);
+            return View(new ProjectDetailViewModel{ Project = project});
         }
 
         [Authorize(Roles = "Administrator, Teacher")]
