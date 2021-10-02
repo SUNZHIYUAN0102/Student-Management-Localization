@@ -179,7 +179,7 @@ namespace StudentManagement.Controllers
                 project.Modified = DateTime.Now;
 
                 await this.context.SaveChangesAsync();
-                return this.RedirectToAction("Index");
+                return this.RedirectToAction("Details","Projects",new { id = project.Id});
             }
             return this.View(model);
         }
@@ -193,8 +193,10 @@ namespace StudentManagement.Controllers
             {
                 return View("~/Views/Shared/NotFound.cshtml");
             }
-
+            
             var project = await this.context.Projects.SingleOrDefaultAsync(x => x.Id == id);
+
+            var subjectId = project.SubjectId;
 
             if (project == null)
             {
@@ -205,7 +207,7 @@ namespace StudentManagement.Controllers
             {
                 this.context.Projects.Remove(project);
                 await this.context.SaveChangesAsync();
-                return this.RedirectToAction(nameof(Index));
+                return this.RedirectToAction("Details","Subjects", new { id = subjectId});
             }
             catch (Exception e)
             {
