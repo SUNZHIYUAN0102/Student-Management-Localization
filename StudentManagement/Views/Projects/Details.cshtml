@@ -6,77 +6,47 @@
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Project's Detail Page";
 }
 
-<h1> @Html.DisplayFor(model => model.Title)</h1>
-
-<div class="card mb-3">
-    <div class="card-header">
-        <div> @localizer["modified"]: @Model.Modified | @localizer["start"]: @Model.StartTime.ToShortDateString() | @localizer["end"]: @Model.DeadLine.ToShortDateString() </div>
-    </div>
-    <div class="card-body">
-        <h5>@Html.Raw(Model.Description)</h5>
-    </div>
-    <div class="card-footer">
-        <form method="post" asp-action="Delete" asp-route-id="@Model.Id">
-            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">@localizer["edit"]</a>
-            <a class="btn btn-primary" asp-action="Index">@localizer["back"]</a>
-            <a class="btn btn-primary" asp-action="Create" asp-controller="Records" asp-route-projectId="@Model.Id">@localizer["logTime"]</a>
-            <span id="confirmSpan_@Model.Id" style="display:none">
-                <span>@localizer["deleteSpan"]</span>
-                <button type="submit" class="btn btn-danger">@localizer["yes"]</button>
-                <a href="#" class="btn btn-primary" onclick="confirmDelete('@Model.Id', false)">@localizer["no"]</a>
-            </span>
-
-            <span id="deleteSpan_@Model.Id">
-                <a href="#" class="btn btn-danger" onclick="confirmDelete('@Model.Id', true)">@localizer["delete"]</a>
-            </span>
-        </form>
-
-    </div>
-</div>
-
-<h3>@localizer["comment"]</h3>
-
-<p>
-    <a asp-action="Create" asp-controller="Notes" asp-route-projectId="@Model.Id" class="btn btn-primary">@localizer["create"]</a>
-</p>
-
-
-
-@if (Model.Notes.Any())
-{
-    <div class="card-container">
-        @foreach (var item in Model.Notes.OrderByDescending(x => x.Created))
-        {
-            <div class="cardx">
-                <header class="article-header">
-                    <div>
-                        <div class="note-title">
-                            <img src="~/uploads/@await UserService.GetNoteCreatorProfile(item.Creator.Email)" class="meow" />
-                            <b>@item.Creator.FullName</b>
-                            @item.Created
-                        </div>
-                    </div>
-                    <h5 class="note-content">
-                        @item.Text
-                    </h5>
-                </header>
-
-                <div class="note-tag">
-                    <div><a asp-action="Edit" asp-controller="Notes" asp-route-Id="@item.Id">Edit</a></div>
-                    <div><a asp-action="Delete" asp-controller="Notes" asp-route-Id="@item.Id">Delete</a></div>
+<div class="container col-12 col-lg-8" style="position:relative">
+    <div style="width:40px;height:40px;background-color:#4285f4;border-radius:50%;color:#fff;display:flex;justify-content:center;align-items:center;position:absolute;top:15px;left:-15px"><i class="fas fa-award"></i></div>
+    <div class="card-header py-3 " style="border-bottom:1px solid #1e8e3e;">
+        <div class="row" style="display:flex; justify-content:space-between; align-items:center">
+            <h2 class="m-0 font-weight-bold text-primary" style="color:#137333">@Model.Title</h2>
+            <div class="dropdown no-arrow">
+                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                    <div class="dropdown-header">Dropdown Header:</div>
+                    <a class="dropdown-item" asp-action="Edit" asp-controller="Projects" asp-route-id="@Model.Id">Edit</a>
+                    <button class="dropdown-item">Delete</button>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
                 </div>
             </div>
+        </div>
 
-        }
+        <div class="row" style="display:flex; justify-content:space-between; align-items: center">
+            <span style="font-size:0.5rem">@Model.Creator.FullName • @Model.Created.ToShortDateString()</span>
+            <span style="font-size:0.5rem">From: @Model.StartTime - @Model.DeadLine</span>
+        </div>
     </div>
-}
 
-@section Scripts{
-    <script src="~/js/site.js"></script>
-    <script src="~/js/ckeditor/ckeditor.js"></script>
-    <script>CKEDITOR.replace('Description');</script>
-}
+    <div class="card-body" style="border-bottom:1px solid rgba(0,0,0,0.87)">
+        @Html.Raw(Model.Description)
+    </div>
+
+    <div style="padding-top:16px">
+        <i class="fas fa-user-friends"></i>
+        <span>Comments</span>
+    </div>
+
+    <div class="mt-2" style="display:flex; justify-content:space-between; align-items:center; position:relative">
+        <img class="mr-2" src="~/uploads/@ViewBag.profileImg" style="width:40px;height:40px;border-radius:50%" />
+        <input class="form-control form-control-user" placeholder="Enter Your Comment...">
+        <a style="position:absolute; right:10px; top:9px;cursor:pointer"><i class="fas fa-paper-plane"></i></a>
+    </div>
+</div>
 

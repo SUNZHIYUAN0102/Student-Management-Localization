@@ -44,6 +44,9 @@ namespace StudentManagement.Controllers
                 return this.NotFound();
             }
 
+            var user = await this.userManager.GetUserAsync(this.HttpContext.User);
+            ViewBag.profileImg = user.ImagePath;
+
             var project = await context.Projects
                 .Include(p => p.Creator)
                 .Include(p => p.Notes)

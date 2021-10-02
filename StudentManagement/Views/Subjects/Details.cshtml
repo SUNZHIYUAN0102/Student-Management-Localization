@@ -26,9 +26,11 @@
                 <div class="card shadow mb-4 mt-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <div style="width:40px;height:40px;background-color:#4285f4;border-radius:50%;color:#fff;display:flex;justify-content:center;align-items:center"><i class="fas fa-award"></i></div>
-                        <div style="display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start">
-                            <h6 class="m-0 font-weight-bold text-primary">@item.Creator.FullName uploads new project: @item.Title</h6>
-                            <p style="margin:0;font-size:.5rem">@item.Created.ToShortDateString() (last time modified:@item.Modified.ToShortDateString())</p>
+                        <div style="display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;cursor:pointer">
+                            <a asp-action="Details" asp-controller="Projects" asp-route-id="@item.Id">
+                                <h6 class="m-0 font-weight-bold text-primary">@item.Creator.FullName uploads new project: @item.Title</h6>
+                                <p style="margin:0;font-size:.5rem">@item.Created.ToShortDateString() (last time modified:@item.Modified.ToShortDateString())</p>
+                            </a>
                         </div>
                         <div class="dropdown no-arrow">
                             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
