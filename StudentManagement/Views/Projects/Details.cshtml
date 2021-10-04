@@ -53,14 +53,14 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                         <div class="dropdown-header">Dropdown Header:</div>
-                        <a href="#noteEditModal" class="dropdown-item" data-toggle="modal">Edit</a>
-                        <a href="#noteDeleteModal" class="dropdown-item" data-toggle="modal">Delete</a>
+                        <a href="#noteEditModal-@note.Id" class="dropdown-item" data-toggle="modal">Edit</a>
+                        <a href="#noteDeleteModal-@note.Id" class="dropdown-item" data-toggle="modal">Delete</a>
                     </div>
                 </div>
             </div>
 
             <form method="post" asp-action="Edit" asp-controller="Notes" asp-route-id="@note.Id">
-                <div class="modal fade" id="noteEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="noteEditModal-@note.Id"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -83,7 +83,7 @@
             </form>
 
             <form method="post" asp-action="Delete" asp-controller="Notes" asp-route-id="@note.Id">
-                <div id="noteDeleteModal" class="modal fade">
+                <div id="noteDeleteModal-@note.Id" class="modal fade">
                     <div class="modal-dialog modal-confirm">
                         <div class="modal-content">
                             <div class="modal-header flex-column">
