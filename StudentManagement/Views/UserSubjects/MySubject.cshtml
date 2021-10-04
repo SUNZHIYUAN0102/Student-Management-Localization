@@ -22,7 +22,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                         <div class="dropdown-header">Dropdown Header:</div>
-                        <a href="#mySubjectDeleteModal" class="dropdown-item" data-toggle="modal">Leave Subject</a>
+                        <a href="#mySubjectDeleteModal-@item.SubjectId" class="dropdown-item" data-toggle="modal">Leave Subject</a>
                         <a class="dropdown-item" href="#">Another action</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Something else here</a>
@@ -42,7 +42,7 @@
         </div>
 
         <form method="post" asp-action="Leave" asp-controller="UserSubjects" asp-route-subjectId="@item.SubjectId">
-            <div id="mySubjectDeleteModal" class="modal fade">
+            <div id="mySubjectDeleteModal-@item.SubjectId" class="modal fade">
                 <div class="modal-dialog modal-confirm">
                     <div class="modal-content">
                         <div class="modal-header flex-column">

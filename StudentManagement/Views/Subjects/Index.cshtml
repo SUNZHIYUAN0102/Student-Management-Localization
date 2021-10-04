@@ -38,16 +38,39 @@
                             <td>@item.Created</td>
                             <td>
                                 <form style="display:inline-block;color:white" method="post" asp-action="Join" asp-controller="UserSubjects" asp-route-subjectId="@item.Id">
-                                    <button type="submit" class="btn btn-success">Join</button>
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="fas fa-sign-in-alt"></i>
+                                    </button>
                                 </form>
-                                <a class="btn btn-info" asp-action="Edit" asp-controller="Subjects" asp-route-id="@item.Id">
-                                    Edit
+                                <a title="Edit" class="btn btn-info" asp-action="Edit" asp-controller="Subjects" asp-route-id="@item.Id">
+                                    <i class="far fa-edit"></i>
                                 </a>
-                                <form style="display:inline-block;color:white" method="post" asp-action="Delete" asp-controller="Subjects" asp-route-id="@item.Id" id="deleteForm">
-                                    <a class="btn btn-danger" onclick="document.getElementById('deleteForm').submit()">Delete</a>
-                                </form>
-                                <form style="display:inline-block;color:white" method="post" asp-action="Leave" asp-controller="UserSubjects" asp-route-subjectId="@item.Id">
-                                    <button type="submit" class="btn btn-warning">Leave</button>
+
+                                <a title="Delete" class="btn btn-danger" data-toggle="modal" href="#subjectDeleteModal-@item.Id">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+
+                                <form method="post" asp-action="Delete" asp-controller="Subjects" asp-route-id="@item.Id">
+                                    <div id="subjectDeleteModal-@item.Id" class="modal fade">
+                                        <div class="modal-dialog modal-confirm">
+                                            <div class="modal-content">
+                                                <div class="modal-header flex-column">
+                                                    <div class="icon-box">
+                                                        <i class="fas fa-times-circle"></i>
+                                                    </div>
+                                                    <h4 class="modal-title w-100">Are you sure?</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Do you really want to delete these sources? This process cannot be undone.</p>
+                                                </div>
+                                                <div class="modal-footer justify-content-center">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </form>
                             </td>
                         </tr>
