@@ -66,33 +66,9 @@ namespace StudentManagement.Controllers
             return this.View();
         }
 
-        public async Task<IActionResult> Edit(Guid? id)
-        {
-            if (id == null)
-            {
-                return View("~/Views/Shared/NotFound.cshtml");
-            }
-
-            var note = await this.context.Notes
-                .SingleOrDefaultAsync(m => m.Id == id);
-
-            if (note == null || !this.userPermission.CanEditNote(note))
-            {
-                return View("~/Views/Shared/NotFound.cshtml");
-            }
-
-            var model = new NoteEditViewModel
-            {
-                Text = note.Text
-            };
-
-            this.ViewBag.Project = note.Project;
-            return this.View(model);
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid? id, NoteEditViewModel model)
+        public async Task<IActionResult> Edit(Guid? id, ProjectDetailViewModel model)
         {
             if (id == null)
             {
@@ -109,13 +85,12 @@ namespace StudentManagement.Controllers
 
             if (ModelState.IsValid)
             {
-                note.Text = model.Text;
+                note.Text = model.NoteEditViewModel.Text;
                 await this.context.SaveChangesAsync();
                 return RedirectToAction("Details", "Projects", new { id = note.ProjectId });
             }
 
-            this.ViewBag.Project = note.Project;
-            return this.View(model);
+            return View();
         }
 
         public async Task<IActionResult> Delete(Guid? id)
@@ -132,7 +107,7 @@ namespace StudentManagement.Controllers
 
             if (note == null || !this.userPermission.CanEditNote(note))
             {
-                return NotFound();
+                return View("~/Views/Shared/NotFound.cshtml");
             }
 
             this.context.Notes.Remove(note);
