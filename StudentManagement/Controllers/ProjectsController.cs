@@ -51,7 +51,7 @@ namespace StudentManagement.Controllers
             var project = await context.Projects
                 .Include(p => p.Creator)
                 .Include(p => p.Notes)
-                .Include(p => p.Records)
+                .Include(p => p.Records).ThenInclude(x=>x.Student)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (project == null)

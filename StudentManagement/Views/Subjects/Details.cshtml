@@ -13,10 +13,10 @@
 
 <div class="row" style="justify-content:center">
     <nav class="col-12 col-lg-8">
-        <div class="nav nav-tabs" id="nav-tab" role="tablist" >
-            <a class="nav-link active" id="nav-project-tab" data-toggle="tab" href="#nav-project" role="tab" aria-controls="nav-project" aria-selected="true">Projects</a>
-            <a class="nav-link" id="nav-user-tab" data-toggle="tab" href="#nav-user" role="tab" aria-controls="nav-user" aria-selected="false">Users</a>
-            <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">#</a>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist" style="justify-content:center">
+            <a class="nav-link active" id="nav-project-tab" data-toggle="tab" href="#nav-project" role="tab" aria-controls="nav-project" aria-selected="true" style="flex:1;text-align:center">Projects</a>
+            <a class="nav-link" id="nav-user-tab" data-toggle="tab" href="#nav-user" role="tab" aria-controls="nav-user" aria-selected="false" style="flex:1;text-align:center">Users</a>
+            <a class="nav-link" id="nav-record-tab" data-toggle="tab" href="#nav-record" role="tab" aria-controls="nav-record" aria-selected="false" style="flex:1;text-align:center">Records</a>
         </div>
     </nav>
     <div class="tab-content col-12 col-lg-8" id="nav-tabContent">
@@ -38,10 +38,8 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                                 <div class="dropdown-header">Dropdown Header:</div>
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
+                                <a class="dropdown-item" asp-action="Edit" asp-controller="Projects" asp-route-id="@item.Id">Move to top</a>
+                                <a class="dropdown-item" href="#" onclick="shareLink(@item.Created)">Share</a>
                             </div>
                         </div>
                     </div>
@@ -65,7 +63,13 @@
                 }
             }
         </div>
-        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+        <div class="tab-pane fade" id="nav-record" role="tabpanel" aria-labelledby="nav-record-tab">...</div>
 
     </div>
 </div>
+
+<script>
+    function shareLink(projectId) {
+        navigator.clipboard.writeText("meowww");
+    }
+</script>

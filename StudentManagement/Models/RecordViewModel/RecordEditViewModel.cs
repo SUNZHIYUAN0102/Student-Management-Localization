@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StudentManagement.Models.RecordViewModel
 {
-    public class RecordCreateViewModel
+    public class RecordEditViewModel
     {
         [Required]
         public string StudentId { get; set; }
@@ -15,6 +15,5 @@ namespace StudentManagement.Models.RecordViewModel
         public float LogTime { get; set; }
         [Required]
         public string Week { get; set; }
-
     }
 }

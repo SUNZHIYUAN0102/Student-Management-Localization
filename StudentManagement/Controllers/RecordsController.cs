@@ -64,6 +64,7 @@ namespace StudentManagement.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Guid? projectId, RecordCreateViewModel model)
         {
             if (projectId == null)
@@ -107,6 +108,82 @@ namespace StudentManagement.Controllers
                 this.context.Records.Add(record);
                 await this.context.SaveChangesAsync();
                 return RedirectToAction("Details", "Projects", new { id = project.Id });
+            }
+            return this.View(model);
+        }
+
+        [Authorize(Roles = "Administrator, Teacher")]
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid? id)
+        {
+            if (id == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
+            var record = await this.context.Records
+                .Include(x=>x.Project).ThenInclude(x=>x.Subject).ThenInclude(x=>x.UserSubjects).ThenInclude(x=>x.User)
+                .SingleOrDefaultAsync(x => x.Id == id);
+
+
+            if(record == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
+            var getWeek = Week.Split(record.Project.StartTime, record.Project.DeadLine);
+
+            var students = record.Project.Subject.UserSubjects.Where(x => x.Role == "Student").Select(x => x.User);
+
+            ViewBag.Students = new SelectList(students, "Id", "FullName");
+
+            ViewBag.Week = new SelectList(getWeek);
+
+            var model = new RecordEditViewModel
+            {
+                StudentId = record.StudentId,
+                LogTime = record.LogTime,
+                Week = record.Week
+            };
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid? id, RecordEditViewModel model)
+        {
+            if (id == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
+            var record = await this.context.Records
+                .Include(x => x.Project).ThenInclude(x => x.Subject).ThenInclude(x => x.UserSubjects).ThenInclude(x => x.User)
+                .SingleOrDefaultAsync(x => x.Id == id);
+
+
+            if (record == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
+            var getWeek = Week.Split(record.Project.StartTime, record.Project.DeadLine);
+
+            var students = record.Project.Subject.UserSubjects.Where(x => x.Role == "Student").Select(x => x.User);
+
+            ViewBag.Students = new SelectList(students, "Id", "FullName");
+
+            ViewBag.Week = new SelectList(getWeek);
+
+            if (this.ModelState.IsValid)
+            {
+                record.StudentId = model.StudentId;
+                record.LogTime = model.LogTime;
+                record.Week = model.Week;
+                await this.context.SaveChangesAsync();
+
+                return RedirectToAction("Details", "Projects", new { id = record.ProjectId });
             }
 
             return this.View(model);
