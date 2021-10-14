@@ -188,6 +188,27 @@ namespace StudentManagement.Controllers
 
             return this.View(model);
         }
-    }
 
+        [Authorize(Roles = "Administrator, Teacher")]
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
+            var record = await this.context.Records.SingleOrDefaultAsync(x => x.Id == id);
+
+            if (record == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
+            this.context.Records.Remove(record);
+            await this.context.SaveChangesAsync();
+
+            return RedirectToAction("Details", "Projects", new { id = record.ProjectId });
+        }
+    }
 }
