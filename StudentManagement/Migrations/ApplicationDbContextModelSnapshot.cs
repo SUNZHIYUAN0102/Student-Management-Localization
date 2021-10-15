@@ -150,6 +150,28 @@ namespace StudentManagement.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("StudentManagement.Models.Message", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("StudentManagement.Models.Note", b =>
                 {
                     b.Property<Guid>("Id")
@@ -454,6 +476,13 @@ namespace StudentManagement.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("StudentManagement.Models.Message", b =>
+                {
+                    b.HasOne("StudentManagement.Models.User", "Creator")
+                        .WithMany("Messages")
+                        .HasForeignKey("CreatorId");
                 });
 
             modelBuilder.Entity("StudentManagement.Models.Note", b =>

@@ -69,6 +69,8 @@ namespace StudentManagement
             services.AddScoped<UserService>();
             services.AddScoped<IEmailService, EmailService>();
 
+            services.AddSignalR();
+
             services.AddLocalization(opt => { opt.ResourcesPath = "Resources"; });
             services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
             services.Configure<RequestLocalizationOptions>(
@@ -116,7 +118,7 @@ namespace StudentManagement
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            
             app.UseRouting();
 
             app.UseAuthentication();
@@ -135,6 +137,7 @@ namespace StudentManagement
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Subjects}/{action=Index}/{id?}");
+                endpoints.MapHub<ChatHub>("/Chat/Index");
             });
         }
     } 
