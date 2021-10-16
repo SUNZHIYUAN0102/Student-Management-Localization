@@ -19,7 +19,7 @@ namespace StudentManagement.Service
             this.dbcontext = dbcontext;
             this.userManager = userManager;
         }
-        public async Task SendMessage(string message)
+        public async Task SendMessage(string message, string creator)
         {
             var now = DateTime.Now;
             var user = await this.userManager.GetUserAsync(this.Context.User);
@@ -31,7 +31,7 @@ namespace StudentManagement.Service
             };
             this.dbcontext.Messages.Add(sendText);
             await this.dbcontext.SaveChangesAsync();
-            await Clients.All.SendAsync("ReceiveMessage", message);
+            await Clients.All.SendAsync("ReceiveMessage", message, creator);
         }
     }
 }
