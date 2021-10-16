@@ -1,7 +1,38 @@
 ﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
-<h3 class="text-danger">
-    @localizer["title"]
-    <a asp-action="ForgotPassword" asp-controller="Account">
-        @localizer["reset"]
-    </a>
-</h3>
+
+@{ 
+    ViewData["Title"] = "Lock Out";
+}
+
+
+<div class="container">
+
+    <div class="row justify-content-center">
+
+        <div class="col-xl-10 col-lg-12 col-md-9">
+
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div style=" background: url(https://i.ibb.co/GJT8ZQb/karsten-winegeart-o-U6-KZTXhuvk-unsplash.jpg); background-size: cover; background-position: center;" class="col-lg-6 d-none d-lg-block"></div>
+                        <div class="col-lg-6">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-2">Your account already be locked out, please try later or click the link reset password</h1>
+                                </div>
+                                <form>
+                                    <a asp-action="ForgotPassword" asp-controller="Account" class="btn btn-primary btn-user btn-block">
+                                        Reset Password
+                                    </a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

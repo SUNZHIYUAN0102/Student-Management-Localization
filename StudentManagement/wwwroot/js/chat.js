@@ -3,10 +3,10 @@
 document.getElementById("sendButton").disabled = true;
 
 connection.on("ReceiveMessage", function (message) {
+    var name = document.getElementById("creatorName").innerText;
     var li = document.createElement("li");
     document.getElementById("messagesList").appendChild(li);
-
-    li.textContent = `says ${message}`;
+    li.textContent = `${name} says ${message}`;
 });
 
 connection.start().then(function () {
