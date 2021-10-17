@@ -26,8 +26,26 @@ namespace StudentManagement.Controllers
             this.userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(Guid? projectId)
         {
+            if (projectId == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
+            var project = await this.context.Projects
+                .Include(x => x.Subject).ThenInclude(x => x.UserSubjects)
+                .ThenInclude(x => x.User)
+                .SingleOrDefaultAsync(x => x.Id == projectId);
+
+            if (project == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
+            ViewBag.ProjectName = project.Title;
+            ViewBag.Record = this.context.Records.Include(x => x.Student).Where(x => x.ProjectId == project.Id).AsEnumerable().GroupBy(x => x.Week);
+
             return View();
         }
 
@@ -193,7 +211,7 @@ namespace StudentManagement.Controllers
                 record.Progress = model.Progress;
                 await this.context.SaveChangesAsync();
 
-                return RedirectToAction("Details", "Projects", new { id = record.ProjectId });
+                return RedirectToAction("Index", "Records", new { projectId = record.ProjectId });
             }
 
             return this.View(model);
@@ -218,7 +236,7 @@ namespace StudentManagement.Controllers
             this.context.Records.Remove(record);
             await this.context.SaveChangesAsync();
 
-            return RedirectToAction("Details", "Projects", new { id = record.ProjectId });
+            return RedirectToAction("Index", "Records", new { projectId = record.ProjectId });
         }
     }
 }
