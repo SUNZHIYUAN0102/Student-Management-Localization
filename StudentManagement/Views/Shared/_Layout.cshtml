@@ -75,7 +75,7 @@
                                 <input type="hidden" name="culture" asp-for="@culture.RequestCulture.UICulture.Name" value="en" />
                                 <a class="collapse-item" href="#" onclick="document.getElementById('switchEn').submit();">English</a>
                             </form>
-                            
+
                             <form id="switchZh" asp-action="CultureManagement" asp-controller="Home" method="post" asp-route-returnUrl="@returnUrl">
                                 <input type="hidden" name="culture" asp-for="@culture.RequestCulture.UICulture.Name" value="zh" />
                                 <a class="collapse-item" href="#" onclick="document.getElementById('switchZh').submit();">Simplified Chinese</a>
@@ -403,5 +403,6 @@
     <script src="~/vendor/datatables/jquery.dataTables.js"></script>
     <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
     @RenderSection("Scripts", required: false)
+    @RenderSection("Styles", required: false)
 </body>
 </html>

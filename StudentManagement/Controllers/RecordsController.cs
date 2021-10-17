@@ -102,7 +102,9 @@ namespace StudentManagement.Controllers
                     LogTime = model.LogTime,
                     Week = model.Week,
                     ProjectId = project.Id,
-                    Created = now
+                    Created = now,
+                    Note = model.Note,
+                    Progress = model.Progress
                 };
 
                 this.context.Records.Add(record);
@@ -139,11 +141,15 @@ namespace StudentManagement.Controllers
 
             ViewBag.Week = new SelectList(getWeek);
 
+            ViewBag.progress = record.Progress;
+
             var model = new RecordEditViewModel
             {
                 StudentId = record.StudentId,
                 LogTime = record.LogTime,
-                Week = record.Week
+                Week = record.Week,
+                Progress = record.Progress,
+                Note = record.Note
             };
 
             return this.View(model);
@@ -176,11 +182,15 @@ namespace StudentManagement.Controllers
 
             ViewBag.Week = new SelectList(getWeek);
 
+            ViewBag.progress = record.Progress;
+
             if (this.ModelState.IsValid)
             {
                 record.StudentId = model.StudentId;
                 record.LogTime = model.LogTime;
                 record.Week = model.Week;
+                record.Note = model.Note;
+                record.Progress = model.Progress;
                 await this.context.SaveChangesAsync();
 
                 return RedirectToAction("Details", "Projects", new { id = record.ProjectId });

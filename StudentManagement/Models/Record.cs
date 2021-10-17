@@ -23,5 +23,8 @@ namespace StudentManagement.Models
         public String Week { get; set; }
 
         public float LogTime { get; set; }
+        public string Note { get; set; }
+        public int Progress { get; set; }
+
     }
 }

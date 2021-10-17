@@ -28,6 +28,7 @@ namespace StudentManagement.Controllers
                 .ToListAsync();
             var user = await this.userManager.GetUserAsync(this.HttpContext.User);
 
+            ViewBag.User = this.context.Users;
             ViewBag.Name = user.FullName;
             return View(new ChatIndexViewModel{ Messages=messages});
         }

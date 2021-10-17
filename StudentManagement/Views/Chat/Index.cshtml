@@ -2,10 +2,79 @@
 
 @{ ViewData["Title"] = "Chat Room";}
 
-<div class="jumbotron bg-light">
-    <h2 class="text-center text-primary">
-        <i class="fab fa-facebook-messenger"></i>&nbsp; Public Talk
-    </h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class=" row border-bottom padding-sm" style="height: 40px;">
+                Members
+            </div>
+            <ul class="mt-3" style="padding:0;">
+                @foreach (var user in ViewBag.User)
+                {
+                    <li class="mb-3" style="list-style:none;">
+                        <a asp-action="Profile" asp-controller="Manage" asp-route-id="@user.Id" style="display:flex;justify-content:flex-start;align-items:center">
+                            <img src="~/uploads/@user.ImagePath" style="width:40px;height:40px;border-radius:50%;margin-right:15px">
+                            <div class="friend-name">
+                                <strong>@user.FullName</strong>
+                            </div>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <div class="col-md-8">
+            <div class="chat-message">
+                <ul class="chat" id="messagesList">
+                    @foreach (var item in Model.Messages)
+                    {
+                        <li class="left clearfix">
+                            <span class="chat-img pull-left">
+                                <img src="~/uploads/@item.Creator.ImagePath">
+                            </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <strong class="primary-font">@item.Creator.FullName</strong>
+                                    <small class="pull-right text-muted"><i class="fa fa-clock-o"></i>@item.Created.ToString()</small>
+                                </div>
+                                <p>
+                                    @item.Text
+                                </p>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="chat-box bg-white">
+                <div class="input-group">
+                    <input class="form-control border no-shadow no-rounded" placeholder="Type your message here" id="messageInput">
+                    <div class="col-4"><input type="hidden" id="creatorName" value="@ViewBag.Name" /></div>
+                    <span class="input-group-btn">
+                        <button class="btn btn-success no-rounded" type="button" id="sendButton">Send</button>
+                    </span>
+                </div>
+                <!-- /input-group -->
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Styles {
+    <link href="@Url.Content("~/Content/chat.css")" rel="stylesheet" type="text/css" />
+}
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>
+
+
+
+
+@*<div class="jumbotron bg-light">
+        <h2 class="text-center text-primary">
+            <i class="fab fa-facebook-messenger"></i>&nbsp; Public Talk
+        </h2>
         <div class="row">&nbsp;</div>
         <div class="row">
             <div class="col-2">Message</div>
@@ -18,22 +87,19 @@
                 <button type="submit" id="sendButton">Send</button>
             </div>
         </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        <hr />
     </div>
-</div>
-<div class="row">
-    <div class="col-6">
-        <ul id="messagesList">
-            @foreach(var item in Model.Messages)
-            {
-                <li>@item.Creator.FullName says @item.Text</li>
-            }
-        </ul>
+    <div class="row">
+        <div class="col-12">
+            <hr />
+        </div>
     </div>
-</div>
-
-<script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/chat.js"></script>
+    <div class="row">
+        <div class="col-6">
+            <ul id="messagesList">
+                @foreach (var item in Model.Messages)
+                {
+                    <li>@item.Creator.FullName says @item.Text</li>
+                }
+            </ul>
+        </div>
+    </div>*@
