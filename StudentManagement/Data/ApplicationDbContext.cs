@@ -20,6 +20,8 @@ namespace StudentManagement.Data
         public DbSet<Note> Notes { get; set; }
         public DbSet<Record> Records { get; set; }
         public DbSet<Message> Messages { get; set; }
+
+        public DbSet<Room> Rooms { get; set; }
         public DbSet<UserSubject> UserSubjects { get; set; }
         public DbSet<UserProject> UserProjects { get; set; }
 

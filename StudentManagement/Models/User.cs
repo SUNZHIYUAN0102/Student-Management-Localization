@@ -6,11 +6,6 @@ namespace StudentManagement.Models
 {
     public class User : IdentityUser
     {
-        public User()
-        {
-            Messages = new HashSet<Message>();
-        }
-
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -45,7 +40,8 @@ namespace StudentManagement.Models
 
         public ICollection<Record> Records { get; set; }
 
-        public virtual ICollection<Message> Messages { get; set; }
+        public ICollection<Room> Rooms { get; set; }
+        public ICollection<Message> Messages { get; set; }
     }
 
 }
