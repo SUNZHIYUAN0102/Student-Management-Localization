@@ -1,10 +1,7 @@
 ﻿@model StudentManagement.Models.AccountViewModel.RegisterViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 
-@{
-    ViewData["Title"]= "Registration";
-
-}
+@{ ViewData["Title"] = "Registration"; }
 
 <div class="container">
 
@@ -38,13 +35,21 @@
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <input asp-for="Password" type="password" class="form-control form-control-user"
-                                           id="exampleInputPassword" placeholder="Password">
+                                           id="examplePassword" placeholder="Password" onkeyup="trigger()">
                                 </div>
                                 <div class="col-sm-6">
                                     <input asp-for="ConfirmPassword" type="password" class="form-control form-control-user"
                                            id="exampleRepeatPassword" placeholder="Repeat Password">
                                 </div>
                             </div>
+
+                            <div class="indicator">
+                                <span class="weak"></span>
+                                <span class="medium"></span>
+                                <span class="strong"></span>
+                            </div>
+                            <div class="mb-3 text"></div>
+
                             <a href="#" class="btn btn-primary btn-user btn-block" onclick="document.getElementById('registerform').submit();">
                                 Register Account
                             </a>
@@ -70,3 +75,11 @@
     </div>
 
 </div>
+
+@section Styles{
+<link rel="stylesheet" href="~/css/passwordStrength.css"/>
+} 
+@section Scripts{ 
+    <script src="~/js/passwordStrength.js"></script>
+}
+
