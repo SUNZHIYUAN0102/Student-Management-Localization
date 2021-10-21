@@ -15,6 +15,8 @@ namespace StudentManagement.Models
 
         public DateTime Created { get; set; }
 
+        public string Code { get; set; }
+
         public ICollection<Project> Projects { get; set; }
 
         public ICollection<UserSubject> UserSubjects { get; set; }

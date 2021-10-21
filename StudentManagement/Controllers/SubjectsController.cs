@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using StudentManagement.Data;
 using StudentManagement.Models;
 using StudentManagement.Models.SubjectViewModel;
+using StudentManagement.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,7 +78,8 @@ namespace StudentManagement.Controllers
                 {
                     Name = model.Name,
                     Creator = user,
-                    Created = now
+                    Created = now,
+                    Code = RandomAlphanumeric.RandomCode()
                 };
                 this.context.Subjects.Add(subject);
                 await this.context.SaveChangesAsync();
