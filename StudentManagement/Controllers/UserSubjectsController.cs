@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using StudentManagement.Models.UserSubjectsViewModel;
 
 namespace StudentManagement.Controllers
 {
@@ -29,22 +30,18 @@ namespace StudentManagement.Controllers
         {
             var user = await this.usermanager.GetUserAsync(this.HttpContext.User);
             var mySubjects = this.context.UserSubjects
-                .Include(x=>x.Subject).ThenInclude(x=>x.Creator)
-                .Where(x => x.UserId == user.Id);
-            return this.View(await mySubjects.ToListAsync());
+                .Include(x => x.Subject).ThenInclude(x => x.Creator)
+                .Where(x => x.UserId == user.Id)
+                .AsEnumerable();
+            return View(new MySubjectsViewModel { UserSubjects = mySubjects});
         }
 
         [Authorize(Roles = "Administrator, Teacher, Student")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Join(Guid? subjectId)
+        public async Task<IActionResult> Join(MySubjectsViewModel model)
         {
-            if(subjectId == null)
-            {
-                return View("~/Views/Shared/NotFound.cshtml");
-            }
-
-            var subject = await this.context.Subjects.SingleOrDefaultAsync(x => x.Id == subjectId);
+            var subject = await this.context.Subjects.SingleOrDefaultAsync(x => x.Code == model.JoinSubjectViewModel.Code);
 
             if(subject == null)
             {

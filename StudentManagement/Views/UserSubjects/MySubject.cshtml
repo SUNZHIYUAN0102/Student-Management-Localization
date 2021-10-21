@@ -1,4 +1,4 @@
-﻿@model IEnumerable<StudentManagement.Models.UserSubject>
+﻿@model StudentManagement.Models.UserSubjectsViewModel.MySubjectsViewModel
 
 @{
     ViewData["Title"] = "My Subject";
@@ -6,12 +6,36 @@
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">My Subjects</h1>
+    <a style="cursor:pointer" data-toggle="modal" data-target="#joinSubject"><i class="fas fa-plus"></i></a>
 </div>
 
+<form method="post" asp-action="Join" asp-controller="UserSubjects">
+    <div class="modal fade" id="joinSubject" tabindex="-1" role="dialog" aria-labelledby="joinSubject" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Subject's Code</h5>
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input asp-for="JoinSubjectViewModel.Code" class="form-control form-control-user" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Join</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
 <div class="row" style="justify-content: space-evenly">
-    @foreach (var item in Model)
+    @foreach (var item in Model.UserSubjects)
     {
-        <div class="card shadow mb-4 mr-4" style="width:300px;height:294px;cursor: pointer;">
+        <div class="card shadow mb-4 mr-4" style="width:300px;height:294px;">
             <div style="height:30%;" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">
                     <a asp-action="Details" asp-controller="Subjects" asp-route-id="@item.SubjectId">@item.Subject.Name</a>
