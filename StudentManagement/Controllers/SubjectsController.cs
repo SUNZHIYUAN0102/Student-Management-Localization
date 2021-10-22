@@ -106,7 +106,8 @@ namespace StudentManagement.Controllers
             }
             var model = new SubjectEditViewModel()
             {
-                Name = subject.Name
+                Name = subject.Name,
+                ThemeName = subject.ThemeName
             };
             return this.View(model);
         }
@@ -129,6 +130,7 @@ namespace StudentManagement.Controllers
             if (this.ModelState.IsValid)
             {
                 subject.Name = model.Name;
+                subject.ThemeName = model.ThemeName;
                 await this.context.SaveChangesAsync();
                 return this.RedirectToAction(nameof(Index));
             }
