@@ -64,27 +64,38 @@
             }
         </div>
         <div class="tab-pane fade" id="nav-code" role="tabpanel" aria-labelledby="nav-code-tab">
-            <div class="container mt-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="border:2px dashed #d1d3e2;border-radius:.5rem">
-                    <div style="display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start">
-                        <h5 class="m-0 font-weight-bold text-primary">Subject's Code</h5>
-                        <h6 class="m-0 font-weight-bold mt-2">@Model.Code</h6>
-                    </div>
-                    <div class="dropdown no-arrow">
-                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                            <div class="dropdown-header">Code Setting:</div>
-                            <form method="post" asp-action="ResetCode" asp-controller="Subjects" asp-route-subjectId="@Model.Id">
-                                <button type="submit" class="dropdown-item">Reset Subject's Code</button>
-                            </form>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Close Subject's Code</a>
+            @if (Model.Code != null)
+            {
+                <div class="container mt-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="border:2px dashed #d1d3e2;border-radius:.5rem">
+                        <div style="display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start">
+                            <h5 class="m-0 font-weight-bold text-primary">Subject's Code</h5>
+                            <h6 class="m-0 font-weight-bold mt-2">@Model.Code</h6>
+                        </div>
+                        <div class="dropdown no-arrow">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header">Code Setting:</div>
+                                <form method="post" asp-action="ResetCode" asp-controller="Subjects" asp-route-subjectId="@Model.Id">
+                                    <button type="submit" class="dropdown-item">Reset Subject's Code</button>
+                                </form>
+                                <div class="dropdown-divider"></div>
+                                <form method="post" asp-action="RemoveCode" asp-controller="Subjects" asp-route-subjectId="@Model.Id">
+                                    <button type="submit" class="dropdown-item">Close Subject's Code</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
+            else
+            {
+               <form method="post" asp-action="ResetCode" asp-controller="Subjects" asp-route-subjectId="@Model.Id">
+                   <button class="btn btn-primary mt-4" type="submit">Generate Subject's Code</button>
+               </form>
+            }
         </div>
 
     </div>
