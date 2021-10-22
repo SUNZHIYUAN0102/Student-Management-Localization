@@ -16,7 +16,7 @@
         <div class="nav nav-tabs" id="nav-tab" role="tablist" style="justify-content:center">
             <a class="nav-link active" id="nav-project-tab" data-toggle="tab" href="#nav-project" role="tab" aria-controls="nav-project" aria-selected="true" style="flex:1;text-align:center">Projects</a>
             <a class="nav-link" id="nav-user-tab" data-toggle="tab" href="#nav-user" role="tab" aria-controls="nav-user" aria-selected="false" style="flex:1;text-align:center">Users</a>
-            <a class="nav-link" id="nav-record-tab" data-toggle="tab" href="#nav-record" role="tab" aria-controls="nav-record" aria-selected="false" style="flex:1;text-align:center">Records</a>
+            <a class="nav-link" id="nav-code-tab" data-toggle="tab" href="#nav-code" role="tab" aria-controls="nav-code" aria-selected="false" style="flex:1;text-align:center">Code</a>
         </div>
     </nav>
     <div class="tab-content col-12 col-lg-8" id="nav-tabContent">
@@ -63,7 +63,29 @@
                 }
             }
         </div>
-        <div class="tab-pane fade" id="nav-record" role="tabpanel" aria-labelledby="nav-record-tab">...</div>
+        <div class="tab-pane fade" id="nav-code" role="tabpanel" aria-labelledby="nav-code-tab">
+            <div class="container mt-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="border:2px dashed #d1d3e2;border-radius:.5rem">
+                    <div style="display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start">
+                        <h5 class="m-0 font-weight-bold text-primary">Subject's Code</h5>
+                        <h6 class="m-0 font-weight-bold mt-2">@Model.Code</h6>
+                    </div>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Code Setting:</div>
+                            <form method="post" asp-action="ResetCode" asp-controller="Subjects" asp-route-subjectId="@Model.Id">
+                                <button type="submit" class="dropdown-item">Reset Subject's Code</button>
+                            </form>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Close Subject's Code</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>

@@ -167,5 +167,31 @@ namespace StudentManagement.Controllers
                 return View("~/Views/Shared/DeleteError.cshtml");
             }
         }
+
+        [Authorize(Roles = "Administrator, Teacher")]
+        [HttpPost]
+        public async Task<IActionResult> ResetCode(Guid? subjectId)
+        {
+            if (subjectId == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
+            var subject = await this.context.Subjects.SingleOrDefaultAsync(x => x.Id == subjectId);
+
+            if (subject == null)
+            {
+                return View("~/Views/Shared/NotFound.cshtml");
+            }
+
+            if (this.ModelState.IsValid)
+            {
+                subject.Code = RandomAlphanumeric.RandomCode();
+                await this.context.SaveChangesAsync();
+                return RedirectToAction("Details", "Subjects", new { id = subject.Id });
+            }
+
+            return this.View();
+        }
     }
 }
