@@ -10,5 +10,9 @@ namespace StudentManagement.Models.SubjectViewModel
     {
         [Required]
         public string Name { get; set; }
+
+        [Required]
+
+        public string ThemeName { get; set; }
     }
 }

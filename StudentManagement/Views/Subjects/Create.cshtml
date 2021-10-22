@@ -24,6 +24,26 @@
                                         <label style="border:none;margin:0;" class="form-control">Subject Name</label>
                                         <input asp-for="Name" class="form-control form-control-user">
                                     </div>
+
+                                    <div class="form-group">
+                                        <label style="border:none;margin:0;" class="form-control">Subject's Theme</label>
+                                        <div style="display:flex;align-items:center" class="form-check mb-4">
+                                            <input class="form-check-input" asp-for="ThemeName" type="radio" value="img_birthday.jpg" checked>
+                                            <img src="~/SubjectThemes/img_birthday.jpg" />
+                                        </div>
+                                        <div style="display:flex;align-items:center" class="form-check mb-4">
+                                            <input class="form-check-input" asp-for="ThemeName" type="radio" value="img_bookclub.jpg">
+                                            <img src="~/SubjectThemes/img_bookclub.jpg" />
+                                        </div>
+                                        <div style="display:flex;align-items:center" class="form-check mb-4">
+                                            <input class="form-check-input" asp-for="ThemeName" type="radio" value="img_graduation.jpg">
+                                            <img src="~/SubjectThemes/img_graduation.jpg" />
+                                        </div>
+                                        <div style="display:flex;align-items:center" class="form-check mb-4">
+                                            <input class="form-check-input" asp-for="ThemeName" type="radio" value="img_read.jpg">
+                                            <img src="~/SubjectThemes/img_read.jpg" />
+                                        </div>
+                                    </div>
   
                                     <button type="submit" class="btn btn-primary btn-user btn-block">Create</button>
                                 </form>

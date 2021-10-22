@@ -79,6 +79,7 @@ namespace StudentManagement.Controllers
                     Name = model.Name,
                     Creator = user,
                     Created = now,
+                    ThemeName = model.ThemeName,
                     Code = RandomAlphanumeric.RandomCode()
                 };
                 this.context.Subjects.Add(subject);

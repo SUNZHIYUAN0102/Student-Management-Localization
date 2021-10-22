@@ -17,6 +17,8 @@ namespace StudentManagement.Models
 
         public string Code { get; set; }
 
+        public string ThemeName { get; set; }
+
         public ICollection<Project> Projects { get; set; }
 
         public ICollection<UserSubject> UserSubjects { get; set; }

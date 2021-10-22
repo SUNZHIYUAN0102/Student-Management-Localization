@@ -31,6 +31,7 @@ namespace StudentManagement.Controllers
             var user = await this.usermanager.GetUserAsync(this.HttpContext.User);
             var mySubjects = this.context.UserSubjects
                 .Include(x => x.Subject).ThenInclude(x => x.Creator)
+                .Include(x => x.Subject.Projects)
                 .Where(x => x.UserId == user.Id)
                 .AsEnumerable();
             return View(new MySubjectsViewModel { UserSubjects = mySubjects});

@@ -36,9 +36,9 @@
     @foreach (var item in Model.UserSubjects)
     {
         <div class="card shadow mb-4 mr-4" style="width:300px;height:294px;">
-            <div style="height:30%;" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <div style="height:30%;background-image:url(https://www.gstatic.com/classroom/themes/@item.Subject.ThemeName);background-size:cover;background-position:center" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">
-                    <a asp-action="Details" asp-controller="Subjects" asp-route-id="@item.SubjectId">@item.Subject.Name</a>
+                    <a style="color:white" asp-action="Details" asp-controller="Subjects" asp-route-id="@item.SubjectId">@item.Subject.Name</a>
                 </h6>
                 <div class="dropdown no-arrow">
                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -58,10 +58,13 @@
                 <div style="width:75px; height:75px; background:pink; border-radius:50%; position:absolute; top:-40px; left:180px;">
                     <img style="width:100%;height:100%;border-radius:50%" src="~/uploads/@item.Subject.Creator.ImagePath" />
                 </div>
-                Meowwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+                @*@foreach(var project in item.Subject.Projects.Take(3).OrderByDescending(x=>x.Created))
+                {
+                    <h5>@project.Title -- @project.DeadLine.ToShortDateString()</h5>
+                }*@
             </div>
             <div style="height:15%" class="card-footer">
-                @item.Subject.Created.ToShortDateString()
+                <p style="margin:0;font-size:12px">Created At: @item.Subject.Created.ToShortDateString()</p>
             </div>
         </div>
 

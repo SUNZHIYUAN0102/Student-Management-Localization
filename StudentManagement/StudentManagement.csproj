@@ -30,5 +30,12 @@
   <ItemGroup>
     <Folder Include="Views\Notes\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\SubjectThemes\img_birthday.jpg" />
+    <None Include="wwwroot\SubjectThemes\img_bookclub.jpg" />
+    <None Include="wwwroot\SubjectThemes\img_graduation.jpg" />
+    <None Include="wwwroot\SubjectThemes\img_read.jpg" />
+  </ItemGroup>
 	
 </Project>
