@@ -1,57 +1,73 @@
 ﻿@model IEnumerable<StudentManagement.Models.User>
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
-@{
-    ViewBag.Title = "All Users";
-}
 
-<h1>@localizer["title"]</h1>
+@{ ViewData["Title"] = "All Users"; }
 
-@if (Model.Any())
-{
-    <a class="btn btn-primary mb-3" style="width:auto" asp-action="Register" asp-controller="Account">@localizer["add"]</a>
-    foreach (var user in Model)
-    {
-        <div class="card mb-3">
-            <div class="card-header">
-                @localizer["userid"]: @user.Id
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">@user.Email</h5>
-            </div>
-            <div class="card-footer">
-                <form method="post" asp-action="DeleteUsers" asp-controller="Admin" asp-route-id="@user.Id">
-                    <a class="btn btn-primary" asp-action="EditUsers" asp-controller="Admin" asp-route-id="@user.Id">@localizer["edit"]</a>
-                    <span id="confirmSpan_@user.Id" style="display:none">
-                        <span>@localizer["deleteSpan"]</span>
-                        <button type="submit" class="btn btn-danger">@localizer["yes"]</button>
-                        <a href="#" class="btn btn-primary" onclick="confirmDelete('@user.Id', false)">@localizer["no"]</a>
-                    </span>
+<h1>All Users</h1>
 
-                    <span id="deleteSpan_@user.Id">
-                        <a href="#" class="btn btn-danger" onclick="confirmDelete('@user.Id', true)">@localizer["delete"]</a>
-                    </span>
-                </form>
-            </div>
-        </div>
-    }
-}
-else
-{
-    <div class="card">
-        <div class="card-header">
-            @localizer["exception"]
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">
-                @localizer["usebutton"]
-            </h5>
-            <a class="btn btn-primary" style="width:auto" asp-controller="Account" asp-action="Register">
-                @localizer["add"]
-            </a>
+<a class="btn btn-primary mb-3" style="width:auto" asp-action="Register" asp-controller="Account">Add Users</a>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Users's DataTable</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>UserName</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.FullName</td>
+                            <td>@item.Email</td>
+                            <td>
+                                <a title="Edit" class="btn btn-info" asp-action="EditUsers" asp-controller="Admin" asp-route-id="@item.Id">
+                                    <i class="far fa-edit"></i>
+                                </a>
+
+                                <a title="Delete" class="btn btn-danger" data-toggle="modal" href="#userDeleteModal-@item.Id">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+
+                                <form method="post" asp-action="DeleteUsers" asp-controller="Admin" asp-route-id="@item.Id">
+                                    <div id="userDeleteModal-@item.Id" class="modal fade">
+                                        <div class="modal-dialog modal-confirm">
+                                            <div class="modal-content">
+                                                <div class="modal-header flex-column">
+                                                    <div class="icon-box">
+                                                        <i class="fas fa-times-circle"></i>
+                                                    </div>
+                                                    <h4 class="modal-title w-100">Are you sure?</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Do you really want to delete these sources? This process cannot be undone.</p>
+                                                </div>
+                                                <div class="modal-footer justify-content-center">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                </td>
+                            </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
-}
+</div>
 
-@section Scripts{
-    <script src="~/js/site.js"></script>
+
+@section Scripts {
+    <script src="~/js/demo/datatables-demo.js"></script>
 }

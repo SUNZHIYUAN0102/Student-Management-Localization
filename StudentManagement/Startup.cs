@@ -136,7 +136,7 @@ namespace StudentManagement
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Subjects}/{action=Index}/{id?}");
+                    pattern: "{controller=UserSubjects}/{action=MySubject}/{id?}");
                 endpoints.MapHub<ChatHub>("/Chat/Index");
             });
         }

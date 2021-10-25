@@ -37,11 +37,6 @@
                             <td>@item.Creator.FirstName</td>
                             <td>@item.Created</td>
                             <td>
-                                <form style="display:inline-block;color:white" method="post" asp-action="Join" asp-controller="UserSubjects" asp-route-subjectId="@item.Id">
-                                    <button type="submit" class="btn btn-success" title="Join Subject">
-                                        <i class="fas fa-sign-in-alt"></i>
-                                    </button>
-                                </form>
                                 <a title="Edit" class="btn btn-info" asp-action="Edit" asp-controller="Subjects" asp-route-id="@item.Id">
                                     <i class="far fa-edit"></i>
                                 </a>

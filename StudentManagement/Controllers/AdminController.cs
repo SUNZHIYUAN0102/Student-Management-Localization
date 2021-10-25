@@ -35,34 +35,18 @@ namespace StudentManagement.Controllers
             var user = await userManager.FindByIdAsync(id);
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Id = {id} can't be found";
-                return View("NotFound");
+                return View("~/Views/Shared/NotFound.cshtml");
             }
-            else
+
+            var result = await userManager.DeleteAsync(user);
+            if (result.Succeeded)
             {
-                try
-                {
-                    var result = await userManager.DeleteAsync(user);
-                    if (result.Succeeded)
-                    {
-                        return RedirectToAction("ListUsers", "Admin");
-                    }
-
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error.Description);
-
-                    }
-                    return View("ListUsers");
-                }
-                catch(Exception e)
-                {
-                    ViewBag.ErrorTitle = "User can't be deleted";
-                    ViewBag.ErrorMessage = "User can't be deleted as there are roles in this user. If you want to delete user please remove roles from user first";
-                    return View("DeleteError");
-                }
+                return RedirectToAction(nameof(ListUsers));
             }
+
+            return this.View();
         }
+
 
         [HttpGet]
         public async Task<IActionResult> EditUsers(string id)
@@ -70,11 +54,9 @@ namespace StudentManagement.Controllers
             var user = await userManager.FindByIdAsync(id);
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Id = {id} can't be found";
-                return View("NotFound");
+                return View("~/Views/Shared/NotFound.cshtml");
             }
 
-            var userClaims = await userManager.GetClaimsAsync(user);
             var userRoles = await userManager.GetRolesAsync(user);
 
             var model = new EditUserViewModel
@@ -83,13 +65,11 @@ namespace StudentManagement.Controllers
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Claims = userClaims.Select(c => c.Value).ToList(),
                 Roles = userRoles
             };
 
             return View(model);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> EditUsers(EditUserViewModel model)
@@ -97,15 +77,14 @@ namespace StudentManagement.Controllers
             var user = await userManager.FindByIdAsync(model.Id);
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Id = {model.Id} can't be found";
-                return View("NotFound");
+                return View("~/Views/Shared/NotFound.cshtml");
             }
             else
             {
-                user.Email = model.Email;
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 var result = await userManager.UpdateAsync(user);
+
                 if(result.Succeeded)
                 {
                     return RedirectToAction("ListUsers", "Admin");
@@ -118,7 +97,6 @@ namespace StudentManagement.Controllers
                 }
                 return View(model);
             }
-           
         }
 
         [HttpGet]
@@ -163,7 +141,6 @@ namespace StudentManagement.Controllers
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"Role with Id = {userId} can't be found";
                 return View("NotFound");
             }
 

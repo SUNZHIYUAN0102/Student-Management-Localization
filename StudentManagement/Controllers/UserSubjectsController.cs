@@ -73,7 +73,6 @@ namespace StudentManagement.Controllers
             return this.View();
         }
 
-        [Authorize(Roles = "Administrator, Teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Leave(Guid? subjectId)

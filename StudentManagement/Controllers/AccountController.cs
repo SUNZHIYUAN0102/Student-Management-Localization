@@ -83,7 +83,7 @@ namespace StudentManagement.Controllers
                 var result = await this.signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
-                    return this.RedirectToAction("Index", "Subjects");
+                    return this.RedirectToAction("MySubject", "UserSubjects");
                 }
 
                 if (result.IsLockedOut)
@@ -226,7 +226,7 @@ namespace StudentManagement.Controllers
                     var confirmationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, Request.Scheme);
                     await SendEmailConfirmationEmail(user, confirmationLink);
 
-                    if (signInManager.IsSignedIn(User) && User.IsInRole("Administrators"))
+                    if (signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
                     {
                         return RedirectToAction("ListUsers", "Admin");
                     }
