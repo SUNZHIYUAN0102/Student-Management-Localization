@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,9 +14,9 @@ namespace StudentManagement.Models.ProjectViewModel
         [Required]
         public string Description { get; set; }
         [Required]
-        public DateTime StartTime { get; set; }
+        public DateTime StartTime { get; set; } = DateTime.Now;
         [Required]
-        public DateTime DeadLine { get; set; }
+        public DateTime DeadLine { get; set; } = DateTime.Now;
 
         [Required]
         public Boolean IsPrivate { get; set; }

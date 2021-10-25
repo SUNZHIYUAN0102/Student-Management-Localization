@@ -6,10 +6,12 @@
 }
 
 <div class="row mb-4" style="justify-content: center;">
-    <div class="card-body col-12 col-lg-8" style="height:15rem;background-image:url(https://www.gstatic.com/classroom/themes/@Model.ThemeName);background-position:center;background-size:cover;color:#fff;justify-content:center;border-radius:.4rem;">
+    <div class="card-body col-12 col-lg-8" style="height:15rem;background-image:url(https://www.gstatic.com/classroom/themes/@Model.ThemeName);background-position:center;background-size:cover;color:#fff;display:flex;justify-content:space-between;border-radius:.4rem;">
         <h1>@Model.Name</h1>
+        <h1><a style="color:white" asp-action="Create" asp-controller="Projects" asp-route-subjectId="@Model.Id"><i class="fas fa-plus"></i></a></h1>
     </div>
 </div>
+
 
 <div class="row" style="justify-content:center">
     <nav class="col-12 col-lg-8">

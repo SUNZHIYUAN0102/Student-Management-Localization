@@ -23,7 +23,6 @@ namespace StudentManagement.Data
 
         public DbSet<Room> Rooms { get; set; }
         public DbSet<UserSubject> UserSubjects { get; set; }
-        public DbSet<UserProject> UserProjects { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,8 +30,6 @@ namespace StudentManagement.Data
 
             modelBuilder.Entity<UserSubject>()
                 .HasKey(x => new { x.UserId, x.SubjectId });
-            modelBuilder.Entity<UserProject>()
-                .HasKey(x => new { x.UserId, x.ProjectId });
 
             //foreach (var foreignKey in modelBuilder.Model.GetEntityTypes()
             //    .SelectMany(e => e.GetForeignKeys()))

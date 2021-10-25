@@ -120,7 +120,7 @@ namespace StudentManagement.Controllers
 
                 this.context.Projects.Add(project);
                 await context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details","Subjects",new { id = project.SubjectId});
             }
             this.ViewBag.Subject = subject;
             return this.View(model);
