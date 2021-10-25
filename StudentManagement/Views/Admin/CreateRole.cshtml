@@ -2,18 +2,31 @@
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 @{ ViewData["Title"] = "Create New Role";}
 
-<h1>@localizer["title"]</h1>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1>Create Role</h1>
+                                </div>
+                                <form method="post" asp-controller="Admin" asp-action="CreateRole" class="user">
+                                    <div asp-validation-summary="All" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <label style="border:none;margin:0;" class="form-control">Role Name</label>
+                                        <input asp-for="RoleName" class="form-control form-control-user">
+                                    </div>
 
-<form asp-controller="Admin" asp-action="CreateRole" method="post" class="form-horizontal">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group col-md-4">
-        <label>@localizer["rolename"]</label>
-        <input asp-for="RoleName" class="form-control" />
-        <span asp-validation-for="RoleName" class="text-danger"></span>
+                                    <button type="submit" class="mb-3 btn btn-primary btn-user btn-block">Create Role</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="form-group col-md-3">
-        <button type="submit" class="btn btn-primary ">@localizer["create"]</button>
-    </div>
-</form>
-
+</div>

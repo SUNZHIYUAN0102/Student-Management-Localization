@@ -107,7 +107,6 @@ namespace StudentManagement.Controllers
             var user = await userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Id = {userId} can't be found";
                 return View("NotFound");
             }
 
