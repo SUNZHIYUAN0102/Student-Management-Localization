@@ -18,6 +18,8 @@ namespace StudentManagement.Models
 
         public User Student { get; set; }
 
+        public User Creator { get; set; }
+
         public DateTime Created { get; set; }
 
         public String Week { get; set; }

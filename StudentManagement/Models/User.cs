@@ -33,12 +33,15 @@ namespace StudentManagement.Models
         {
             get { return FirstName + " " + LastName; }
         }
+
         public ICollection<Note> Notes { get; set; }
 
         public ICollection<UserSubject> UserSubjects { get; set; }
         public ICollection<Project> Projects { get; set; }
 
         public ICollection<Record> Records { get; set; }
+
+        public ICollection<Record> CreatedRecords { get; set; }
 
         public ICollection<Room> Rooms { get; set; }
         public ICollection<Message> Messages { get; set; }

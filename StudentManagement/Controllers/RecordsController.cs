@@ -110,6 +110,8 @@ namespace StudentManagement.Controllers
 
             ViewBag.projectId = project.Id;
 
+            var user = await userManager.GetUserAsync(this.HttpContext.User);
+
             var now = DateTime.Now;
 
             if (this.ModelState.IsValid)
@@ -122,7 +124,8 @@ namespace StudentManagement.Controllers
                     ProjectId = project.Id,
                     Created = now,
                     Note = model.Note,
-                    Progress = model.Progress
+                    Progress = model.Progress,
+                    Creator = user
                 };
 
                 this.context.Records.Add(record);

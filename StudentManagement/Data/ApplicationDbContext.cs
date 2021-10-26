@@ -31,6 +31,14 @@ namespace StudentManagement.Data
             modelBuilder.Entity<UserSubject>()
                 .HasKey(x => new { x.UserId, x.SubjectId });
 
+            modelBuilder.Entity<User>()
+                        .HasMany(b => b.Records)
+                        .WithOne(x => x.Student);
+
+            modelBuilder.Entity<User>()
+                        .HasMany(b => b.CreatedRecords)
+                        .WithOne(x => x.Creator);
+
             //foreach (var foreignKey in modelBuilder.Model.GetEntityTypes()
             //    .SelectMany(e => e.GetForeignKeys()))
             //{
