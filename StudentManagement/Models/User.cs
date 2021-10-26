@@ -33,7 +33,6 @@ namespace StudentManagement.Models
         {
             get { return FirstName + " " + LastName; }
         }
-
         public ICollection<Note> Notes { get; set; }
 
         public ICollection<UserSubject> UserSubjects { get; set; }

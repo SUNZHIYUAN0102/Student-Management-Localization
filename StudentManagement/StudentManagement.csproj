@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20211026092040_Update-Group.cs" />
+    <Compile Remove="Migrations\20211026092040_Update-Group.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="jQuery.UI.Combined" Version="1.12.1" />
     <PackageReference Include="Localization.AspNetCore.TagHelpers" Version="0.6.0" />
     <PackageReference Include="Microsoft.AspNet.SignalR" Version="2.4.2" />
