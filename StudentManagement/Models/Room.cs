@@ -11,8 +11,7 @@ namespace StudentManagement.Models
 
         public string Name { get; set; }
 
-        public string CreatorId { get; set; }
-        public User Creator { get; set; }
+        public User Admin { get; set; }
 
         public ICollection<Message> Messages { get; set; }
     }

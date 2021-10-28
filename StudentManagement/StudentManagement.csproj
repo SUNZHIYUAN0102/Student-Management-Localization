@@ -10,6 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="jQuery.UI.Combined" Version="1.12.1" />
     <PackageReference Include="Localization.AspNetCore.TagHelpers" Version="0.6.0" />
     <PackageReference Include="Microsoft.AspNet.SignalR" Version="2.4.2" />
@@ -37,6 +39,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\lib\knockout\knockout-latest.debug.js" />
+    <None Include="wwwroot\lib\knockout\knockout-latest.debug.min.js" />
+    <None Include="wwwroot\lib\knockout\knockout-latest.debug.min.js.map" />
+    <None Include="wwwroot\lib\knockout\knockout-latest.js" />
+    <None Include="wwwroot\lib\knockout\knockout-latest.min.js" />
+    <None Include="wwwroot\lib\knockout\knockout-latest.min.js.map" />
     <None Include="wwwroot\SubjectThemes\img_birthday.jpg" />
     <None Include="wwwroot\SubjectThemes\img_bookclub.jpg" />
     <None Include="wwwroot\SubjectThemes\img_graduation.jpg" />

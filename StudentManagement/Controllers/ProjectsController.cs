@@ -46,7 +46,7 @@ namespace StudentManagement.Controllers
 
             var user = await this.userManager.GetUserAsync(this.HttpContext.User);
 
-            ViewBag.profileImg = user.ImagePath;
+            ViewBag.profileImg = user.Avatar;
 
             var project = await context.Projects
                 .Include(p => p.Creator)

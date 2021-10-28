@@ -9,13 +9,10 @@ namespace StudentManagement.Models
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public string Text { get; set; }
-        public DateTime Created { get; set; }
-
-        public string CreatorId { get; set; }
-        public User Creator { get; set; }
-
-        public Guid RoomId { get; set; }
-        public Room Room { get; set; }
+        public string Content { get; set; }
+        public DateTime Timestamp { get; set; }
+        public User FromUser { get; set; }
+        public Guid ToRoomId { get; set; }
+        public Room ToRoom { get; set; }
     }
 }

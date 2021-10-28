@@ -45,7 +45,7 @@
         @foreach (var note in Model.Project.Notes)
         {
             <div class="card-header" style="border:none;display:flex;align-items:center">
-                <img class="mr-2" src="~/uploads/@note.Creator.ImagePath" style="width:40px;height:40px;border-radius:50%" />
+                <img class="mr-2" src="~/uploads/@note.Creator.Avatar" style="width:40px;height:40px;border-radius:50%" />
                 <div>
                     <p style="margin:0">@note.Creator.FullName @note.Created.ToShortTimeString()</p>
                     <p style="margin:0">@note.Text</p>

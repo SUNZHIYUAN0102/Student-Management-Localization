@@ -10,7 +10,7 @@ namespace StudentManagement.Models
 
         public string LastName { get; set; }
 
-        public string ImagePath { get; set; }
+        public string Avatar { get; set; }
 
         public DateTime Registered { get; set; }
 

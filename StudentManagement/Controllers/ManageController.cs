@@ -79,7 +79,7 @@ namespace StudentManagement.Controllers
                 return this.View("Error");
             }
 
-            ViewBag.ImagePath = user.ImagePath;
+            ViewBag.ImagePath = user.Avatar;
 
             return this.View(new ProfileViewModel
             {
@@ -108,7 +108,7 @@ namespace StudentManagement.Controllers
                 var user = await this.GetCurrentUserAsync();
                 if(user != null)
                 {
-                    user.ImagePath = file.FileName;
+                    user.Avatar = file.FileName;
 
                     var result = await userManager.UpdateAsync(user);
                     if (result.Succeeded)

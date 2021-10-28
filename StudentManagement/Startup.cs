@@ -69,7 +69,12 @@ namespace StudentManagement
             services.AddScoped<UserService>();
             services.AddScoped<IEmailService, EmailService>();
 
-            services.AddSignalR();
+            services.AddSignalR(o =>
+            {
+                o.EnableDetailedErrors = true;
+            });
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddLocalization(opt => { opt.ResourcesPath = "Resources"; });
             services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
@@ -137,7 +142,7 @@ namespace StudentManagement
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=UserSubjects}/{action=MySubject}/{id?}");
-                endpoints.MapHub<ChatHub>("/Chat/Index");
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
         }
     } 

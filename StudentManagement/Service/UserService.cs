@@ -30,20 +30,10 @@ namespace StudentManagement.Service
         {
             var user = await this.userManager.FindByNameAsync(username);
 
-            var Picture = user.ImagePath;
+            var Picture = user.Avatar;
 
             return Picture;
         }
-
-        public async Task<string> GetNoteCreatorProfile(string email)
-        {
-            var user = await this.userManager.FindByEmailAsync(email);
-
-            var Picture = user.ImagePath;
-
-            return Picture;
-        }
-
 
         public async Task<List<string>> GetRole(string username)
         {
