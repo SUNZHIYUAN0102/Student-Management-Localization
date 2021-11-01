@@ -55,7 +55,7 @@ namespace StudentManagement.Controllers
                 return View("~/Views/Shared/NotFound.cshtml");
             }
 
-            return this.View(subject);
+            return View(new SubjectDetailViewModel { Subject = subject });
         }
 
         [Authorize(Roles = "Administrator, Teacher")]

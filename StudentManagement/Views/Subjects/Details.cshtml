@@ -1,4 +1,4 @@
-﻿@model StudentManagement.Models.Subject
+﻿@model StudentManagement.Models.SubjectViewModel.SubjectDetailViewModel
 
 @{
     ViewData["Title"] = "Subject's Deatil";
@@ -6,9 +6,9 @@
 }
 
 <div class="row mb-4" style="justify-content: center;">
-    <div class="card-body col-12 col-lg-8" style="height:15rem;background-image:url(https://www.gstatic.com/classroom/themes/@Model.ThemeName);background-position:center;background-size:cover;color:#fff;display:flex;justify-content:space-between;border-radius:.4rem;">
-        <h1>@Model.Name</h1>
-        <h1><a style="color:white" asp-action="Create" asp-controller="Projects" asp-route-subjectId="@Model.Id"><i class="fas fa-plus"></i></a></h1>
+    <div class="card-body col-12 col-lg-8" style="height:15rem;background-image:url(https://www.gstatic.com/classroom/themes/@Model.Subject.ThemeName);background-position:center;background-size:cover;color:#fff;display:flex;justify-content:space-between;border-radius:.4rem;">
+        <h1>@Model.Subject.Name</h1>
+        <h1><a style="color:white" asp-action="Create" asp-controller="Projects" asp-route-subjectId="@Model.Subject.Id"><i class="fas fa-plus"></i></a></h1>
     </div>
 </div>
 
@@ -23,7 +23,7 @@
     </nav>
     <div class="tab-content col-12 col-lg-8" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-project" role="tabpanel" aria-labelledby="nav-project-tab">
-            @foreach (var item in Model.Projects)
+            @foreach (var item in Model.Subject.Projects)
             {
                 <div class="card shadow mb-4 mt-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -66,13 +66,13 @@
             }
         </div>
         <div class="tab-pane fade" id="nav-code" role="tabpanel" aria-labelledby="nav-code-tab">
-            @if (Model.Code != null)
+            @if (Model.Subject.Code != null)
             {
                 <div class="container mt-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="border:2px dashed #d1d3e2;border-radius:.5rem">
                         <div style="display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start">
                             <h5 class="m-0 font-weight-bold text-primary">Subject's Code</h5>
-                            <h6 class="m-0 font-weight-bold mt-2">@Model.Code</h6>
+                            <h6 class="m-0 font-weight-bold mt-2">@Model.Subject.Code</h6>
                         </div>
                         <div class="dropdown no-arrow">
                             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -80,11 +80,11 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                                 <div class="dropdown-header">Code Setting:</div>
-                                <form method="post" asp-action="ResetCode" asp-controller="Subjects" asp-route-subjectId="@Model.Id">
+                                <form method="post" asp-action="ResetCode" asp-controller="Subjects" asp-route-subjectId="@Model.Subject.Id">
                                     <button type="submit" class="dropdown-item">Reset Subject's Code</button>
                                 </form>
                                 <div class="dropdown-divider"></div>
-                                <form method="post" asp-action="RemoveCode" asp-controller="Subjects" asp-route-subjectId="@Model.Id">
+                                <form method="post" asp-action="RemoveCode" asp-controller="Subjects" asp-route-subjectId="@Model.Subject.Id">
                                     <button type="submit" class="dropdown-item">Close Subject's Code</button>
                                 </form>
                             </div>
@@ -94,7 +94,7 @@
             }
             else
             {
-               <form method="post" asp-action="ResetCode" asp-controller="Subjects" asp-route-subjectId="@Model.Id">
+               <form method="post" asp-action="ResetCode" asp-controller="Subjects" asp-route-subjectId="@Model.Subject.Id">
                    <button class="btn btn-primary mt-4" type="submit">Generate Subject's Code</button>
                </form>
             }

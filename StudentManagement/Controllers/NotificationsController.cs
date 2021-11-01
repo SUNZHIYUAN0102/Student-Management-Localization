@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using StudentManagement.Data;
 using StudentManagement.Models;
 using StudentManagement.Models.ProjectViewModel;
+using StudentManagement.Models.SubjectViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace StudentManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Guid? subjectId, ProjectDetailViewModel model)
+        public async Task<IActionResult> Create(Guid? subjectId, SubjectDetailViewModel model)
         {
             if(subjectId == null)
             {
@@ -49,6 +50,18 @@ namespace StudentManagement.Controllers
             {
                 var user = await this.userManager.GetUserAsync(this.HttpContext.User);
                 var now = DateTime.Now;
+                var notification = new Notification()
+                {
+                    Text = model.NotificationCreateViewModel.Text,
+                    Created = now,
+                    SubjectId = subject.Id,
+                    Creator = user
+                };
+
+                this.context.Notifications.Add(notification);
+                await this.context.SaveChangesAsync();
+
+                return RedirectToAction("Details", "Subjects", new { id = subject.Id });
             }
 
             return View();
