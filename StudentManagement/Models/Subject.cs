@@ -21,6 +21,7 @@ namespace StudentManagement.Models
 
         public ICollection<Project> Projects { get; set; }
 
+        public ICollection<Notification> Notifications { get; set; }
         public ICollection<UserSubject> UserSubjects { get; set; }
 
     }

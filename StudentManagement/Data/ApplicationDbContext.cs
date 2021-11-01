@@ -17,6 +17,7 @@ namespace StudentManagement.Data
 
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
         public DbSet<Note> Notes { get; set; }
         public DbSet<Record> Records { get; set; }
         public DbSet<Message> Messages { get; set; }

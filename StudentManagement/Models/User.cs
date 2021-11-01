@@ -37,7 +37,7 @@ namespace StudentManagement.Models
 
         public ICollection<UserSubject> UserSubjects { get; set; }
         public ICollection<Project> Projects { get; set; }
-
+        public ICollection<Notification> Notifications { get; set; }
         public ICollection<Record> Records { get; set; }
 
         public ICollection<Record> CreatedRecords { get; set; }
