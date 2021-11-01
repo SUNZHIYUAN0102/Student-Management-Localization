@@ -17,6 +17,7 @@
     <nav class="col-12 col-lg-8">
         <div class="nav nav-tabs" id="nav-tab" role="tablist" style="justify-content:center">
             <a class="nav-link active" id="nav-project-tab" data-toggle="tab" href="#nav-project" role="tab" aria-controls="nav-project" aria-selected="true" style="flex:1;text-align:center">Projects</a>
+            <a class="nav-link" id="nav-notification-tab" data-toggle="tab" href="#nav-notification" role="tab" aria-controls="nav-notification" aria-selected="false" style="flex:1;text-align:center">Notifications</a>
             <a class="nav-link" id="nav-user-tab" data-toggle="tab" href="#nav-user" role="tab" aria-controls="nav-user" aria-selected="false" style="flex:1;text-align:center">Users</a>
             <a class="nav-link" id="nav-code-tab" data-toggle="tab" href="#nav-code" role="tab" aria-controls="nav-code" aria-selected="false" style="flex:1;text-align:center">Code</a>
         </div>
@@ -47,6 +48,22 @@
                     </div>
                 </div>
             }
+        </div>
+        <div class="tab-pane fade" id="nav-notification" role="tabpanel" aria-labelledby="nav-notification-tab">
+            <form id="createNotification" method="post" asp-action="Create" asp-controller="Notifications" asp-route-subjectId="@Model.Subject.Id">
+                <div class="card shadow mt-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">@Model.Subject.Name's Notification</h6>
+                        <div style="cursor:pointer" onclick="initMap()"><i class="fas fa-map-marker-alt"></i></div>
+                    </div>
+
+                    <div class="card-body">
+                        <input class="form-control form-control-user" asp-for="NotificationCreateViewModel.Text" />
+                        <div id="map" class="mt-3 mb-3"></div>
+                        <a href="#" class="btn btn-primary btn-user btn-block" onclick="document.getElementById('createNotification').submit();"><i class="fas fa-check-circle"></i></a>
+                    </div>
+                </div>
+            </form>
         </div>
         <div class="tab-pane fade" id="nav-user" role="tabpanel" aria-labelledby="nav-user-tab">
             @foreach (var item in ViewBag.users)
@@ -94,17 +111,57 @@
             }
             else
             {
-               <form method="post" asp-action="ResetCode" asp-controller="Subjects" asp-route-subjectId="@Model.Subject.Id">
-                   <button class="btn btn-primary mt-4" type="submit">Generate Subject's Code</button>
-               </form>
+                <form method="post" asp-action="ResetCode" asp-controller="Subjects" asp-route-subjectId="@Model.Subject.Id">
+                    <button class="btn btn-primary mt-4" type="submit">Generate Subject's Code</button>
+                </form>
             }
         </div>
 
     </div>
 </div>
 
-<script>
-    function shareLink(projectId) {
-        navigator.clipboard.writeText("meowww");
-    }
-</script>
+@section Scripts{
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLX5eXlHSgEOZ-fqhZzNRHc7uo_Zbhj00"></script>
+
+    <script type="text/javascript">
+        function initMap() {
+            const myLatlng = { lat: 56.468994804578905, lng: 84.94389999859904 };
+
+            var div = document.getElementById("map");
+
+            div.style.width = "100%";
+            div.style.height = 300 + "px";
+
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 12,
+                center: myLatlng,
+            });
+
+            // Create the initial InfoWindow.
+            let infoWindow = new google.maps.InfoWindow({
+                content: "Selecte Your Address",
+                position: myLatlng,
+            });
+
+            console.log(infoWindow.position);
+
+            infoWindow.open(map);
+            // Configure the click listener.
+            map.addListener("click", (mapsMouseEvent) => {
+                // Close the current InfoWindow.
+                infoWindow.close();
+                // Create a new InfoWindow.
+                infoWindow = new google.maps.InfoWindow({
+                    position: mapsMouseEvent.latLng,
+                });
+                infoWindow.setContent(
+                    JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+                );
+                infoWindow.open(map);
+
+            });
+
+
+        }
+    </script>
+}
