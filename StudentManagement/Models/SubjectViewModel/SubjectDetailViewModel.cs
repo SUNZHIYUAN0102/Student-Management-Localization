@@ -10,5 +10,7 @@ namespace StudentManagement.Models.SubjectViewModel
         public Subject Subject { get; set; }
 
         public NotificationViewModel.NotificationCreateViewModel NotificationCreateViewModel { get; set; }
+
+        public AttendanceViewModel.AttendanceCreateViewModel AttendanceCreateViewModel { get; set; }
     }
 }

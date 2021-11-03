@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using StudentManagement.Data;
 using StudentManagement.Models;
@@ -43,12 +44,18 @@ namespace StudentManagement.Controllers
                 return View("~/Views/Shared/NotFound.cshtml");
             }
             var subject = await this.context.Subjects
-                .Include(x=>x.Projects)
+                .Include(x => x.Projects)
                 .Include(x => x.UserSubjects)
                 .ThenInclude(x => x.User)
+                .Include(x => x.Notifications)
+                .Include(x => x.Attendances).ThenInclude(x => x.Student)
                 .SingleOrDefaultAsync(x => x.Id == id);
 
             ViewBag.users = subject.UserSubjects.GroupBy(x => x.Role);
+
+            var students = subject.UserSubjects.Where(x => x.Role == "Student").Select(x => x.User);
+
+            ViewBag.Students = new SelectList(students, "Id", "FullName");
 
             if (subject == null)
             {
