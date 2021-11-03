@@ -20,6 +20,7 @@ namespace StudentManagement.Models
         public string ThemeName { get; set; }
 
         public ICollection<Project> Projects { get; set; }
+        public ICollection<Attendance> Attendances { get; set; }
 
         public ICollection<Notification> Notifications { get; set; }
         public ICollection<UserSubject> UserSubjects { get; set; }

@@ -40,6 +40,7 @@ namespace StudentManagement.Models
         public ICollection<Notification> Notifications { get; set; }
         public ICollection<Record> Records { get; set; }
 
+        public ICollection<Attendance> Attendances { get; set; }
         public ICollection<Record> CreatedRecords { get; set; }
 
         public ICollection<Room> Rooms { get; set; }
