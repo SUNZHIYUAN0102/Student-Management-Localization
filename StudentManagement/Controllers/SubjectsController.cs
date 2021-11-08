@@ -57,6 +57,9 @@ namespace StudentManagement.Controllers
 
             ViewBag.Students = new SelectList(students, "Id", "FullName");
 
+            ViewBag.AttendanceStudents = students;
+            ViewBag.Attendance = subject.Attendances;
+
             if (subject == null)
             {
                 return View("~/Views/Shared/NotFound.cshtml");

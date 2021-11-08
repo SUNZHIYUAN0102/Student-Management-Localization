@@ -29,7 +29,8 @@
 
     <link href="~/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
-    <link href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css" rel="stylesheet"/>
+    <link href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css" rel="stylesheet" />
+    <link href='~/vendor/fullcalendar-5.10.1/lib//main.css' rel='stylesheet' />
 </head>
 <body id="page-top">
     <div id="wrapper">
@@ -95,7 +96,6 @@
                     <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">My Pages:</h6>
-                            <a class="collapse-item" asp-action="Index" asp-controller="Subjects">All Subjects</a>
                             <a class="collapse-item" asp-action="MySubject" asp-controller="UserSubjects">My Subject</a>
                             <a class="collapse-item" href="utilities-animation.html">Animations</a>
                             <a class="collapse-item" href="utilities-other.html">Other</a>
@@ -124,7 +124,7 @@
                             <a class="collapse-item" asp-action="ListUsers" asp-controller="Admin">All Users</a>
                             <a class="collapse-item" asp-action="ListRoles" asp-controller="Admin">All Roles</a>
                             <div class="collapse-divider"></div>
-  
+
                         </div>
                     </div>
                 </li>
@@ -401,6 +401,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+    <script src='~/vendor/fullcalendar-5.10.1//lib/main.js'></script>
     @RenderSection("Scripts", required: false)
     @RenderSection("Styles", required: false)
 </body>

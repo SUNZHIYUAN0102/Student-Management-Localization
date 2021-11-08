@@ -75,13 +75,34 @@
             <form id="createAttendance" method="post" asp-action="Create" asp-controller="Attendances" asp-route-subjectId="@Model.Subject.Id">
                 <div class="row mt-4 mb-4" style="display:flex;justify-content:center">
                     <select asp-for="AttendanceCreateViewModel.StudentId" class="col-4 form-control form-control-user" asp-items="@ViewBag.Students"></select>
-                    <input class="col-4 ml-3 mr-3 form-control form-control-user" type="date" asp-for="AttendanceCreateViewModel.PickedDate" />
+                    <input class="col-4 ml-3 mr-3 form-control form-control-user" asp-for="AttendanceCreateViewModel.PickedDate" type="date" />
                     <a href="#" class="col-1 btn btn-primary btn-user btn-block" onclick="document.getElementById('createAttendance').submit();"><i class="fas fa-check-circle"></i></a>
                     <button type="button" class="ml-3 col-1 btn btn-primary" data-toggle="modal" data-target="#attendanceModal">
                         <i class="fas fa-table"></i>
                     </button>
                 </div>
             </form>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            @for (var numb = 1; numb <= DaysInmonth; numb++)
+                            {
+                                <th>@numb</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.AttendanceStudents)
+                        {
+                            <tr>
+                                <td>@item.FullName</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="tab-pane fade" id="nav-user" role="tabpanel" aria-labelledby="nav-user-tab">
             @foreach (var item in ViewBag.users)
@@ -140,7 +161,7 @@
 
 <div class="modal fade" id="attendanceModal" tabindex="-1" role="dialog" aria-labelledby="attendanceModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content" style="width:800px">
             <div class="modal-header">
                 <h5 class="modal-title">Attendance Table</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -148,18 +169,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Student Name</th>
-                            @for (var numb = 1; numb <= DaysInmonth; numb++)
-                            {
-                               <th>@numb</th>
-                            }
-                        </tr>
-
-                    </thead>
-                </table>
+                
             </div>
         </div>
     </div>
@@ -216,6 +226,4 @@
             backgroundBox.style.display = "none";
         }
     </script>
-
-    <script src="~/js/demo/datatables-demo.js"></script>
 }
