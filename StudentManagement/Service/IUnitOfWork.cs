@@ -10,7 +10,7 @@ namespace StudentManagement.Service
 {
     public interface IUnitOfWork
     {
-        void UploadImage(IFormFile file);
+        void UploadFile(IFormFile file);
     }
 
     public class UnitOfWork : IUnitOfWork
@@ -21,7 +21,7 @@ namespace StudentManagement.Service
             this.hostingEnvironment = hostingEnvironment;
         }
 
-        public async void UploadImage(IFormFile file)
+        public async void UploadFile(IFormFile file)
         {
             long totalBytes = file.Length;
             string filename = file.FileName.Trim('"');

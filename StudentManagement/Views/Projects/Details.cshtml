@@ -9,10 +9,15 @@
     ViewData["Title"] = "Project's Detail Page";
 }
 
-<div class="container col-12 col-lg-8" style="position:relative">
+<div class="container col-7" style="position:relative">
     <div style="width:40px;height:40px;background-color:#4285f4;border-radius:50%;color:#fff;display:flex;justify-content:center;align-items:center;position:absolute;top:15px;left:-15px"><i class="fas fa-award"></i></div>
-    <div style="width:100px;min-height:200px;position:absolute;top:15px;right:-95px;background-color:pink">Meow</div>
-    <div class="card-header py-3 " style="border-bottom:2px solid #1e8e3e;">
+    <div style="width:220px;min-height:200px;position:absolute;top:15px;right:-210px;border-radius:15px;border:2px dashed black;overflow:hidden;padding:15px;">
+        <form method="post" asp-action="Upload" asp-controller="Attachments" asp-route-projectId="@Model.Project.Id" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+    <div class="card-header py-3 " style="border-bottom:2px solid #d1d1d1;">
         <div class="row" style="display:flex; justify-content:space-between; align-items:center">
             <h2 class="m-0 font-weight-bold text-primary" style="color:#137333">@Model.Project.Title</h2>
             <div class="dropdown no-arrow">

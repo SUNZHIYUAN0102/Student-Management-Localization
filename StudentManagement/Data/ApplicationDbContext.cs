@@ -24,6 +24,7 @@ namespace StudentManagement.Data
         public DbSet<Record> Records { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<Attachment> Attachments { get; set; }
         public DbSet<UserSubject> UserSubjects { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
