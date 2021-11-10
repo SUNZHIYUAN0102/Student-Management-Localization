@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using StudentManagement.Data;
 using StudentManagement.Models;
 using StudentManagement.Models.EventViewModel;
@@ -32,6 +33,14 @@ namespace StudentManagement.Controllers
             return this.View(new EventDetailViewModel {Events = myEvent });
         }
 
+        [HttpGet]
+        public async Task<JsonResult> GetEvents()
+        {
+            var user = await this.userManager.GetUserAsync(this.HttpContext.User);
+            var myEvent = this.dbcontext.Events.Include(x => x.User).Where(x => x.User == user);
+            return Json(new { data = myEvent});
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(EventDetailViewModel model)
@@ -45,7 +54,8 @@ namespace StudentManagement.Controllers
                     Description = model.EventCreateViewModel.Description,
                     StartTime = model.EventCreateViewModel.StartTime,
                     EndTime = model.EventCreateViewModel.EndTime,
-                    UserId = user.Id
+                    UserId = user.Id,
+                    ThemeColor = model.EventCreateViewModel.ThemeColor
                 };
 
                 this.dbcontext.Events.Add(myEvent);

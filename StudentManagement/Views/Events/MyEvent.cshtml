@@ -63,27 +63,49 @@
 
 </div>
 
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><span id="eventTitle"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="pDetails"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @section Scripts{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
     <script>
         $(document).ready(function () {
             var events = [];
             $.ajax({
                 type: "GET",
-                url: "/home/GetEvents",
+                url: "/Events/GetEvents",
                 success: function (data) {
                     $.each(data, function (i, v) {
-                        events.push({
-                            title: v.Subject,
-                            description: v.Description,
-                            start: moment(v.Start),
-                            end: v.End != null ? moment(v.End) : null,
-                            color: v.ThemeColor,
-                            allDay: v.IsFullDay
-                        });
+                        $.each(v, function (index, value) {
+                            events.push({
+                                title: value.title,
+                                description: value.description,
+                                start: moment(value.startTime),
+                                end: moment(value.endTime),
+                                color: value.themeColor,
+                            });
+                        })
                     })
 
+                    console.log(events);
                     GenerateCalender(events);
                 },
                 error: function (error) {
@@ -92,9 +114,8 @@
             })
 
             function GenerateCalender(events) {
-                $('#calender').fullCalendar('destroy');
-                $('#calender').fullCalendar({
-                    contentHeight: 400,
+                $('#calendar').fullCalendar('destroy');
+                $('#calendar').fullCalendar({
                     defaultDate: new Date(),
                     timeFormat: 'h(:mm)a',
                     header: {
@@ -108,11 +129,9 @@
                     eventClick: function (calEvent, jsEvent, view) {
                         $('#myModal #eventTitle').text(calEvent.title);
                         var $description = $('<div/>');
-                        $description.append($('<p/>').html('<b>Start:</b>' + calEvent.start.format("DD-MMM-YYYY HH:mm a")));
-                        if (calEvent.end != null) {
-                            $description.append($('<p/>').html('<b>End:</b>' + calEvent.end.format("DD-MMM-YYYY HH:mm a")));
-                        }
-                        $description.append($('<p/>').html('<b>Description:</b>' + calEvent.description));
+                        $description.append($('<p/>').html('<b>Start: </b>' + calEvent.start.format("DD-MMM-YYYY HH:mm a")));
+                        $description.append($('<p/>').html('<b>End: </b>' + calEvent.end.format("DD-MMM-YYYY HH:mm a")));
+                        $description.append($('<p/>').html('<b>Description: </b>' + calEvent.description));
                         $('#myModal #pDetails').empty().html($description);
 
                         $('#myModal').modal();

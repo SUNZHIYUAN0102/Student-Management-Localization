@@ -38,8 +38,11 @@ namespace StudentManagement
         {
 
             services.AddControllersWithViews()
-                .AddRazorRuntimeCompilation();
-       
+                .AddRazorRuntimeCompilation()
+                .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
