@@ -17,6 +17,8 @@ namespace StudentManagement.Models
 
         public DateTime EndTime { get; set; }
 
+        public string ThemeColor { get; set; }
+
         public string UserId { get; set; }
 
         public User User { get; set; }

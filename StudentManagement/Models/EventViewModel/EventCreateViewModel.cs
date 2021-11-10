@@ -19,5 +19,8 @@ namespace StudentManagement.Models.EventViewModel
 
         [Required]
         public DateTime EndTime { get; set; } = DateTime.Now;
+
+        [Required]
+        public string ThemeColor { get; set; }
     }
 }
