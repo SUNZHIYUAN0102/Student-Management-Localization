@@ -27,6 +27,8 @@ namespace StudentManagement.Data
         public DbSet<Attachment> Attachments { get; set; }
         public DbSet<UserSubject> UserSubjects { get; set; }
 
+        public DbSet<Event> Events { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

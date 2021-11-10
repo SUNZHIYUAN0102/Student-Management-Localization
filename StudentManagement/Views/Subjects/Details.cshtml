@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Subject's Deatil";
     var DaysInmonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+
+    var CurrentName = new List<string>();
 }
 
 <div class="row mb-4" style="justify-content: center;">
@@ -94,12 +96,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in ViewBag.AttendanceStudents)
-                        {
-                            <tr>
-                                <td>@item.FullName</td>
-                            </tr>
-                        }
+                        <tr>
+                            @foreach (var student in ViewBag.AttendanceStudents)
+                            {
+                                <td>@student.FullName</td>
+                            }
+                            @foreach (var item in Model.Subject.Attendances)
+                            {
+                                @for (var num = 1; num <= DaysInmonth; num++)
+                                {
+                                    <td>
+                                        @{
+                                            var GetThatDayValue = Model.Subject.Attendances.Where(x => x.PickedDate.Day == num && x.Student.FullName == item.Student.FullName).FirstOrDefault();
+                                            var Date = GetThatDayValue != null ? "Attend" : "Absent";
+                                            <text>@Date</text>
+                                        }
+                                    </td>
+                                }
+                            }
+                        </tr>
                     </tbody>
                 </table>
             </div>

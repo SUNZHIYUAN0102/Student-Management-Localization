@@ -13,8 +13,8 @@
     <div style="width:40px;height:40px;background-color:#4285f4;border-radius:50%;color:#fff;display:flex;justify-content:center;align-items:center;position:absolute;top:15px;left:-15px"><i class="fas fa-award"></i></div>
     <div style="width:220px;min-height:200px;position:absolute;top:15px;right:-210px;border-radius:15px;border:2px dashed black;overflow:hidden;padding:15px;">
         <form method="post" asp-action="Upload" asp-controller="Attachments" asp-route-projectId="@Model.Project.Id" enctype="multipart/form-data">
-            <input type="file" name="file">
-            <button type="submit">Upload</button>
+            <input class="mb-3" type="file" name="file" />
+            <button class="upload ml-2" type="submit">Upload a file</button>
         </form>
     </div>
     <div class="card-header py-3 " style="border-bottom:2px solid #d1d1d1;">

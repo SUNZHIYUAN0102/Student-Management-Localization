@@ -46,6 +46,7 @@ namespace StudentManagement.Models
         public ICollection<Room> Rooms { get; set; }
         public ICollection<Message> Messages { get; set; }
 
+        public ICollection<Event> Events { get; set; }
         public ICollection<Attachment> Attachments { get; set; }
     }
 
