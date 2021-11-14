@@ -30,7 +30,7 @@ namespace StudentManagement.Controllers
         {
             var user = await this.userManager.GetUserAsync(this.HttpContext.User);
             var myEvent = await this.dbcontext.Events.Include(x => x.User).Where(x => x.User == user).ToListAsync();
-            return this.View(new EventDetailViewModel {Events = myEvent });
+            return this.View(new EventDetailViewModel { Events = myEvent });
         }
 
         [HttpGet]
@@ -38,7 +38,21 @@ namespace StudentManagement.Controllers
         {
             var user = await this.userManager.GetUserAsync(this.HttpContext.User);
             var myEvent = this.dbcontext.Events.Include(x => x.User).Where(x => x.User == user);
-            return Json(new { data = myEvent});
+            return Json(new { data = myEvent });
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> DeleteEvent(Guid eventId)
+        {
+            var status = false;
+            var v = await this.dbcontext.Events.Where(x => x.Id == eventId).SingleOrDefaultAsync();
+            if (v != null)
+            {
+                this.dbcontext.Remove(v);
+                await this.dbcontext.SaveChangesAsync();
+                status = true;
+            }
+            return Json(new { Data = new { status = status } });
         }
 
         [HttpPost]

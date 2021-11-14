@@ -73,6 +73,9 @@
                 </button>
             </div>
             <div class="modal-body">
+                <button id="btnDelete" class="btn btn-danger btn-sm float-right">
+                    <span class="glyphicon glyphicon-remove"></span> Remove
+                </button>
                 <p id="pDetails"></p>
             </div>
             <div class="modal-footer">
@@ -89,6 +92,7 @@
     <script>
         $(document).ready(function () {
             var events = [];
+            var selectedEvent = null;
             $.ajax({
                 type: "GET",
                 url: "/Events/GetEvents",
@@ -96,6 +100,7 @@
                     $.each(data, function (i, v) {
                         $.each(v, function (index, value) {
                             events.push({
+                                eventId: value.id,
                                 title: value.title,
                                 description: value.description,
                                 start: moment(value.startTime),
@@ -125,8 +130,11 @@
                     },
                     eventLimit: true,
                     eventColor: '#378006',
+                    eventTextColor: '#fff',
                     events: events,
                     eventClick: function (calEvent, jsEvent, view) {
+                        selectedEvent = calEvent;
+                        console.log(selectedEvent);
                         $('#myModal #eventTitle').text(calEvent.title);
                         var $description = $('<div/>');
                         $description.append($('<p/>').html('<b>Start: </b>' + calEvent.start.format("DD-MMM-YYYY HH:mm a")));
@@ -135,6 +143,22 @@
                         $('#myModal #pDetails').empty().html($description);
 
                         $('#myModal').modal();
+                        $('#btnDelete').click(function () {
+                            if (selectedEvent != null && confirm('Are you sure?')) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/Events/DeleteEvent',
+                                    data: { 'eventId': selectedEvent.eventId },
+                                    success: function (data) {
+                                        FetchEventAndRenderCalendar();
+                                        $('#myModal').modal('hide');
+                                    },
+                                    error: function () {
+                                        alert('Failed');
+                                    }
+                                })
+                            }
+                        })
                     }
                 })
             }
