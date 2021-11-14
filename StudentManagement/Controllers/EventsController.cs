@@ -62,6 +62,7 @@ namespace StudentManagement.Controllers
             if (this.ModelState.IsValid)
             {
                 var user = await this.userManager.GetUserAsync(this.HttpContext.User);
+
                 var myEvent = new Event
                 {
                     Title = model.EventCreateViewModel.Title,

@@ -42,6 +42,7 @@
                     <div class="form-group">
                         <label style="border:none;margin:0;padding:0" class="form-control">Theme Color</label>
                         <select asp-for="EventCreateViewModel.ThemeColor" class="form-control form-control-user">
+                            <option value="">Default</option>
                             <option value="Black">Black</option>
                             <option value="Red">Red</option>
                             <option value="Green">Green</option>
@@ -150,8 +151,11 @@
                                     url: '/Events/DeleteEvent',
                                     data: { 'eventId': selectedEvent.eventId },
                                     success: function (data) {
-                                        FetchEventAndRenderCalendar();
-                                        $('#myModal').modal('hide');
+                                        console.log(data);
+                                        if (data.status == true) {
+                                            FetchEventAndRenderCalendar();
+                                            $('#myModal').modal('hide');
+                                        }
                                     },
                                     error: function () {
                                         alert('Failed');
