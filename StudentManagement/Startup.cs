@@ -146,6 +146,7 @@ namespace StudentManagement
                     name: "default",
                     pattern: "{controller=UserSubjects}/{action=MySubject}/{id?}");
                 endpoints.MapHub<ChatHub>("/chatHub");
+                endpoints.MapHub<CounterHub>("/counterHub");
             });
         }
     } 
