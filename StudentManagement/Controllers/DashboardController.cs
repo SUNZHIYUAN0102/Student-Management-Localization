@@ -23,9 +23,15 @@ namespace StudentManagement.Controllers
         {
             ViewBag.TotalUsers = this.dbcontext.Users.Count();
             ViewBag.TotalSubjects = this.dbcontext.Subjects.Count();
-            ViewBag.TotalProjects = this.dbcontext.Projects.Count();
             ViewBag.TotalRooms = this.dbcontext.Rooms.Count();
             return View();
+        }
+
+        [HttpGet]
+        public JsonResult GetProjects()
+        {
+            var Projects = this.dbcontext.Projects.AsEnumerable().GroupBy(x => x.Created.Month);
+            return Json(new { data = Projects });
         }
     }
 }
