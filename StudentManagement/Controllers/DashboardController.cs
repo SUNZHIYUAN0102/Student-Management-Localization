@@ -30,7 +30,7 @@ namespace StudentManagement.Controllers
         [HttpGet]
         public JsonResult GetProjects()
         {
-            var Projects = this.dbcontext.Projects.AsEnumerable().GroupBy(x => x.Created.Month);
+            var Projects = this.dbcontext.Projects.OrderBy(x=>x.Created).AsEnumerable().GroupBy(x => x.Created.Month);
             return Json(new { data = Projects });
         }
     }

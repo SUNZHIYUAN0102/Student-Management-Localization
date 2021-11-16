@@ -7,12 +7,10 @@ $.ajax({
     type: "GET",
     url: "/Dashboard/GetProjects",
     success: function (data) {
-        $.each(data, function (i, v) {
-            $.each(v, function (index, value) {
-                var num = value[0].created.substr(5, 2);
-                month.push(monthName[num - 1]);
-                amount.push(value.length);
-            })
+        $.each(data.data, function (index, value) {
+            var num = value[0].created.substr(5, 2);
+            month.push(monthName[num - 1]);
+            amount.push(value.length);
         })
     }
 })
