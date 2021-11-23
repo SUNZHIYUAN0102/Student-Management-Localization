@@ -16,11 +16,13 @@ namespace StudentManagement.Controllers
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<User> userManager;
+        private readonly SignInManager<User> signinManager;
 
-        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
+        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
+            this.signinManager = signInManager;
         }
 
         [HttpGet]
@@ -146,7 +148,9 @@ namespace StudentManagement.Controllers
             var roles = await userManager.GetRolesAsync(user);
 
             var result = await userManager.RemoveFromRolesAsync(user, roles);
-            if(!result.Succeeded)
+
+
+            if (!result.Succeeded)
             {
                 ModelState.AddModelError("", "Can't remove user existing roles");
                 return View(model);
@@ -361,6 +365,7 @@ namespace StudentManagement.Controllers
                     if (i < (model.Count - 1))
                         continue;
                     else
+                 
                         return RedirectToAction("EditRole", new { Id = roleId });
                 }
             }

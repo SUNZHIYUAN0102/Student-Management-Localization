@@ -17,8 +17,6 @@ using Microsoft.Extensions.Configuration;
 
 namespace StudentManagement.Controllers
 {
-    //Test
-    //meow
     [Authorize]
     public class AccountController : Controller
     {

@@ -105,7 +105,9 @@ namespace StudentManagement
                     options.AppId = "902776780127477";
                     options.AppSecret = "131c4129875fe50edca7a1a4f33fe890";
                 });
-       
+
+            services.Configure<SecurityStampValidatorOptions>(options => { options.ValidationInterval = TimeSpan.FromMinutes(1); });
+
             services.AddRazorPages();
             services.AddAuthentication();
             services.AddAuthorization();
