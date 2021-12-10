@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StudentManagement.Models
 {
-    public class MyRole
+    public class RoleInformation
     {
         public string RoleName { get; set; }
 
