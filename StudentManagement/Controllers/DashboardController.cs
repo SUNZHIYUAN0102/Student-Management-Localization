@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using StudentManagement.Data;
 using StudentManagement.Models;
@@ -21,6 +22,8 @@ namespace StudentManagement.Controllers
             this.userManager = userManager;
             this.roleManager = roleManager;
         }
+
+        [Authorize(Roles = "Administrator")]
         public IActionResult Index()
         {
             ViewBag.TotalUsers = this.dbcontext.Users.Count();

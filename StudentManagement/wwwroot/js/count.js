@@ -7,7 +7,6 @@
     });
 
     connection.on("UpdateCount", function (counter) {
-        var strong = document.getElementById("counter");
-        strong.innerText = counter;
+        window.sessionStorage.setItem('OnlineUser', counter)
     });
 })
