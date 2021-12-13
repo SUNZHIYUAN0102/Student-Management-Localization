@@ -115,7 +115,6 @@ namespace StudentManagement.Controllers
                     Description = model.Description,
                     StartTime = model.StartTime,
                     DeadLine = model.DeadLine,
-                    IsPrivate = model.IsPrivate
                 };
 
                 this.context.Projects.Add(project);
@@ -147,7 +146,6 @@ namespace StudentManagement.Controllers
                 Description = project.Description,
                 StartTime = project.StartTime,
                 DeadLine = project.DeadLine,
-                IsPrivate = project.IsPrivate
             };
 
             return View(model);
@@ -175,7 +173,6 @@ namespace StudentManagement.Controllers
                 project.Description = model.Description;
                 project.StartTime = model.StartTime;
                 project.DeadLine = model.DeadLine;
-                project.IsPrivate = model.IsPrivate;
                 project.Modified = DateTime.Now;
 
                 await this.context.SaveChangesAsync();

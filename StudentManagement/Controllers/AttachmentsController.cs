@@ -48,12 +48,12 @@ namespace StudentManagement.Controllers
 
             var user = await this.userManager.GetUserAsync(this.HttpContext.User);
 
-            unitOfWork.UploadFile(file);
+            unitOfWork.UploadFile(file, user.Id);
             if (this.ModelState.IsValid)
             {
                 var attachment = new Attachment
                 {
-                    FileName = file.Name,
+                    FileName = user.Id + file.Name,
                     ProjectId = project.Id,
                     UserId = user.Id,
                     Created = DateTime.Now

@@ -216,7 +216,7 @@ namespace StudentManagement.Controllers
         {
             if (this.ModelState.IsValid)
             {
-                var user = new User { Email = model.Email, UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName, Avatar = "icon.png" };
+                var user = new User { Email = model.Email, UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName, Avatar = "Avatar.png" };
                 var result = await this.userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -232,7 +232,7 @@ namespace StudentManagement.Controllers
                 }
 
                 this.AddErrors(result);
-            }
+            } 
 
             // If we got this far, something failed, redisplay form
             return this.View(model);

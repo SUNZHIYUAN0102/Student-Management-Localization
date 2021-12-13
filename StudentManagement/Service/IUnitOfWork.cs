@@ -10,7 +10,7 @@ namespace StudentManagement.Service
 {
     public interface IUnitOfWork
     {
-        void UploadFile(IFormFile file);
+        void UploadFile(IFormFile file, string userId);
     }
 
     public class UnitOfWork : IUnitOfWork
@@ -21,13 +21,13 @@ namespace StudentManagement.Service
             this.hostingEnvironment = hostingEnvironment;
         }
 
-        public async void UploadFile(IFormFile file)
+        public async void UploadFile(IFormFile file, string userId)
         {
             long totalBytes = file.Length;
             string filename = file.FileName.Trim('"');
             filename = EnsureFileName(filename);
             byte[] buffer = new byte[16 * 1024];
-            using (FileStream output = System.IO.File.Create(GetPathAndFileName(filename)))
+            using (FileStream output = System.IO.File.Create(GetPathAndFileName(filename,userId)))
             {
                 using(Stream input = file.OpenReadStream())
                 {
@@ -41,13 +41,14 @@ namespace StudentManagement.Service
             }
         }
 
-        private string GetPathAndFileName(string filename)
+        private string GetPathAndFileName(string filename, string userId)
         {
             string path = hostingEnvironment.WebRootPath + "\\uploads\\";
             if (!Directory.Exists(path))
 
                 Directory.CreateDirectory(path);
-            return path + filename;
+            string fullPath = userId + filename;
+            return path + fullPath;
         }
 
         private string EnsureFileName(string filename)

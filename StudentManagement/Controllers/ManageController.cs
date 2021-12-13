@@ -102,13 +102,13 @@ namespace StudentManagement.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPhoto(IFormFile file)
         {
-            unitOfWork.UploadFile(file);
+            var user = await this.userManager.GetUserAsync(this.HttpContext.User);
+            unitOfWork.UploadFile(file,user.Id);
             if(this.ModelState.IsValid)
             {
-                var user = await this.GetCurrentUserAsync();
                 if(user != null)
                 {
-                    user.Avatar = file.FileName;
+                    user.Avatar = user.Id + file.FileName;
 
                     var result = await userManager.UpdateAsync(user);
                     if (result.Succeeded)
