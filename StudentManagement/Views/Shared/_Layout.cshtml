@@ -75,12 +75,12 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Available Languages:</h6>
                             <form id="switchEn" asp-action="CultureManagement" asp-controller="Home" method="post" asp-route-returnUrl="@returnUrl">
-                                <input type="hidden" name="culture" asp-for="@culture.RequestCulture.UICulture.Name" value="en" />
+                                <input type="hidden" name="culture" value="en" />
                                 <a class="collapse-item" href="#" onclick="document.getElementById('switchEn').submit();">English</a>
                             </form>
 
                             <form id="switchZh" asp-action="CultureManagement" asp-controller="Home" method="post" asp-route-returnUrl="@returnUrl">
-                                <input type="hidden" name="culture" asp-for="@culture.RequestCulture.UICulture.Name" value="zh" />
+                                <input type="hidden" name="culture" value="zh" />
                                 <a class="collapse-item" href="#" onclick="document.getElementById('switchZh').submit();">Simplified Chinese</a>
                             </form>
                         </div>
@@ -98,7 +98,6 @@
                             <h6 class="collapse-header">My Pages:</h6>
                             <a class="collapse-item" asp-action="MySubject" asp-controller="UserSubjects">My Subject</a>
                             <a class="collapse-item" asp-action="MyEvent" asp-controller="Events">My Events</a>
-                            <a class="collapse-item" href="utilities-other.html">Other</a>
                         </div>
                     </div>
                 </li>
@@ -136,15 +135,6 @@
                     </div>
                 </li>
 
-                <!-- Nav Item - Charts -->
-                <li class="nav-item">
-                    <a class="nav-link" href="charts.html">
-                        <i class="fas fa-fw fa-chart-area"></i>
-                        <span>Charts</span>
-                    </a>
-                </li>
-
-
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">
 
@@ -155,9 +145,8 @@
 
                 <!-- Sidebar Message -->
                 <div class="sidebar-card d-none d-lg-flex">
-                    <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
-                    <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
-                    <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
+                    <p>The best time to plant a tree was 20 years ago.</p>
+                    <p>The second best time is now.</p>
                 </div>
             </ul>
         }

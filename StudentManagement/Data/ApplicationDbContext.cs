@@ -18,7 +18,6 @@ namespace StudentManagement.Data
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Notification> Notifications { get; set; }
-
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Note> Notes { get; set; }
         public DbSet<Record> Records { get; set; }
@@ -26,7 +25,6 @@ namespace StudentManagement.Data
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
         public DbSet<UserSubject> UserSubjects { get; set; }
-
         public DbSet<Event> Events { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -50,7 +48,5 @@ namespace StudentManagement.Data
             //    foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             //}
         }
-
     }
-
 }

@@ -10,16 +10,13 @@ namespace StudentManagement.Models.RecordViewModel
     {
         [Required]
         public string StudentId { get; set; }
-
         [Required]
         public float LogTime { get; set; }
         [Required]
         public string Week { get; set; }
-
         [Required]
         public string Note { get; set; }
         [Required]
-        public int Progress { get; set; }
-        
+        public int Progress { get; set; }   
     }
 }

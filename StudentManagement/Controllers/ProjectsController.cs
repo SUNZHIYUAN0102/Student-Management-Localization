@@ -51,6 +51,7 @@ namespace StudentManagement.Controllers
             var project = await context.Projects
                 .Include(p => p.Creator)
                 .Include(p => p.Notes)
+                .Include(p => p.Attachments)
                 .Include(p => p.Records).ThenInclude(x=>x.Student)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
@@ -58,6 +59,8 @@ namespace StudentManagement.Controllers
             {
                 return View("~/Views/Shared/NotFound.cshtml");
             }
+
+            ViewBag.MyAttach = project.Attachments.Where(x => x.User == user);
 
             return View(new ProjectDetailViewModel{ Project = project});
         }
