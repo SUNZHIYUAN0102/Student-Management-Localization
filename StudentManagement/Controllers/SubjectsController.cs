@@ -55,7 +55,7 @@ namespace StudentManagement.Controllers
 
             var students = subject.UserSubjects.Where(x => x.Role == "Student").Select(x => x.User);
 
-            ViewBag.Attendance = subject.Attendances.GroupBy(x=>x.Student.FullName);
+            ViewBag.Attendance = subject.Attendances.Where(x=>x.PickedDate.Month==DateTime.Now.Month).OrderBy(x=>x.Student.FullName);
 
             ViewBag.Students = new SelectList(students, "Id", "FullName");
 

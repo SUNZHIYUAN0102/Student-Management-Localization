@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Subject's Deatil";
     var DaysInmonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+    var CurrentName = "";
 }
 
 <div class="row mb-4" style="justify-content: center;">
@@ -77,9 +78,6 @@
                     <select asp-for="AttendanceCreateViewModel.StudentId" class="col-4 form-control form-control-user" asp-items="@ViewBag.Students"></select>
                     <input class="col-4 ml-3 mr-3 form-control form-control-user" asp-for="AttendanceCreateViewModel.PickedDate" type="date" />
                     <a href="#" class="col-1 btn btn-primary btn-user btn-block" onclick="document.getElementById('createAttendance').submit();"><i class="fas fa-check-circle"></i></a>
-                    <button type="button" class="ml-3 col-1 btn btn-primary" data-toggle="modal" data-target="#attendanceModal">
-                        <i class="fas fa-table"></i>
-                    </button>
                 </div>
             </form>
             <div class="table-responsive">
@@ -94,18 +92,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            @foreach (var item in ViewBag.Attendance)
+                        @foreach (var item in ViewBag.Attendance)
+                        {
+                            if (CurrentName != item.Student.FullName)
                             {
-                                <td>@item.Key</td>
-                                @foreach (var attend in item)
-                                {
-                                    <td>@attend.PickedDate</td>
-                                }
+                                CurrentName = item.Student.FullName;
+                                <tr>
+                                    <td>@CurrentName</td>
+
+                                    @for (var num = 1; num <= DaysInmonth; num++)
+                                    {
+                                        <td>
+                                            @{
+                                              var dd = item.PickedDate.Day == num ? "Yes" : "No";
+                                              <text>@dd</text>
+                                            }
+                                        </td>
+                                    }
+                                </tr>
                             }
-                        </tr>
+                        }
                     </tbody>
-                </table>
+                    </table>
             </div>
         </div>
         <div class="tab-pane fade" id="nav-user" role="tabpanel" aria-labelledby="nav-user-tab">
@@ -163,21 +171,6 @@
     </div>
 </div>
 
-<div class="modal fade" id="attendanceModal" tabindex="-1" role="dialog" aria-labelledby="attendanceModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="width:800px">
-            <div class="modal-header">
-                <h5 class="modal-title">Attendance Table</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                
-            </div>
-        </div>
-    </div>
-</div>
 
 @section Scripts{
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLX5eXlHSgEOZ-fqhZzNRHc7uo_Zbhj00"></script>
