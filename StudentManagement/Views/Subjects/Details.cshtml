@@ -99,20 +99,22 @@
                                 CurrentName = item.Student.FullName;
                                 <tr>
                                     <td>@CurrentName</td>
-
-                                    @for (var num = 1; num <= DaysInmonth; num++)
-                                    {
-                                        <td>
-                                            @{
-                                              var dd = item.PickedDate.Day == num ? "Yes" : "No";
-                                              <text>@dd</text>
-                                            }
-                                        </td>
-                                    }
+                                     @for (var num = 1; num <= DaysInmonth; num++)
+                                     {
+                                         <td>
+                                             @{ 
+                                                 var GetThatDayValue = Model.Subject.Attendances.Where(x => x.PickedDate.Month == DateTime.Now.Month && x.PickedDate.Day == num && x.Student.FullName == CurrentName).FirstOrDefault();
+                                                 var DD = GetThatDayValue!=null ? "✔️" : "❌";
+                                                 <text>@DD</text>
+                                              }
+                                         </td>
+                                     }
                                 </tr>
                             }
+
+
                         }
-                    </tbody>
+                        </tbody>
                     </table>
             </div>
         </div>
