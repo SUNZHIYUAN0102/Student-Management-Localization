@@ -74,10 +74,30 @@
 
         <div class="tab-pane fade" id="nav-attendance" role="tabpanel" aria-labelledby="nav-attendance-tab">
             <form id="createAttendance" method="post" asp-action="Create" asp-controller="Attendances" asp-route-subjectId="@Model.Subject.Id">
-                <div class="row mt-4 mb-4" style="display:flex;justify-content:center">
+                <div class="row mt-4 mb-4" style="display:flex;justify-content:flex-start">
                     <select asp-for="AttendanceCreateViewModel.StudentId" class="col-4 form-control form-control-user" asp-items="@ViewBag.Students"></select>
                     <input class="col-4 ml-3 mr-3 form-control form-control-user" asp-for="AttendanceCreateViewModel.PickedDate" type="date" />
                     <a href="#" class="col-1 btn btn-primary btn-user btn-block" onclick="document.getElementById('createAttendance').submit();"><i class="fas fa-check-circle"></i></a>
+                </div>
+            </form>
+            <form method="get" asp-action="Details" asp-controller="Subjects" asp-route-id="@Model.Subject.Id">
+                <div class="mb-4" style="display:flex;align-items:center">
+                    <select class="col-2 form-control form-control-user mr-2" name="month">
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">Octorber</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                    <button class="col-1 btn btn-primary btn-user btn-block mr-2" type="submit">Switch</button>
+                    <h5 style="margin:0!important">Current Month: @ViewBag.Month</h5>
                 </div>
             </form>
             <div class="table-responsive">
@@ -103,7 +123,7 @@
                                      {
                                          <td>
                                              @{ 
-                                                 var GetThatDayValue = Model.Subject.Attendances.Where(x => x.PickedDate.Month == DateTime.Now.Month && x.PickedDate.Day == num && x.Student.FullName == CurrentName).FirstOrDefault();
+                                                 var GetThatDayValue = Model.Subject.Attendances.Where(x => x.PickedDate.Month == ViewBag.Month && x.PickedDate.Day == num && x.Student.FullName == CurrentName).FirstOrDefault();
                                                  var DD = GetThatDayValue!=null ? "✔️" : "❌";
                                                  <text>@DD</text>
                                               }

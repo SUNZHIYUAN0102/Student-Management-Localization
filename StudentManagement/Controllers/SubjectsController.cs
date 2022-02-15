@@ -37,7 +37,7 @@ namespace StudentManagement.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(Guid? id, int? month)
         {
             if (id == null)
             {
@@ -55,7 +55,16 @@ namespace StudentManagement.Controllers
 
             var students = subject.UserSubjects.Where(x => x.Role == "Student").Select(x => x.User);
 
-            ViewBag.Attendance = subject.Attendances.Where(x=>x.PickedDate.Month==DateTime.Now.Month).OrderBy(x=>x.Student.FullName);
+            if (month != null)
+            {
+                ViewBag.Attendance = subject.Attendances.Where(x => x.PickedDate.Month == month).OrderBy(x => x.Student.FullName);
+                ViewBag.Month = month;
+            }
+            else
+            {
+                ViewBag.Attendance = subject.Attendances.Where(x => x.PickedDate.Month == DateTime.Now.Month).OrderBy(x => x.Student.FullName);
+                ViewBag.Month = DateTime.Now.Month;
+            }
 
             ViewBag.Students = new SelectList(students, "Id", "FullName");
 
