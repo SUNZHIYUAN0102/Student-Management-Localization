@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Subject's Deatil";
-    var DaysInmonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
     var CurrentName = "";
 }
 
@@ -105,7 +104,7 @@
                     <thead>
                         <tr>
                             <th>Student Name</th>
-                            @for (var numb = 1; numb <= DaysInmonth; numb++)
+                            @for (var numb = 1; numb <= ViewBag.DaysInMonth; numb++)
                             {
                                 <th>@numb</th>
                             }
@@ -119,7 +118,7 @@
                                 CurrentName = item.Student.FullName;
                                 <tr>
                                     <td>@CurrentName</td>
-                                     @for (var num = 1; num <= DaysInmonth; num++)
+                                     @for (var num = 1; num <= ViewBag.DaysInMonth; num++)
                                      {
                                          <td>
                                              @{ 

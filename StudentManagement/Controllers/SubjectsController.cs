@@ -59,11 +59,13 @@ namespace StudentManagement.Controllers
             {
                 ViewBag.Attendance = subject.Attendances.Where(x => x.PickedDate.Month == month).OrderBy(x => x.Student.FullName);
                 ViewBag.Month = month;
+                ViewBag.DaysInMonth = DateTime.DaysInMonth(DateTime.Now.Year, month ?? default(int));
             }
             else
             {
                 ViewBag.Attendance = subject.Attendances.Where(x => x.PickedDate.Month == DateTime.Now.Month).OrderBy(x => x.Student.FullName);
                 ViewBag.Month = DateTime.Now.Month;
+                ViewBag.DaysInMonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
             }
 
             ViewBag.Students = new SelectList(students, "Id", "FullName");
