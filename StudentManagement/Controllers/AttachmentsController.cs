@@ -25,9 +25,23 @@ namespace StudentManagement.Controllers
             this.unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(Guid? projectId)
         {
-            return View();
+            if (projectId == null)
+            {
+                return NotFound();
+            }
+
+            var project = await this.dbcontext.Projects.SingleOrDefaultAsync(x => x.Id == projectId);
+
+            if (project == null)
+            {
+                return NotFound();
+            }
+
+            var attachments = await this.dbcontext.Attachments.Include(x => x.User).Where(x => x.Project == project).ToListAsync();
+            return View(attachments);
         }
 
         [HttpPost]
@@ -53,7 +67,7 @@ namespace StudentManagement.Controllers
             {
                 var attachment = new Attachment
                 {
-                    FileName = user.Id + file.Name,
+                    FileName = user.Id + file.FileName,
                     ProjectId = project.Id,
                     UserId = user.Id,
                     Created = DateTime.Now

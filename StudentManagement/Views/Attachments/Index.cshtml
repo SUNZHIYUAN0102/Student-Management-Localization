@@ -1,0 +1,20 @@
+﻿@model IEnumerable<StudentManagement.Models.Attachment>
+
+@{
+    ViewData["Title"] = "Current Project's Attachments";
+}
+
+<div class="container col-8">
+    @foreach (var item in Model)
+    {
+        <div class="card mb-4">
+            <div class="card-header">
+                From @item.User.FullName
+                <span class="float-right">@item.Created</span>
+            </div>
+            <div class="card-body">
+                <a href="~/uploads/@item.FileName">@item.FileName.Substring(36)</a>
+            </div>
+        </div>
+    }
+</div>
