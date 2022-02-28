@@ -40,6 +40,8 @@ namespace StudentManagement.Controllers
                 return NotFound();
             }
 
+            ViewBag.projectName = project.Title;
+
             var attachments = await this.dbcontext.Attachments.Include(x => x.User).Where(x => x.Project == project).ToListAsync();
             return View(attachments);
         }
@@ -81,6 +83,33 @@ namespace StudentManagement.Controllers
             }
 
             return View();
+        }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> AssignScore(Guid? attachmentId, int score)
+        {
+            if (attachmentId == null)
+            {
+                return NotFound();
+            }
+
+            var attachment = await this.dbcontext.Attachments.SingleOrDefaultAsync(x => x.Id == attachmentId);
+
+            if (attachment == null)
+            {
+                return NotFound();
+            }
+
+            if (this.ModelState.IsValid)
+            {
+                attachment.Score = score;
+                await this.dbcontext.SaveChangesAsync();
+
+                return RedirectToAction("Index","Attachments", new { projectId = attachment.ProjectId});
+            }
+
+            return this.View();
         }
     }
 }

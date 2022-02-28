@@ -4,17 +4,52 @@
     ViewData["Title"] = "Current Project's Attachments";
 }
 
-<div class="container col-8">
-    @foreach (var item in Model)
-    {
-        <div class="card mb-4">
-            <div class="card-header">
-                From @item.User.FullName
-                <span class="float-right">@item.Created</span>
-            </div>
-            <div class="card-body">
-                <a href="~/uploads/@item.FileName">@item.FileName.Substring(36)</a>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-xl-12 col-lg-12 col-md-12">
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h2 text-gray-900 mb-4 font-italic font-weight-bold">@ViewBag.ProjectName's Attachments</h1>
+                                </div>
+                                @foreach (var item in Model.OrderByDescending(x=>x.Created))
+                                {
+                                    <div class="card mb-4">
+                                        <div class="card-header" style="display:flex;justify-content:space-between">
+                                            <div>
+                                                <h5 class="m-0 text-dark font-weight-bold">From @item.User.FullName</h5>
+                                                <p class="m-0">@item.Created</p>
+                                            </div>
+                                            @if (Convert.ToBoolean(item.Score))
+                                            {
+                                                <p>@item.Score points</p>
+                                            }
+                                            else
+                                            {
+                                                <form method="post" asp-action="AssignScore" asp-controller="Attachments" asp-route-attachmentId="@item.Id">
+                                                    <select name="score" onchange="this.form.submit()">
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                        <option>4</option>
+                                                        <option>5</option>
+                                                    </select>
+                                                </form>
+                                            }
+                                        </div>
+                                        <div class="card-body">
+                                            <a href="~/uploads/@item.FileName">@item.FileName.Substring(36)</a>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    }
+    </div>
 </div>

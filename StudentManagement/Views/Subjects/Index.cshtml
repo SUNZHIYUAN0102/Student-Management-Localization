@@ -24,6 +24,7 @@
                 <thead>
                     <tr>
                         <th>Subjects</th>
+                        <th>Code</th>
                         <th>Creator</th>
                         <th>Created</th>
                         <th>Actions</th>
@@ -34,6 +35,7 @@
                     {
                         <tr>
                             <td><a asp-action="Create" asp-controller="Projects" asp-route-subjectId="@item.Id">@item.Name</a></td>
+                            <td>@item.Code</td>
                             <td>@item.Creator.FirstName</td>
                             <td>@item.Created</td>
                             <td>

@@ -17,8 +17,11 @@ namespace StudentManagement.Models
 
         public DateTime Created { get; set; }
 
+        public int Score { get; set; }
+
         public Guid ProjectId { get; set; }
 
         public Project Project { get; set; }
+
     }
 }
