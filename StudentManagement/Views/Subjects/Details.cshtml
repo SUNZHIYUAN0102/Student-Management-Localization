@@ -75,7 +75,7 @@
             <form id="createAttendance" method="post" asp-action="Create" asp-controller="Attendances" asp-route-subjectId="@Model.Subject.Id">
                 <div class="row mt-4 mb-4" style="display:flex;justify-content:flex-start">
                     <select asp-for="AttendanceCreateViewModel.StudentId" class="col-4 form-control form-control-user" asp-items="@ViewBag.Students"></select>
-                    <input class="col-4 ml-3 mr-3 form-control form-control-user" asp-for="AttendanceCreateViewModel.PickedDate" type="date" />
+                    <input class="col-4 ml-3 mr-3 form-control form-control-user" type="date" asp-for="AttendanceCreateViewModel.PickedDate" />
                     <a href="#" class="col-1 btn btn-primary btn-user btn-block" onclick="document.getElementById('createAttendance').submit();"><i class="fas fa-check-circle"></i></a>
                 </div>
             </form>

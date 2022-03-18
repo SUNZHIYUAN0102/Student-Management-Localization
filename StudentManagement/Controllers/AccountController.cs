@@ -171,7 +171,8 @@ namespace StudentManagement.Controllers
                         user = new User
                         {
                             UserName = info.Principal.FindFirstValue(ClaimTypes.Email),
-                            Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                            Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                            Avatar = "Avatar.png"
                         };
 
                         await userManager.CreateAsync(user);

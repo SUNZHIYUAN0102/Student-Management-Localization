@@ -10,6 +10,7 @@ namespace StudentManagement.Models
         public Guid Id { get; set; } = Guid.NewGuid();
 
         public string StudentId { get; set; }
+
         public User Student { get; set; }
 
         public Guid SubjectId { get; set; }
