@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Notes\**" />
+    <Content Remove="Views\Notes\**" />
+    <EmbeddedResource Remove="Views\Notes\**" />
+    <None Remove="Views\Notes\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Migrations\20211026092040_Update-Group.cs" />
     <Compile Remove="Migrations\20211026092040_Update-Group.Designer.cs" />
   </ItemGroup>
@@ -31,10 +38,6 @@
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.3" />
     <PackageReference Include="PagedList.Mvc" Version="4.5.0" />
     <PackageReference Include="System.Speech" Version="5.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Notes\" />
   </ItemGroup>
 
   <ItemGroup>

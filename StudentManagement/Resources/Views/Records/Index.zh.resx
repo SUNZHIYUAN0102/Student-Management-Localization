@@ -117,25 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="action" xml:space="preserve">
-    <value>行动</value>
+  <data name="Alert" xml:space="preserve">
+    <value>你是否确认删除当前资源？此操作不可逆。</value>
   </data>
-  <data name="delete" xml:space="preserve">
+  <data name="Alert Title" xml:space="preserve">
+    <value>确认删除？</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
     <value>删除</value>
-  </data>
-  <data name="edit" xml:space="preserve">
-    <value>更改</value>
-  </data>
-  <data name="hour" xml:space="preserve">
-    <value>小时</value>
-  </data>
-  <data name="project" xml:space="preserve">
-    <value>项目名称</value>
-  </data>
-  <data name="student" xml:space="preserve">
-    <value>学生姓名</value>
-  </data>
-  <data name="title" xml:space="preserve">
-    <value>所有记录</value>
   </data>
 </root>

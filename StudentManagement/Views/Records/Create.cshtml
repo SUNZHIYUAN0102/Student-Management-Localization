@@ -1,6 +1,6 @@
 ﻿@model StudentManagement.Models.RecordViewModel.RecordCreateViewModel
-
-@{ ViewData["Title"] = "Create Record";} 
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@{ ViewData["Title"] = "Create Record";}
 
 <div class="container">
     <div class="row justify-content-center">
@@ -11,38 +11,33 @@
                         <div class="col-lg">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">Create Record</h1>
+                                    <h1 class="h4 text-gray-900 mb-4">@localizer["Title"]</h1>
                                 </div>
                                 <form asp-action="Create" asp-controller="Records" asp-route-projectId="@ViewBag.projectId" method="post" class="user">
                                     <div asp-validation-summary="All" class="text-danger"></div>
                                     <div class="form-group">
-                                        <label style="border:none;margin:0;" class="form-control">Student</label>
+                                        <label style="border:none;margin:0;" class="form-control">@localizer["Student"]</label>
                                         <select asp-for="StudentId" class="form-control" asp-items="@ViewBag.Students"></select>
                                     </div>
-
                                     <div class="form-group">
-                                        <label style="border:none;margin:0;" class="form-control">Spent Time (Hours)</label>
+                                        <label style="border:none;margin:0;" class="form-control">@localizer["Spend"]</label>
                                         <input type="number" step="0.01" asp-for="LogTime" class="form-control form-control-user">
                                     </div>
-
                                     <div class="form-group">
-                                        <label style="border:none;margin:0;" class="form-control">Week</label>
+                                        <label style="border:none;margin:0;" class="form-control">@localizer["Week"]</label>
                                         <select asp-for="Week" class="form-control" asp-items="@ViewBag.Week"></select>
                                     </div>
-
                                     <div class="form-group">
-                                        <label style="border:none;margin:0;" class="form-control">Progress(%)</label>
+                                        <label style="border:none;margin:0;" class="form-control">@localizer["Progress"]</label>
                                         <input type="range" asp-for="Progress" min="1" max="100" oninput="this.nextElementSibling.value = this.value">
                                         <output>1</output>
                                     </div>
-
                                     <div class="form-group">
-                                        <label style="border:none;margin:0;" class="form-control">Note</label>
+                                        <label style="border:none;margin:0;" class="form-control">@localizer["Note"]</label>
                                         <textarea rows="4" asp-for="Note" class="form-control" placeholder="input your note"></textarea>
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-user btn-block">Create</button>
+                                    <button type="submit" class="btn btn-primary btn-user btn-block">@localizer["Create"]</button>
                                 </form>
-
                             </div>
                         </div>
                     </div>

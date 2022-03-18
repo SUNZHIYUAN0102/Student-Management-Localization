@@ -26,6 +26,9 @@ namespace StudentManagement.Controllers
             this.userManager = userManager;
         }
 
+        [Authorize(Roles = "Administrator, Teacher")]
+        [HttpGet]
+
         public async Task<IActionResult> Index(Guid? projectId)
         {
             if (projectId == null)
