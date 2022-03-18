@@ -1,4 +1,5 @@
 ﻿@model StudentManagement.Models.SubjectViewModel.SubjectDetailViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 
 @{
     ViewData["Title"] = "Subject's Deatil";
@@ -19,24 +20,24 @@
 <div class="row" style="justify-content:center">
     <nav class="col-12 col-lg-8">
         <div class="nav nav-tabs" id="nav-tab" role="tablist" style="justify-content:center">
-            <a class="nav-link active" id="nav-project-tab" data-toggle="tab" href="#nav-project" role="tab" aria-controls="nav-project" aria-selected="true" style="flex:1;text-align:center">Projects</a>
-            <a class="nav-link" id="nav-notification-tab" data-toggle="tab" href="#nav-notification" role="tab" aria-controls="nav-notification" aria-selected="false" style="flex:1;text-align:center">Notifications</a>
-            <a class="nav-link" id="nav-attendance-tab" data-toggle="tab" href="#nav-attendance" role="tab" aria-controls="nav-attendance" aria-selected="false" style="flex:1;text-align:center">Attendances</a>
-            <a class="nav-link" id="nav-user-tab" data-toggle="tab" href="#nav-user" role="tab" aria-controls="nav-user" aria-selected="false" style="flex:1;text-align:center">Users</a>
-            <a class="nav-link" id="nav-code-tab" data-toggle="tab" href="#nav-code" role="tab" aria-controls="nav-code" aria-selected="false" style="flex:1;text-align:center">Code</a>
+            <a class="nav-link active" id="nav-project-tab" data-toggle="tab" href="#nav-project" role="tab" aria-controls="nav-project" aria-selected="true" style="flex:1;text-align:center">@localizer["Project"]</a>
+            <a class="nav-link" id="nav-notification-tab" data-toggle="tab" href="#nav-notification" role="tab" aria-controls="nav-notification" aria-selected="false" style="flex:1;text-align:center">@localizer["Notification"]</a>
+            <a class="nav-link" id="nav-attendance-tab" data-toggle="tab" href="#nav-attendance" role="tab" aria-controls="nav-attendance" aria-selected="false" style="flex:1;text-align:center">@localizer["Attendance"]</a>
+            <a class="nav-link" id="nav-user-tab" data-toggle="tab" href="#nav-user" role="tab" aria-controls="nav-user" aria-selected="false" style="flex:1;text-align:center">@localizer["User"]</a>
+            <a class="nav-link" id="nav-code-tab" data-toggle="tab" href="#nav-code" role="tab" aria-controls="nav-code" aria-selected="false" style="flex:1;text-align:center">@localizer["Code"]</a>
         </div>
     </nav>
     <div class="tab-content col-12 col-lg-8" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-project" role="tabpanel" aria-labelledby="nav-project-tab">
-            @foreach (var item in Model.Subject.Projects.OrderByDescending(x=>x.Created))
+            @foreach (var item in Model.Subject.Projects.OrderByDescending(x => x.Created))
             {
                 <div class="card shadow mb-4 mt-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <div style="width:40px;height:40px;background-color:#4285f4;border-radius:50%;color:#fff;display:flex;justify-content:center;align-items:center"><i class="fas fa-award"></i></div>
                         <div style="display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;cursor:pointer">
                             <a asp-action="Details" asp-controller="Projects" asp-route-id="@item.Id">
-                                <h6 class="m-0 font-weight-bold text-primary">@item.Creator.FullName uploads new project: @item.Title</h6>
-                                <p style="margin:0;font-size:.5rem">@item.Created.ToShortDateString() (last time modified:@item.Modified.ToShortDateString())</p>
+                                <h6 class="m-0 font-weight-bold text-primary">@item.Creator.FullName @localizer["Upload"]: @item.Title</h6>
+                                <p style="margin:0;font-size:.5rem">@item.Created.ToShortDateString() (@localizer["Modify"]: @item.Modified.ToShortDateString())</p>
                             </a>
                         </div>
                         <div class="dropdown no-arrow">
@@ -44,9 +45,9 @@
                                 <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                                <div class="dropdown-header">Dropdown Header:</div>
-                                <a class="dropdown-item" asp-action="Edit" asp-controller="Projects" asp-route-id="@item.Id">Move to top</a>
-                                <a class="dropdown-item" href="#" onclick="shareLink(@item.Created)">Share</a>
+                                <div class="dropdown-header">@localizer["Action"]:</div>
+                                <a class="dropdown-item" asp-action="Edit" asp-controller="Projects" asp-route-id="@item.Id">@localizer["Detail"]</a>
+                                <a class="dropdown-item" href="#" onclick="shareLink(@item.Created)">@localizer["Share"]</a>
                             </div>
                         </div>
                     </div>
@@ -57,7 +58,7 @@
             <form id="createNotification" method="post" asp-action="Create" asp-controller="Notifications" asp-route-subjectId="@Model.Subject.Id">
                 <div class="card shadow mt-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">@Model.Subject.Name's Notification</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">@Model.Subject.Name @localizer["Notification"]</h6>
                         <div style="cursor:pointer" onclick="initMap()"><i class="fas fa-map-marker-alt"></i></div>
                     </div>
 
@@ -82,28 +83,28 @@
             <form method="get" asp-action="Details" asp-controller="Subjects" asp-route-id="@Model.Subject.Id">
                 <div class="mb-4" style="display:flex;align-items:center">
                     <select class="col-2 form-control form-control-user mr-2" name="month">
-                        <option value="01">January</option>
-                        <option value="02">February</option>
-                        <option value="03">March</option>
-                        <option value="04">April</option>
-                        <option value="05">May</option>
-                        <option value="06">June</option>
-                        <option value="07">July</option>
-                        <option value="08">August</option>
-                        <option value="09">September</option>
-                        <option value="10">Octorber</option>
-                        <option value="11">November</option>
-                        <option value="12">December</option>
+                        <option value="01">@localizer["January"]</option>
+                        <option value="02">@localizer["February"]</option>
+                        <option value="03">@localizer["March"]</option>
+                        <option value="04">@localizer["April"]</option>
+                        <option value="05">@localizer["May"]</option>
+                        <option value="06">@localizer["June"]</option>
+                        <option value="07">@localizer["July"]</option>
+                        <option value="08">@localizer["August"]</option>
+                        <option value="09">@localizer["September"]</option>
+                        <option value="10">@localizer["Octorber"]</option>
+                        <option value="11">@localizer["November"]</option>
+                        <option value="12">@localizer["December"]</option>
                     </select>
-                    <button class="col-1 btn btn-primary btn-user btn-block mr-2" type="submit">Switch</button>
-                    <h5 style="margin:0!important">Current Month: @ViewBag.Month</h5>
+                    <button class="col-1 btn btn-primary btn-user btn-block mr-2" type="submit">@localizer["Switch"]</button>
+                    <h5 style="margin:0!important">@localizer["Current Month"]: @ViewBag.Month</h5>
                 </div>
             </form>
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Student Name</th>
+                            <th>@localizer["Student"]</th>
                             @for (var numb = 1; numb <= ViewBag.DaysInMonth; numb++)
                             {
                                 <th>@numb</th>
@@ -118,23 +119,21 @@
                                 CurrentName = item.Student.FullName;
                                 <tr>
                                     <td>@CurrentName</td>
-                                     @for (var num = 1; num <= ViewBag.DaysInMonth; num++)
-                                     {
-                                         <td>
-                                             @{ 
-                                                 var GetThatDayValue = Model.Subject.Attendances.Where(x => x.PickedDate.Month == ViewBag.Month && x.PickedDate.Day == num && x.Student.FullName == CurrentName).FirstOrDefault();
-                                                 var DD = GetThatDayValue!=null ? "✔️" : "❌";
-                                                 <text>@DD</text>
-                                              }
-                                         </td>
-                                     }
+                                    @for (var num = 1; num <= ViewBag.DaysInMonth; num++)
+                                    {
+                                        <td>
+                                            @{
+                                                var GetThatDayValue = Model.Subject.Attendances.Where(x => x.PickedDate.Month == ViewBag.Month && x.PickedDate.Day == num && x.Student.FullName == CurrentName).FirstOrDefault();
+                                                var DD = GetThatDayValue != null ? "✔️" : "❌";
+                                                <text>@DD</text>
+                                            }
+                                        </td>
+                                    }
                                 </tr>
                             }
-
-
                         }
-                        </tbody>
-                    </table>
+                    </tbody>
+                </table>
             </div>
         </div>
         <div class="tab-pane fade" id="nav-user" role="tabpanel" aria-labelledby="nav-user-tab">
@@ -160,7 +159,7 @@
                 <div class="container mt-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="border:2px dashed #d1d3e2;border-radius:.5rem">
                         <div style="display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start">
-                            <h5 class="m-0 font-weight-bold text-primary">Subject's Code</h5>
+                            <h5 class="m-0 font-weight-bold text-primary">@localizer["Subject Code"]</h5>
                             <h6 class="m-0 font-weight-bold mt-2">@Model.Subject.Code</h6>
                         </div>
                         <div class="dropdown no-arrow">
@@ -168,13 +167,13 @@
                                 <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                                <div class="dropdown-header">Code Setting:</div>
+                                <div class="dropdown-header">@localizer["Code Setting"]:</div>
                                 <form method="post" asp-action="ResetCode" asp-controller="Subjects" asp-route-subjectId="@Model.Subject.Id">
-                                    <button type="submit" class="dropdown-item">Reset Subject's Code</button>
+                                    <button type="submit" class="dropdown-item">@localizer["Reset"]</button>
                                 </form>
                                 <div class="dropdown-divider"></div>
                                 <form method="post" asp-action="RemoveCode" asp-controller="Subjects" asp-route-subjectId="@Model.Subject.Id">
-                                    <button type="submit" class="dropdown-item">Close Subject's Code</button>
+                                    <button type="submit" class="dropdown-item">@localizer["Close"]</button>
                                 </form>
                             </div>
                         </div>
@@ -184,7 +183,7 @@
             else
             {
                 <form method="post" asp-action="ResetCode" asp-controller="Subjects" asp-route-subjectId="@Model.Subject.Id">
-                    <button class="btn btn-primary mt-4" type="submit">Generate Subject's Code</button>
+                    <button class="btn btn-primary mt-4" type="submit">@localizer["Generate"]</button>
                 </form>
             }
         </div>
