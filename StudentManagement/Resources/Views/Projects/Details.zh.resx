@@ -117,52 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="back" xml:space="preserve">
-    <value>返回列表</value>
+  <data name="Alert" xml:space="preserve">
+    <value>你是否确认删除当前资源？此操作不可逆。</value>
   </data>
-  <data name="comment" xml:space="preserve">
+  <data name="Alert Title" xml:space="preserve">
+    <value>确认删除?</value>
+  </data>
+  <data name="All Attachment" xml:space="preserve">
+    <value>所有文件</value>
+  </data>
+  <data name="All Record" xml:space="preserve">
+    <value>所有记录</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
     <value>评论</value>
   </data>
-  <data name="create" xml:space="preserve">
-    <value>创建</value>
+  <data name="Comment Action" xml:space="preserve">
+    <value>评论操作</value>
   </data>
-  <data name="delete" xml:space="preserve">
+  <data name="Create Record" xml:space="preserve">
+    <value>创建记录</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
     <value>删除</value>
   </data>
-  <data name="deleteSpan" xml:space="preserve">
-    <value>你确认删除？</value>
-  </data>
-  <data name="edit" xml:space="preserve">
+  <data name="Edit" xml:space="preserve">
     <value>更改</value>
   </data>
-  <data name="end" xml:space="preserve">
-    <value>截至日期</value>
+  <data name="Edit Comment" xml:space="preserve">
+    <value>修改评论</value>
   </data>
-  <data name="hour" xml:space="preserve">
-    <value>小时</value>
+  <data name="Enter" xml:space="preserve">
+    <value>输入你的评论</value>
   </data>
-  <data name="logTime" xml:space="preserve">
-    <value>记录时间</value>
+  <data name="From" xml:space="preserve">
+    <value>起止日期</value>
   </data>
-  <data name="modified" xml:space="preserve">
-    <value>更改日期</value>
+  <data name="Project Action" xml:space="preserve">
+    <value>项目操作</value>
   </data>
-  <data name="no" xml:space="preserve">
-    <value>否</value>
+  <data name="Save" xml:space="preserve">
+    <value>保存更改</value>
   </data>
-  <data name="record" xml:space="preserve">
-    <value>记录</value>
-  </data>
-  <data name="start" xml:space="preserve">
-    <value>开始日期</value>
-  </data>
-  <data name="student" xml:space="preserve">
-    <value>学生姓名</value>
-  </data>
-  <data name="week" xml:space="preserve">
-    <value>星期</value>
-  </data>
-  <data name="yes" xml:space="preserve">
-    <value>是</value>
+  <data name="Upload" xml:space="preserve">
+    <value>上传文件</value>
   </data>
 </root>

@@ -1,5 +1,4 @@
 ﻿@model StudentManagement.Models.ProjectViewModel.ProjectDetailViewModel
-
 @using StudentManagement.Service
 @inject StudentManagement.Service.UserService UserService
 @inject IUserPermission Userpermission
@@ -14,7 +13,7 @@
     <div style="width:220px;min-height:200px;position:absolute;top:15px;right:-210px;border-radius:15px;border:2px dashed black;overflow:hidden;padding:15px;">
         <form method="post" asp-action="Upload" asp-controller="Attachments" asp-route-projectId="@Model.Project.Id" enctype="multipart/form-data">
             <input class="mb-3" type="file" name="file" />
-            <button class="upload ml-2" type="submit">Upload a file</button>
+            <button class="upload ml-2" type="submit">@localizer["Upload"]</button>
         </form>
     </div>
     <div class="card-header py-3 " style="border-bottom:2px solid #d1d1d1;">
@@ -25,20 +24,20 @@
                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                    <div class="dropdown-header">Dropdown Header:</div>
-                    <a class="dropdown-item" asp-action="Edit" asp-controller="Projects" asp-route-id="@Model.Project.Id">Edit</a>
-                    <a href="#projectDeleteModal" class="dropdown-item" data-toggle="modal">Delete</a>
+                    <div class="dropdown-header">@localizer["Project Action"]</div>
+                    <a class="dropdown-item" asp-action="Edit" asp-controller="Projects" asp-route-id="@Model.Project.Id">@localizer["Edit"]</a>
+                    <a href="#projectDeleteModal" class="dropdown-item" data-toggle="modal">@localizer["Delete"]</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" asp-action="Create" asp-controller="Records" asp-route-projectId="@Model.Project.Id">Create Record</a>
-                    <a class="dropdown-item" asp-action="Index" asp-controller="Records" asp-route-projectId="@Model.Project.Id">All Records</a>
-                    <a class="dropdown-item" asp-action="Index" asp-controller="Attachments" asp-route-projectId="@Model.Project.Id">All Attachements</a>
+                    <a class="dropdown-item" asp-action="Create" asp-controller="Records" asp-route-projectId="@Model.Project.Id">@localizer["Create Record"]</a>
+                    <a class="dropdown-item" asp-action="Index" asp-controller="Records" asp-route-projectId="@Model.Project.Id">@localizer["All Record"]</a>
+                    <a class="dropdown-item" asp-action="Index" asp-controller="Attachments" asp-route-projectId="@Model.Project.Id">@localizer["All Attachment"]</a>
                 </div>
             </div>
         </div>
 
         <div class="row" style="display:flex; justify-content:space-between; align-items: center">
             <span style="font-size:0.5rem">@Model.Project.Creator.FullName • @Model.Project.Created.ToShortDateString()</span>
-            <span style="font-size:0.5rem">From: @Model.Project.StartTime - @Model.Project.DeadLine</span>
+            <span style="font-size:0.5rem">@localizer["From"]: @Model.Project.StartTime - @Model.Project.DeadLine</span>
         </div>
     </div>
 
@@ -48,7 +47,7 @@
 
     <div style="padding-top:16px">
         <i class="fas fa-user-friends"></i>
-        <span>Comments</span>
+        <span>@localizer["Comment"]</span>
         @foreach (var note in Model.Project.Notes)
         {
             <div class="card-header" style="border:none;display:flex;align-items:center">
@@ -62,9 +61,9 @@
                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                        <div class="dropdown-header">Dropdown Header:</div>
-                        <a href="#noteEditModal-@note.Id" class="dropdown-item" data-toggle="modal">Edit</a>
-                        <a href="#noteDeleteModal-@note.Id" class="dropdown-item" data-toggle="modal">Delete</a>
+                        <div class="dropdown-header">@localizer["Comment Action"]</div>
+                        <a href="#noteEditModal-@note.Id" class="dropdown-item" data-toggle="modal">@localizer["Edit"]</a>
+                        <a href="#noteDeleteModal-@note.Id" class="dropdown-item" data-toggle="modal">@localizer["Delete"]</a>
                     </div>
                 </div>
             </div>
@@ -74,18 +73,18 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Edit Comment</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">@localizer["Edit Comment"]</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body" style="display:flex; justify-content:space-between; align-items:center; position:relative">
                                 <img class="mr-2" src="~/uploads/@ViewBag.profileImg" style="width:40px;height:40px;border-radius:50%" />
-                                <input asp-for="@Model.NoteEditViewModel.Text" class="form-control form-control-user" placeholder="Enter Your Comment...">
+                                <input asp-for="@Model.NoteEditViewModel.Text" class="form-control form-control-user" placeholder="@localizer["Enter"]">
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">@localizer["Close"]</button>
+                                <button type="submit" class="btn btn-primary">@localizer["Save"]</button>
                             </div>
                         </div>
                     </div>
@@ -100,15 +99,15 @@
                                 <div class="icon-box">
                                     <i class="fas fa-times-circle"></i>
                                 </div>
-                                <h4 class="modal-title w-100">Are you sure?</h4>
+                                <h4 class="modal-title w-100">@localizer["Alert Title"]</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             </div>
                             <div class="modal-body">
-                                <p>Do you really want to delete these sources? This process cannot be undone.</p>
+                                <p>@localizer["Alert"]</p>
                             </div>
                             <div class="modal-footer justify-content-center">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">@localizer["Cancel"]</button>
+                                <button type="submit" class="btn btn-danger">@localizer["Delete"]</button>
                             </div>
                         </div>
                     </div>
@@ -120,7 +119,7 @@
     <form id="myNote" method="post" asp-controller="Notes" asp-action="Create" asp-route-projectId="@Model.Project.Id">
         <div class="mt-2" style="display:flex; justify-content:space-between; align-items:center; position:relative">
             <img class="mr-2" src="~/uploads/@ViewBag.profileImg" style="width:40px;height:40px;border-radius:50%" />
-            <input asp-for="@Model.NoteEditViewModel.Text" class="form-control form-control-user" placeholder="Enter Your Comment...">
+            <input asp-for="@Model.NoteEditViewModel.Text" class="form-control form-control-user" placeholder="@localizer["Enter"]">
             <a onclick="document.getElementById('myNote').submit();" style="position:absolute; right:10px; top:9px;cursor:pointer"><i class="fas fa-paper-plane"></i></a>
         </div>
     </form>
@@ -134,15 +133,15 @@
                     <div class="icon-box">
                         <i class="fas fa-times-circle"></i>
                     </div>
-                    <h4 class="modal-title w-100">Are you sure?</h4>
+                    <h4 class="modal-title w-100">@localizer["Alert Title"]</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <p>Do you really want to delete these sources? This process cannot be undone.</p>
+                    <p>@localizer["Alert"]</p>
                 </div>
                 <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@localizer["Cancel"]</button>
+                    <button type="submit" class="btn btn-danger">@localizer["Delete"]</button>
                 </div>
             </div>
         </div>

@@ -29,14 +29,6 @@ namespace StudentManagement.Controllers
             this.userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
-        {
-            var projects = context.Projects
-                .Include(p => p.Notes)
-                .Include(p => p.Creator);
-
-            return View(await projects.ToListAsync());
-        }
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)

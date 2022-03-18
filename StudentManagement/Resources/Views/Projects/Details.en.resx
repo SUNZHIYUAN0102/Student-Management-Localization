@@ -117,52 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="back" xml:space="preserve">
-    <value>Back To List</value>
+  <data name="Alert" xml:space="preserve">
+    <value>Do you really want to delete these sources? This process cannot be undone.</value>
   </data>
-  <data name="comment" xml:space="preserve">
+  <data name="Alert Title" xml:space="preserve">
+    <value>Are you sure?</value>
+  </data>
+  <data name="All Attachment" xml:space="preserve">
+    <value>All Attachments</value>
+  </data>
+  <data name="All Record" xml:space="preserve">
+    <value>All Records</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
     <value>Comments</value>
   </data>
-  <data name="create" xml:space="preserve">
-    <value>Create New</value>
+  <data name="Comment Action" xml:space="preserve">
+    <value>Comment's Actions</value>
   </data>
-  <data name="delete" xml:space="preserve">
+  <data name="Create Record" xml:space="preserve">
+    <value>Create Record</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="deleteSpan" xml:space="preserve">
-    <value>Are you sure you want to delete?</value>
-  </data>
-  <data name="edit" xml:space="preserve">
+  <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
-  <data name="end" xml:space="preserve">
-    <value>DeadLine</value>
+  <data name="Edit Comment" xml:space="preserve">
+    <value>Edit Comment</value>
   </data>
-  <data name="hour" xml:space="preserve">
-    <value>Hours</value>
+  <data name="Enter" xml:space="preserve">
+    <value>Enter Your Comment...</value>
   </data>
-  <data name="logTime" xml:space="preserve">
-    <value>Log Time</value>
+  <data name="From" xml:space="preserve">
+    <value>From</value>
   </data>
-  <data name="modified" xml:space="preserve">
-    <value>Modified</value>
+  <data name="Project Action" xml:space="preserve">
+    <value>Project's Actions</value>
   </data>
-  <data name="no" xml:space="preserve">
-    <value>No</value>
+  <data name="Save" xml:space="preserve">
+    <value>Save Comment</value>
   </data>
-  <data name="record" xml:space="preserve">
-    <value>Records</value>
-  </data>
-  <data name="start" xml:space="preserve">
-    <value>StartTime</value>
-  </data>
-  <data name="student" xml:space="preserve">
-    <value>Student Name</value>
-  </data>
-  <data name="week" xml:space="preserve">
-    <value>Week</value>
-  </data>
-  <data name="yes" xml:space="preserve">
-    <value>Yes</value>
+  <data name="Upload" xml:space="preserve">
+    <value>Upload File</value>
   </data>
 </root>
