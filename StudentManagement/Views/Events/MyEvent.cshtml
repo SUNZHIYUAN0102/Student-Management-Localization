@@ -10,7 +10,6 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><span id="eventTitle"></span></h4>
             </div>
             <div class="modal-body">
                 <button id="btnDelete" class="btn btn-default btn-sm pull-right">
@@ -93,27 +92,23 @@
             var selectedEvent = null;
             FetchEventAndRenderCalendar();
             function FetchEventAndRenderCalendar() {
-                $.ajax({
-                    method: "GET",
-                    url: "/api/Events",
-                    success: function (data) {
-                        events = []
-                        console.log(data)
-                        $.each(data, function (i, v) {
-                            events.push({
-                                eventID: v.id,
-                                title: v.title,
-                                description: v.description,
-                                start: moment(v.startTime),
-                                end: moment(v.endTime),
-                                color: v.themeColor,
-                            });
+                axios({
+                    url: '/api/Events',
+                    method: 'GET',
+                }).then(res => {
+                    for (let i = 0; i < res.data.data.length; i++) {
+                        events.push({
+                            eventId: res.data.data[i].id,
+                            title: res.data.data[i].title,
+                            description: res.data.data[i].description,
+                            start: moment(res.data.data[i].startTime),
+                            end: moment(res.data.data[i].endTime),
+                            color: res.data.data[i].themeColor,
                         })
-                        GenerateCalender(events);
-                    },
-                    error: function (error) {
-                        alert('failed');
                     }
+                    GenerateCalender(events);
+                }).catch(e => {
+                    alert('failed');
                 })
             }
 
@@ -135,6 +130,7 @@
                         selectedEvent = calEvent;
                         $('#myModal #eventTitle').text(calEvent.title);
                         var $description = $('<div/>');
+                        $description.append($('<p/>').html('<b>Title: </b>' + calEvent.title));
                         $description.append($('<p/>').html('<b>Start: </b>' + calEvent.start.format("DD-MMM-YYYY HH:mm a")));
                         $description.append($('<p/>').html('<b>End: </b>' + calEvent.end.format("DD-MMM-YYYY HH:mm a")));
                         $description.append($('<p/>').html('<b>Description: </b>' + calEvent.description));
@@ -243,11 +239,8 @@
             })
 
             function SaveEvent(data) {
-                console.log(data)
                 axios({
                     method: 'POST',
-                    headers: {
-                        'content-type': 'application/json' },
                     url: '/api/Events',
                     data: data
                 }).then(data => {
@@ -256,7 +249,7 @@
                         $('#myModalSave').modal('hide');
                     }
                 }).catch(e => {
-                    console.log(e)
+                    alert('failed');
                 })
             }
         })
