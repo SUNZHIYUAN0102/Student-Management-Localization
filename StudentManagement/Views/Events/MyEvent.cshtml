@@ -1,127 +1,125 @@
-﻿@model StudentManagement.Models.EventViewModel.EventDetailViewModel
-
-@{
-    ViewData["Title"] = "My Events";
+﻿@{
+    ViewBag.Title = "Event Page";
 }
 
+<h2>My Events</h2>
+<div id="calender"></div>
 
-<button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal">
-    Add Event
-</button>
-
-<form method="post" asp-action="Create" asp-controller="Events">
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New Event</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label style="border:none;margin:0;padding:0" class="form-control">Title</label>
-                        <input asp-for="EventCreateViewModel.Title" class="form-control form-control-user" />
-                    </div>
-                    <div class="form-group">
-                        <label style="border:none;margin:0;padding:0" class="form-control">Description</label>
-                        <textarea asp-for="EventCreateViewModel.Description" class="form-control form-control-user"></textarea>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-6">
-                            <label style="border:none;margin:0;padding:0" class="form-control">Start Time</label>
-                            <input asp-for="EventCreateViewModel.StartTime" class="form-control form-control-user" />
-                        </div>
-                        <div class="col-6">
-                            <label style="border:none;margin:0;padding:0" class="form-control">End Time</label>
-                            <input asp-for="EventCreateViewModel.EndTime" class="form-control form-control-user" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label style="border:none;margin:0;padding:0" class="form-control">Theme Color</label>
-                        <select asp-for="EventCreateViewModel.ThemeColor" class="form-control form-control-user">
-                            <option value="">Default</option>
-                            <option value="Black">Black</option>
-                            <option value="Red">Red</option>
-                            <option value="Green">Green</option>
-                            <option value="Blue">Blue</option>
-                            <option value="Pink">Pink</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Create</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-
-<div id="calendar">
-
-</div>
-
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><span id="eventTitle"></span></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><span id="eventTitle"></span></h4>
             </div>
             <div class="modal-body">
-                <button id="btnDelete" class="btn btn-danger btn-sm float-right">
+                <button id="btnDelete" class="btn btn-default btn-sm pull-right">
                     <span class="glyphicon glyphicon-remove"></span> Remove
+                </button>
+                <button id="btnEdit" class="btn btn-default btn-sm pull-right" style="margin-right:5px;">
+                    <span class="glyphicon glyphicon-pencil"></span> Edit
                 </button>
                 <p id="pDetails"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 
+<div id="myModalSave" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 form-horizontal">
+                    <input type="hidden" id="hdEventID" value="0" />
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <input type="text" id="txtSubject" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Start</label>
+                        <div class="input-group date" id="dtp1">
+                            <input type="text" id="txtStart" class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>End</label>
+                        <div class="input-group date" id="dtp2">
+                            <input type="text" id="txtEnd" class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="txtDescription" rows="3" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Theme Color</label>
+                        <select id="ddThemeColor" class="form-control">
+                            <option value="">Default</option>
+                            <option value="red">Red</option>
+                            <option value="blue">Blue</option>
+                            <option value="black">Black</option>
+                            <option value="green">Green</option>
+                        </select>
+                    </div>
+                    <button type="button" id="btnSave" class="col-4 btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 @section Scripts{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         $(document).ready(function () {
             var events = [];
             var selectedEvent = null;
-            $.ajax({
-                type: "GET",
-                url: "/Events/GetEvents",
-                success: function (data) {
-                    $.each(data, function (i, v) {
-                        $.each(v, function (index, value) {
+            FetchEventAndRenderCalendar();
+            function FetchEventAndRenderCalendar() {
+                $.ajax({
+                    method: "GET",
+                    url: "/api/Events",
+                    success: function (data) {
+                        events = []
+                        console.log(data)
+                        $.each(data, function (i, v) {
                             events.push({
-                                eventId: value.id,
-                                title: value.title,
-                                description: value.description,
-                                start: moment(value.startTime),
-                                end: moment(value.endTime),
-                                color: value.themeColor,
+                                eventID: v.id,
+                                title: v.title,
+                                description: v.description,
+                                start: moment(v.startTime),
+                                end: moment(v.endTime),
+                                color: v.themeColor,
                             });
                         })
-                    })
-
-                    console.log(events);
-                    GenerateCalender(events);
-                },
-                error: function (error) {
-                    alert('failed');
-                }
-            })
+                        GenerateCalender(events);
+                    },
+                    error: function (error) {
+                        alert('failed');
+                    }
+                })
+            }
 
             function GenerateCalender(events) {
-                $('#calendar').fullCalendar('destroy');
-                $('#calendar').fullCalendar({
+                $('#calender').fullCalendar('destroy');
+                $('#calender').fullCalendar({
                     defaultDate: new Date(),
                     timeFormat: 'h(:mm)a',
                     header: {
@@ -129,13 +127,12 @@
                         center: 'title',
                         right: 'month,basicWeek,basicDay,agenda'
                     },
+                    contentHeight: 400,
                     eventLimit: true,
                     eventColor: '#378006',
-                    eventTextColor: '#fff',
                     events: events,
                     eventClick: function (calEvent, jsEvent, view) {
                         selectedEvent = calEvent;
-                        console.log(selectedEvent);
                         $('#myModal #eventTitle').text(calEvent.title);
                         var $description = $('<div/>');
                         $description.append($('<p/>').html('<b>Start: </b>' + calEvent.start.format("DD-MMM-YYYY HH:mm a")));
@@ -144,26 +141,122 @@
                         $('#myModal #pDetails').empty().html($description);
 
                         $('#myModal').modal();
-                        $('#btnDelete').click(function () {
-                            if (selectedEvent != null && confirm('Are you sure?')) {
-                                $.ajax({
-                                    type: "POST",
-                                    url: '/Events/DeleteEvent',
-                                    data: { 'eventId': selectedEvent.eventId },
-                                    success: function (data) {
-                                        console.log(data);
-                                        if (data.status == true) {
-                                            FetchEventAndRenderCalendar();
-                                            $('#myModal').modal('hide');
-                                        }
-                                    },
-                                    error: function () {
-                                        alert('Failed');
-                                    }
-                                })
-                            }
-                        })
+                    },
+                    selectable: true,
+                    select: function (start, end) {
+                        selectedEvent = {
+                            eventID: null,
+                            title: '',
+                            description: '',
+                            start: start,
+                            end: end,
+                            color: ''
+                        };
+                        openAddEditForm();
+                        $('#calendar').fullCalendar('unselect');
+                    },
+                    editable: true,
+                    eventDrop: function (event) {
+                        var data = {
+                            Id: event.eventID,
+                            Title: event.title,
+                            StartTime: event.start.format('DD/MM/YYYY HH:mm A'),
+                            EndTime: event.end.format('DD/MM/YYYY HH:mm A'),
+                            Description: event.description,
+                            ThemeColor: event.color,
+                        };
+                        SaveEvent(data);
                     }
+                })
+            }
+
+            $('#btnEdit').click(function () {
+                openAddEditForm();
+            })
+            $('#btnDelete').click(function () {
+                if (selectedEvent != null && confirm('Are you sure?')) {
+                    $.ajax({
+                        type: "POST",
+                        url: '/Events/DeleteEvent',
+                        data: { 'eventID': selectedEvent.eventID },
+                        success: function (data) {
+                            if (data.status) {
+                                FetchEventAndRenderCalendar();
+                                $('#myModal').modal('hide');
+                            }
+                        },
+                        error: function () {
+                            alert('Failed');
+                        }
+                    })
+                }
+            })
+
+            $('#dtp1,#dtp2').datetimepicker({
+                format: 'DD/MM/YYYY HH:mm A'
+            });
+
+            function openAddEditForm() {
+                if (selectedEvent != null) {
+                    $('#hdEventID').val(selectedEvent.eventID);
+                    $('#txtSubject').val(selectedEvent.title);
+                    $('#txtStart').val(selectedEvent.start.format('DD/MM/YYYY HH:mm A'));
+                    $('#txtEnd').val(selectedEvent.end.format('DD/MM/YYYY HH:mm A'));
+                    $('#txtDescription').val(selectedEvent.description);
+                    $('#ddThemeColor').val(selectedEvent.color);
+                }
+                $('#myModal').modal('hide');
+                $('#myModalSave').modal();
+            }
+
+            $('#btnSave').click(function () {
+                if ($('#txtSubject').val().trim() == "") {
+                    alert('Subject required');
+                    return;
+                }
+                if ($('#txtStart').val().trim() == "") {
+                    alert('Start date required');
+                    return;
+                }
+                if ($('#txtEnd').val().trim() == "") {
+                    alert('End date required');
+                    return;
+                }
+                else {
+                    var startDate = moment($('#txtStart').val(), "DD/MM/YYYY HH:mm A").toDate();
+                    var endDate = moment($('#txtEnd').val(), "DD/MM/YYYY HH:mm A").toDate();
+                    if (startDate > endDate) {
+                        alert('Invalid end date');
+                        return;
+                    }
+                }
+
+                var data = {
+                    Id: $('#hdEventID').val(),
+                    Title: $('#txtSubject').val().trim(),
+                    StartTime: new Date($('#txtStart').val().trim()).toISOString,
+                    EndTime: new Date($('#txtEnd').val().trim()).toISOString,
+                    Description: $('#txtDescription').val(),
+                    ThemeColor: $('#ddThemeColor').val(),
+                }
+                SaveEvent(data);
+            })
+
+            function SaveEvent(data) {
+                console.log(data)
+                axios({
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json' },
+                    url: '/api/Events',
+                    data: data
+                }).then(data => {
+                    if (data.status) {
+                        FetchEventAndRenderCalendar();
+                        $('#myModalSave').modal('hide');
+                    }
+                }).catch(e => {
+                    console.log(e)
                 })
             }
         })

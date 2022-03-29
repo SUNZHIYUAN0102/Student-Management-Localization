@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using StudentManagement.Data;
 using StudentManagement.Models;
-using StudentManagement.Models.EventViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,10 @@ using System.Threading.Tasks;
 
 namespace StudentManagement.Controllers
 {
-    [Authorize]
+    [Route("api/[controller]")]
+    [ApiController]
+    [Consumes("application/json")]
+    [Produces("application/json")]
     public class EventsController : Controller
     {
         private readonly ApplicationDbContext dbcontext;
@@ -25,12 +28,10 @@ namespace StudentManagement.Controllers
             this.userManager = userManager;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> MyEvent()
+        [HttpGet("my-events")]
+        public IActionResult MyEvent()
         {
-            var user = await this.userManager.GetUserAsync(this.HttpContext.User);
-            var myEvent = await this.dbcontext.Events.Include(x => x.User).Where(x => x.User == user).ToListAsync();
-            return this.View(new EventDetailViewModel { Events = myEvent });
+            return this.View();
         }
 
         [HttpGet]
@@ -41,7 +42,7 @@ namespace StudentManagement.Controllers
             return Json(new { data = myEvent });
         }
 
-        [HttpPost]
+        [HttpDelete]
         public async Task<JsonResult> DeleteEvent(Guid eventId)
         {
             var status = false;
@@ -56,29 +57,44 @@ namespace StudentManagement.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(EventDetailViewModel model)
+        public async Task<JsonResult> SaveEvent(CreateEventModel e)
         {
-            if (this.ModelState.IsValid)
+            var status = false;
+
+            //if (e.Id != null)
+            //{
+            //    var currEvent = await this.dbcontext.Events.Where(x => x.Id == e.Id).SingleOrDefaultAsync();
+
+            //    if (currEvent != null)
+            //    {
+            //        currEvent.Title = e.Title;
+            //        currEvent.Description = e.Description;
+            //        currEvent.StartTime = e.StartTime;
+            //        currEvent.EndTime = e.EndTime;
+            //        currEvent.ThemeColor = e.ThemeColor;
+            //    }
+            //}
+            //else
+            //{
+               
+            //}
+
+            var user = await this.userManager.GetUserAsync(this.HttpContext.User);
+            var newEvent = new Event
             {
-                var user = await this.userManager.GetUserAsync(this.HttpContext.User);
+                Title = e.Title,
+                Description = e.Description,
+                StartTime = e.StartTime,
+                EndTime = e.EndTime,
+                ThemeColor = e.ThemeColor,
+                User = user
+            };
+            this.dbcontext.Events.Add(newEvent);
 
-                var myEvent = new Event
-                {
-                    Title = model.EventCreateViewModel.Title,
-                    Description = model.EventCreateViewModel.Description,
-                    StartTime = model.EventCreateViewModel.StartTime,
-                    EndTime = model.EventCreateViewModel.EndTime,
-                    UserId = user.Id,
-                    ThemeColor = model.EventCreateViewModel.ThemeColor
-                };
+            await this.dbcontext.SaveChangesAsync();
+            status = true;
 
-                this.dbcontext.Events.Add(myEvent);
-                await this.dbcontext.SaveChangesAsync();
-                return RedirectToAction(nameof(MyEvent));
-            }
-
-            return this.View(model);
+            return Json(new { Data = new { status = status } });
         }
     }
 }

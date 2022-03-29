@@ -18,6 +18,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using StudentManagement.Data;
 using StudentManagement.Models;
 using StudentManagement.Service;
@@ -45,6 +46,12 @@ namespace StudentManagement
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Student Management System", Version = "v1" });
+            });
 
             services.AddIdentity<User, IdentityRole>(options =>
             {
@@ -119,6 +126,8 @@ namespace StudentManagement
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Student Management System v1"));
             }
             else
             {
