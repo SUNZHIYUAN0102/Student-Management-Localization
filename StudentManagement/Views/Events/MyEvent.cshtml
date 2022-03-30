@@ -12,16 +12,13 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <button id="btnDelete" class="btn btn-default btn-sm pull-right">
-                    <span class="glyphicon glyphicon-remove"></span> Remove
+                <button id="btnDelete" class="col-2 btn btn-danger float-right">
+                    Remove
                 </button>
-                <button id="btnEdit" class="btn btn-default btn-sm pull-right" style="margin-right:5px;">
-                    <span class="glyphicon glyphicon-pencil"></span> Edit
+                <button id="btnEdit" class="col-2 btn btn-warning">
+                    Edit
                 </button>
-                <p id="pDetails"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <p class="mt-3" id="pDetails"></p>
             </div>
         </div>
     </div>
@@ -35,27 +32,21 @@
             </div>
             <div class="modal-body">
                 <div class="col-md-12 form-horizontal">
-                    <input type="hidden" id="hdEventID" value="0" />
+                    <input type="hidden" id="hdEventID" value=null />
                     <div class="form-group">
                         <label>Subject</label>
-                        <input type="text" id="txtSubject" class="form-control" />
+                        <input autocomplete="off" type="text" id="txtSubject" class="form-control" />
                     </div>
                     <div class="form-group">
                         <label>Start</label>
-                        <div class="input-group date" id="dtp1">
-                            <input type="text" id="txtStart" class="form-control" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
+                        <div class="input-group" id="dtp1">
+                            <input type="datetime-local" id="txtStart" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label>End</label>
-                        <div class="input-group date" id="dtp2">
-                            <input type="text" id="txtEnd" class="form-control" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
+                        <div class="input-group" id="dtp2">
+                            <input type="datetime-local" id="txtEnd" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -80,11 +71,9 @@
     </div>
 </div>
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 @section Scripts{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -92,6 +81,7 @@
             var selectedEvent = null;
             FetchEventAndRenderCalendar();
             function FetchEventAndRenderCalendar() {
+                events = [];
                 axios({
                     url: '/api/Events',
                     method: 'GET',
@@ -101,8 +91,8 @@
                             eventId: res.data.data[i].id,
                             title: res.data.data[i].title,
                             description: res.data.data[i].description,
-                            start: moment(res.data.data[i].startTime),
-                            end: moment(res.data.data[i].endTime),
+                            start: res.data.data[i].startTime,
+                            end: res.data.data[i].endTime,
                             color: res.data.data[i].themeColor,
                         })
                     }
@@ -131,17 +121,16 @@
                         $('#myModal #eventTitle').text(calEvent.title);
                         var $description = $('<div/>');
                         $description.append($('<p/>').html('<b>Title: </b>' + calEvent.title));
-                        $description.append($('<p/>').html('<b>Start: </b>' + calEvent.start.format("DD-MMM-YYYY HH:mm a")));
-                        $description.append($('<p/>').html('<b>End: </b>' + calEvent.end.format("DD-MMM-YYYY HH:mm a")));
+                        $description.append($('<p/>').html('<b>Start: </b>' + calEvent.start));
+                        $description.append($('<p/>').html('<b>End: </b>' + calEvent.end));
                         $description.append($('<p/>').html('<b>Description: </b>' + calEvent.description));
                         $('#myModal #pDetails').empty().html($description);
-
                         $('#myModal').modal();
                     },
                     selectable: true,
                     select: function (start, end) {
                         selectedEvent = {
-                            eventID: null,
+                            eventId: null,
                             title: '',
                             description: '',
                             start: start,
@@ -151,18 +140,6 @@
                         openAddEditForm();
                         $('#calendar').fullCalendar('unselect');
                     },
-                    editable: true,
-                    eventDrop: function (event) {
-                        var data = {
-                            Id: event.eventID,
-                            Title: event.title,
-                            StartTime: event.start.format('DD/MM/YYYY HH:mm A'),
-                            EndTime: event.end.format('DD/MM/YYYY HH:mm A'),
-                            Description: event.description,
-                            ThemeColor: event.color,
-                        };
-                        SaveEvent(data);
-                    }
                 })
             }
 
@@ -171,33 +148,29 @@
             })
             $('#btnDelete').click(function () {
                 if (selectedEvent != null && confirm('Are you sure?')) {
-                    $.ajax({
-                        type: "POST",
-                        url: '/Events/DeleteEvent',
-                        data: { 'eventID': selectedEvent.eventID },
-                        success: function (data) {
-                            if (data.status) {
-                                FetchEventAndRenderCalendar();
-                                $('#myModal').modal('hide');
-                            }
-                        },
-                        error: function () {
-                            alert('Failed');
+                    axios({
+                        method: 'DELETE',
+                        url: '/api/Events',
+                        params: {
+                            'eventId': selectedEvent.eventId
                         }
+                    }).then((res => {
+                        if (res.data.data.status) {
+                            FetchEventAndRenderCalendar();
+                            $('#myModal').modal('hide');
+                        }
+                    })).catch(e => {
+                        alert('Failed')
                     })
                 }
             })
 
-            $('#dtp1,#dtp2').datetimepicker({
-                format: 'DD/MM/YYYY HH:mm A'
-            });
-
             function openAddEditForm() {
                 if (selectedEvent != null) {
-                    $('#hdEventID').val(selectedEvent.eventID);
+                    $('#hdEventID').val(selectedEvent.eventId);
                     $('#txtSubject').val(selectedEvent.title);
-                    $('#txtStart').val(selectedEvent.start.format('DD/MM/YYYY HH:mm A'));
-                    $('#txtEnd').val(selectedEvent.end.format('DD/MM/YYYY HH:mm A'));
+                    $('#txtStart').val(selectedEvent.start);
+                    $('#txtEnd').val(selectedEvent.end);
                     $('#txtDescription').val(selectedEvent.description);
                     $('#ddThemeColor').val(selectedEvent.color);
                 }
@@ -219,9 +192,12 @@
                     return;
                 }
                 else {
-                    var startDate = moment($('#txtStart').val(), "DD/MM/YYYY HH:mm A").toDate();
-                    var endDate = moment($('#txtEnd').val(), "DD/MM/YYYY HH:mm A").toDate();
-                    if (startDate > endDate) {
+                    console.log($('#txtStart').val())
+                    var startDate = moment($('#txtStart').val(), "DD/MM/YYYY HH:mm A");
+                    var endDate = moment($('#txtEnd').val(), "DD/MM/YYYY HH:mm A");
+                    console.log(startDate)
+                    console.log(endDate)
+                    if (endDate.isBefore(startDate)) {
                         alert('Invalid end date');
                         return;
                     }
@@ -230,8 +206,8 @@
                 var data = {
                     Id: $('#hdEventID').val(),
                     Title: $('#txtSubject').val().trim(),
-                    StartTime: new Date($('#txtStart').val().trim()).toISOString,
-                    EndTime: new Date($('#txtEnd').val().trim()).toISOString,
+                    StartTime: $('#txtStart').val().trim(),
+                    EndTime: $('#txtEnd').val().trim(),
                     Description: $('#txtDescription').val(),
                     ThemeColor: $('#ddThemeColor').val(),
                 }
