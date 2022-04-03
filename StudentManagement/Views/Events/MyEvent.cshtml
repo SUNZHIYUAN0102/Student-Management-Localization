@@ -75,6 +75,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6,es7,Array.from,Symbol,console"></script> 
+    <script src="https://unpkg.com/dayjs-with-plugins"></script> 
     <script>
         $(document).ready(function () {
             var events = [];
@@ -96,6 +98,7 @@
                             color: res.data.data[i].themeColor,
                         })
                     }
+                    console.log(events)
                     GenerateCalender(events);
                 }).catch(e => {
                     alert('failed');
@@ -112,29 +115,29 @@
                         center: 'title',
                         right: 'month,basicWeek,basicDay,agenda'
                     },
-                    contentHeight: 400,
                     eventLimit: true,
-                    eventColor: '#378006',
+                    eventColor: '#4e73df',
+                    eventTextColor: 'white',
                     events: events,
                     eventClick: function (calEvent, jsEvent, view) {
                         selectedEvent = calEvent;
                         $('#myModal #eventTitle').text(calEvent.title);
                         var $description = $('<div/>');
                         $description.append($('<p/>').html('<b>Title: </b>' + calEvent.title));
-                        $description.append($('<p/>').html('<b>Start: </b>' + calEvent.start));
-                        $description.append($('<p/>').html('<b>End: </b>' + calEvent.end));
+                        $description.append($('<p/>').html('<b>Start: </b>' + calEvent.start._i));
+                        $description.append($('<p/>').html('<b>End: </b>' + calEvent.end._i));
                         $description.append($('<p/>').html('<b>Description: </b>' + calEvent.description));
                         $('#myModal #pDetails').empty().html($description);
                         $('#myModal').modal();
                     },
                     selectable: true,
-                    select: function (start, end) {
+                    select: function () {
                         selectedEvent = {
                             eventId: null,
                             title: '',
                             description: '',
-                            start: start,
-                            end: end,
+                            start: '',
+                            end: '',
                             color: ''
                         };
                         openAddEditForm();
@@ -169,8 +172,8 @@
                 if (selectedEvent != null) {
                     $('#hdEventID').val(selectedEvent.eventId);
                     $('#txtSubject').val(selectedEvent.title);
-                    $('#txtStart').val(selectedEvent.start);
-                    $('#txtEnd').val(selectedEvent.end);
+                    $('#txtStart').val(selectedEvent.start._i);
+                    $('#txtEnd').val(selectedEvent.end._i);
                     $('#txtDescription').val(selectedEvent.description);
                     $('#ddThemeColor').val(selectedEvent.color);
                 }
@@ -192,14 +195,11 @@
                     return;
                 }
                 else {
-                    console.log($('#txtStart').val())
-                    var startDate = moment($('#txtStart').val(), "DD/MM/YYYY HH:mm A");
-                    var endDate = moment($('#txtEnd').val(), "DD/MM/YYYY HH:mm A");
-                    console.log(startDate)
-                    console.log(endDate)
-                    if (endDate.isBefore(startDate)) {
-                        alert('Invalid end date');
-                        return;
+                    var startDate = $('#txtStart').val();
+                    var endDate = $('#txtEnd').val();
+                    if (!dayjs(startDate).isBefore(dayjs(endDate))) {
+                        alert('Invalid end date')
+                        return
                     }
                 }
 

@@ -64,16 +64,15 @@ namespace StudentManagement.Controllers
         {
             var status = false;
 
-            if (e.Id != null)
+            if (e.Id.Length > 0)
             {
                 var currEvent = await this.dbcontext.Events.Where(x => x.Id == Guid.Parse(e.Id)).SingleOrDefaultAsync();
-
                 if (currEvent != null)
                 {
                     currEvent.Title = e.Title;
                     currEvent.Description = e.Description;
-                    currEvent.StartTime = e.StartTime;
-                    currEvent.EndTime = e.EndTime;
+                    currEvent.StartTime = Convert.ToDateTime(e.StartTime);
+                    currEvent.EndTime = Convert.ToDateTime(e.EndTime);
                     currEvent.ThemeColor = e.ThemeColor;
                 }
             }
@@ -84,8 +83,8 @@ namespace StudentManagement.Controllers
                 {
                     Title = e.Title,
                     Description = e.Description,
-                    StartTime = e.StartTime,
-                    EndTime = e.EndTime,
+                    StartTime = Convert.ToDateTime(e.StartTime),
+                    EndTime = Convert.ToDateTime(e.EndTime),
                     ThemeColor = e.ThemeColor,
                     User = user
                 };
