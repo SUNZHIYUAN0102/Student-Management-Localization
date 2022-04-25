@@ -35,26 +35,9 @@ namespace StudentManagement.Controllers
             this.unitOfWork = unitOfWork;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Profile(string? id)
-        {
-            if(id == null)
-            {
-                return View("~/Views/Shared/NotFound.cshtml");
-            }
-
-            var user = await this.userManager.FindByIdAsync(id);
-
-            if(user == null)
-            {
-                return View("~/Views/Shared/NotFound.cshtml");
-            }
-
-            return this.View(user);
-        }
 
         [HttpGet]
-        public async Task<IActionResult> MyProfile()
+        public async Task<IActionResult> Profile()
         {
             var user = await this.userManager.GetUserAsync(this.HttpContext.User);
             return this.View(user);

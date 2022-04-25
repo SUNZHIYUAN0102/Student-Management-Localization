@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="address" xml:space="preserve">
+    <value>地址</value>
+  </data>
   <data name="changeEmail" xml:space="preserve">
     <value>更改邮箱</value>
+  </data>
+  <data name="changeInformation" xml:space="preserve">
+    <value>更改个人信息</value>
   </data>
   <data name="changePassword" xml:space="preserve">
     <value>更改密码</value>
@@ -129,14 +135,26 @@
   <data name="confirmPassword" xml:space="preserve">
     <value>确认密码</value>
   </data>
+  <data name="degree" xml:space="preserve">
+    <value>文凭</value>
+  </data>
   <data name="email" xml:space="preserve">
     <value>新邮箱</value>
+  </data>
+  <data name="exp" xml:space="preserve">
+    <value>经历</value>
+  </data>
+  <data name="facebookUrl" xml:space="preserve">
+    <value>脸书</value>
   </data>
   <data name="firstName" xml:space="preserve">
     <value>名</value>
   </data>
   <data name="imagePath" xml:space="preserve">
     <value>图像路径</value>
+  </data>
+  <data name="instagramUrl" xml:space="preserve">
+    <value>InstagramUrl</value>
   </data>
   <data name="lastName" xml:space="preserve">
     <value>姓</value>
@@ -147,13 +165,22 @@
   <data name="oldPassword" xml:space="preserve">
     <value>旧密码</value>
   </data>
+  <data name="phone" xml:space="preserve">
+    <value>手机</value>
+  </data>
   <data name="profilePhoto" xml:space="preserve">
     <value>更改头像</value>
   </data>
   <data name="title" xml:space="preserve">
     <value>更改用户资料</value>
   </data>
+  <data name="twitterUrl" xml:space="preserve">
+    <value>推特</value>
+  </data>
   <data name="upload" xml:space="preserve">
     <value>上传图像</value>
+  </data>
+  <data name="vkUrl" xml:space="preserve">
+    <value>VkUrl</value>
   </data>
 </root>

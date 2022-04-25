@@ -17,7 +17,7 @@
                     <a class="list-group-item list-group-item-action active" data-toggle="list" href="#changePassword" role="tab">@localizer["changePassword"]</a>
                     <a class="list-group-item list-group-item-action" data-toggle="list" href="#changeEmail" role="tab">@localizer["changeEmail"]</a>
                     <a class="list-group-item list-group-item-action" data-toggle="list" href="#profilePhoto" role="tab">@localizer["profilePhoto"]</a>
-                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#changeUserInformation" role="tab">Change Information</a>
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#changeUserInformation" role="tab">@localizer["changeInformation"]</a>
                 </div>
             </div>
             <div class="col-8">
@@ -93,40 +93,40 @@
                                 <input asp-for="@Model.changeInformationViewModel.LastName" class="form-control" />
                             </div>
                             <div class="form-group col-md-8">
-                                <label>Degree</label>
+                                <label>@localizer["degree"]</label>
                                 <input asp-for="@Model.changeInformationViewModel.Degree" class="form-control" />
                             </div>
                             <div class="form-group col-md-8">
-                                <label>Exp</label>
+                                <label>@localizer["exp"]</label>
                                 <input asp-for="@Model.changeInformationViewModel.Exp" class="form-control" />
                             </div>
                             <div class="form-group col-md-8">
-                                <label>Address</label>
+                                <label>@localizer["address"]</label>
                                 <input asp-for="@Model.changeInformationViewModel.Address" class="form-control" />
                             </div>
                             <div class="form-group col-md-8">
-                                <label>Phone</label>
+                                <label>@localizer["phone"]</label>
                                 <input asp-for="@Model.changeInformationViewModel.Phone" class="form-control" />
                             </div>
                             <div class="form-group col-md-8">
-                                <label>FacebookUrl</label>
+                                <label>@localizer["facebookUrl"]</label>
                                 <input asp-for="@Model.changeInformationViewModel.FaceBookUrl" class="form-control" />
                             </div>
                             <div class="form-group col-md-8">
-                                <label>TwitterUrl</label>
+                                <label>@localizer["twitterUrl"]</label>
                                 <input asp-for="@Model.changeInformationViewModel.TwitterUrl" class="form-control" />
                             </div>
                             <div class="form-group col-md-8">
-                                <label>VkUrl</label>
+                                <label>@localizer["vkUrl"]</label>
                                 <input asp-for="@Model.changeInformationViewModel.VKUrl" class="form-control" />
                             </div>
                             <div class="form-group col-md-8">
-                                <label>InstagramUrl</label>
+                                <label>@localizer["instagramUrl"]</label>
                                 <input asp-for="@Model.changeInformationViewModel.InstagramUrl" class="form-control" />
                             </div>
 
                             <div class="form-group col-md-6">
-                                <button type="submit" class="btn btn-primary btn-block">Change Information</button>
+                                <button type="submit" class="btn btn-primary btn-block">@localizer["changeInformation"]</button>
                             </div>
                         </form>
 

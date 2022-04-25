@@ -1,5 +1,5 @@
 ﻿@model StudentManagement.Models.User
-
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 @{
     ViewData["Title"] = "Profile Page";
 }
@@ -12,7 +12,7 @@
                     <img style="width:100%;height:100%" src="~/uploads/@Model.Avatar" alt="">
                 </div>
                 <div class="padding-30px-all md-padding-25px-all sm-padding-20px-all text-center">
-                    <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600">Social Medias</h4>
+                    <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600">@localizer["socialMedias"]</h4>
                     <div class="margin-20px-top team-single-icons">
                         <ul class="no-margin" style="padding:0">
                             <li><a href="@Model.FaceBookUrl"><i class="fab fa-facebook-f"></i></a></li>
@@ -34,7 +34,7 @@
                                 <div class="row">
                                     <div class="col-md-5 col-5">
                                         <i class="fas fa-graduation-cap text-orange"></i>
-                                        <strong class="margin-10px-left text-orange">Degree:</strong>
+                                        <strong class="margin-10px-left text-orange">@localizer["degree"]:</strong>
                                     </div>
                                     <div class="col-md-7 col-7">
                                         <p>@Model.Degree</p>
@@ -45,7 +45,7 @@
                                 <div class="row">
                                     <div class="col-md-5 col-5">
                                         <i class="far fa-gem text-yellow"></i>
-                                        <strong class="margin-10px-left text-yellow">Exp.:</strong>
+                                        <strong class="margin-10px-left text-yellow">@localizer["exp"]:</strong>
                                     </div>
                                     <div class="col-md-7 col-7">
                                         <p>@Model.Exp</p>
@@ -56,7 +56,7 @@
                                 <div class="row">
                                     <div class="col-md-5 col-5">
                                         <i class="fas fa-map-marker-alt text-green"></i>
-                                        <strong class="margin-10px-left text-green">Address:</strong>
+                                        <strong class="margin-10px-left text-green">@localizer["address"]:</strong>
                                     </div>
                                     <div class="col-md-7 col-7">
                                         <p>@Model.Address</p>
@@ -67,7 +67,7 @@
                                 <div class="row">
                                     <div class="col-md-5 col-5">
                                         <i class="fas fa-mobile-alt text-purple"></i>
-                                        <strong class="margin-10px-left xs-margin-four-left text-purple">Phone:</strong>
+                                        <strong class="margin-10px-left xs-margin-four-left text-purple">@localizer["phone"]:</strong>
                                     </div>
                                     <div class="col-md-7 col-7">
                                         <p>@Model.Phone</p>
@@ -78,7 +78,7 @@
                                 <div class="row">
                                     <div class="col-md-5 col-5">
                                         <i class="fas fa-envelope text-pink"></i>
-                                        <strong class="margin-10px-left xs-margin-four-left text-pink">Email:</strong>
+                                        <strong class="margin-10px-left xs-margin-four-left text-pink">@localizer["email"]:</strong>
                                     </div>
                                     <div class="col-md-7 col-7">
                                         <p><a href="mailto:you@example.com">@Model.Email</a></p>

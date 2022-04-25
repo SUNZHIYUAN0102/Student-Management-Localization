@@ -118,69 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="address" xml:space="preserve">
-    <value>Address</value>
-  </data>
-  <data name="changeEmail" xml:space="preserve">
-    <value>Change Email</value>
-  </data>
-  <data name="changeInformation" xml:space="preserve">
-    <value>Change Information</value>
-  </data>
-  <data name="changePassword" xml:space="preserve">
-    <value>Change Password</value>
-  </data>
-  <data name="changeUsername" xml:space="preserve">
-    <value>Change UserName</value>
-  </data>
-  <data name="confirmPassword" xml:space="preserve">
-    <value>Confirm Password</value>
+    <value>地址</value>
   </data>
   <data name="degree" xml:space="preserve">
-    <value>Degree</value>
+    <value>文凭</value>
   </data>
   <data name="email" xml:space="preserve">
-    <value>New Email</value>
+    <value>邮箱</value>
   </data>
   <data name="exp" xml:space="preserve">
-    <value>Exp</value>
-  </data>
-  <data name="facebookUrl" xml:space="preserve">
-    <value>FacebookUrl</value>
-  </data>
-  <data name="firstName" xml:space="preserve">
-    <value>FirstName</value>
-  </data>
-  <data name="imagePath" xml:space="preserve">
-    <value>ImagePath</value>
-  </data>
-  <data name="instagramUrl" xml:space="preserve">
-    <value>InstagramUrl</value>
-  </data>
-  <data name="lastName" xml:space="preserve">
-    <value>LastName</value>
-  </data>
-  <data name="newPassword" xml:space="preserve">
-    <value>New Password</value>
-  </data>
-  <data name="oldPassword" xml:space="preserve">
-    <value>Old Password</value>
+    <value>经历</value>
   </data>
   <data name="phone" xml:space="preserve">
-    <value>Phone</value>
+    <value>电话</value>
   </data>
-  <data name="profilePhoto" xml:space="preserve">
-    <value>Change Profile Photo</value>
-  </data>
-  <data name="title" xml:space="preserve">
-    <value>Change Your Account Settings</value>
-  </data>
-  <data name="twitterUrl" xml:space="preserve">
-    <value>TwitterUrl</value>
-  </data>
-  <data name="upload" xml:space="preserve">
-    <value>Upload Image</value>
-  </data>
-  <data name="vkUrl" xml:space="preserve">
-    <value>VkUrl</value>
+  <data name="socialMedias" xml:space="preserve">
+    <value>社交软件</value>
   </data>
 </root>
