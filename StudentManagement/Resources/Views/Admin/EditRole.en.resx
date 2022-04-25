@@ -117,28 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="add" xml:space="preserve">
-    <value>Add or remove users</value>
+  <data name="cardText" xml:space="preserve">
+    <value>This role doesn't have any users.</value>
   </data>
-  <data name="cancel" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="cardTitle" xml:space="preserve">
+    <value>Users in this role</value>
   </data>
-  <data name="exception" xml:space="preserve">
-    <value>None at the moment</value>
-  </data>
-  <data name="id" xml:space="preserve">
-    <value>Id</value>
+  <data name="manage" xml:space="preserve">
+    <value>Manage Role's Users</value>
   </data>
   <data name="rolename" xml:space="preserve">
-    <value>RoleName</value>
+    <value>Role Name</value>
   </data>
   <data name="title" xml:space="preserve">
-    <value>Edit Roles</value>
+    <value>Edit Role</value>
   </data>
   <data name="update" xml:space="preserve">
-    <value>Update</value>
-  </data>
-  <data name="userinrole" xml:space="preserve">
-    <value>Users in this role</value>
+    <value>Update Role</value>
   </data>
 </root>

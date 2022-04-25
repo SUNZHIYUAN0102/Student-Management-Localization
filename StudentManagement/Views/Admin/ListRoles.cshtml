@@ -2,21 +2,21 @@
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 @{ ViewBag.Totle = "All Roles"; }
 
-<h1>All Roles</h1>
+<h1>@localizer["title"]</h1>
 
-<a class="btn btn-primary mb-3" style="width:auto" asp-action="CreateRole" asp-controller="Admin">Add Role</a>
+<a class="btn btn-primary mb-3" style="width:auto" asp-action="CreateRole" asp-controller="Admin">@localizer["addRole"]</a>
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Roles' DataTable</h6>
+        <h6 class="m-0 font-weight-bold text-primary">@localizer["roleTable"]</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Role Name</th>
-                        <th>Actions</th>
+                        <th>@localizer["rolename"]</th>
+                        <th>@localizer["actions"]</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,15 +41,15 @@
                                     <div class="icon-box">
                                         <i class="fas fa-times-circle"></i>
                                     </div>
-                                    <h4 class="modal-title w-100">Are you sure?</h4>
+                                    <h4 class="modal-title w-100">@localizer["alertTitle"]</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Do you really want to delete these sources? This process cannot be undone.</p>
+                                    <p>@localizer["alertText"]</p>
                                 </div>
                                 <div class="modal-footer justify-content-center">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@localizer["cancel"]</button>
+                                    <button type="submit" class="btn btn-danger">@localizer["delete"]</button>
                                 </div>
                             </div>
                         </div>

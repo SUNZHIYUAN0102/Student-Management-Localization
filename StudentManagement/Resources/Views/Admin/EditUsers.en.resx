@@ -117,34 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="cancel" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="cardText" xml:space="preserve">
+    <value>User doesn't have any role yet.</value>
+  </data>
+  <data name="cardTitle" xml:space="preserve">
+    <value>User's Roles</value>
   </data>
   <data name="email" xml:space="preserve">
     <value>Email</value>
   </data>
-  <data name="exception" xml:space="preserve">
-    <value>None at the moment</value>
-  </data>
   <data name="firstname" xml:space="preserve">
-    <value>FirstName</value>
-  </data>
-  <data name="id" xml:space="preserve">
-    <value>Id</value>
+    <value>Firstname</value>
   </data>
   <data name="lastname" xml:space="preserve">
-    <value>LastName</value>
+    <value>Lastname</value>
   </data>
   <data name="manage" xml:space="preserve">
-    <value>Manage Roles</value>
+    <value>Manage User's Roles</value>
   </data>
   <data name="title" xml:space="preserve">
-    <value>Edit Users</value>
+    <value>Edit User</value>
   </data>
   <data name="update" xml:space="preserve">
-    <value>Update</value>
-  </data>
-  <data name="userroles" xml:space="preserve">
-    <value>User Roles</value>
+    <value>Update Users</value>
   </data>
 </root>

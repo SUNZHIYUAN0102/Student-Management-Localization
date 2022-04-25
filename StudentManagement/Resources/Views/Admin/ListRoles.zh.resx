@@ -117,34 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="add" xml:space="preserve">
-    <value>添加新角色</value>
+  <data name="actions" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="addRole" xml:space="preserve">
+    <value>添加角色</value>
+  </data>
+  <data name="alertText" xml:space="preserve">
+    <value>你是否确认删除当前资源？此操作不可逆。</value>
+  </data>
+  <data name="alertTitle" xml:space="preserve">
+    <value>确认删除？</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>取消</value>
   </data>
   <data name="delete" xml:space="preserve">
     <value>删除</value>
   </data>
-  <data name="deleteSpan" xml:space="preserve">
-    <value>你确定删除当前内容？</value>
+  <data name="rolename" xml:space="preserve">
+    <value>角色名</value>
   </data>
-  <data name="edit" xml:space="preserve">
-    <value>更改</value>
-  </data>
-  <data name="exception" xml:space="preserve">
-    <value>没有角色被创建</value>
-  </data>
-  <data name="no" xml:space="preserve">
-    <value>否</value>
-  </data>
-  <data name="roleid" xml:space="preserve">
-    <value>角色编号</value>
+  <data name="roleTable" xml:space="preserve">
+    <value>角色表单</value>
   </data>
   <data name="title" xml:space="preserve">
     <value>所有角色</value>
-  </data>
-  <data name="usebutton" xml:space="preserve">
-    <value>点击下方按钮创建角色</value>
-  </data>
-  <data name="yes" xml:space="preserve">
-    <value>是</value>
   </data>
 </root>

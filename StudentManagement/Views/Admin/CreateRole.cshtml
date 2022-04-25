@@ -11,16 +11,16 @@
                         <div class="col-lg">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1>Create Role</h1>
+                                    <h1>@localizer["title"]</h1>
                                 </div>
                                 <form method="post" asp-controller="Admin" asp-action="CreateRole" class="user">
                                     <div asp-validation-summary="All" class="text-danger"></div>
                                     <div class="form-group">
-                                        <label style="border:none;margin:0;" class="form-control">Role Name</label>
+                                        <label style="border:none;margin:0;" class="form-control">@localizer["rolename"]</label>
                                         <input asp-for="RoleName" class="form-control form-control-user">
                                     </div>
 
-                                    <button type="submit" class="mb-3 btn btn-primary btn-user btn-block">Create Role</button>
+                                    <button type="submit" class="mb-3 btn btn-primary btn-user btn-block">@localizer["create"]</button>
                                 </form>
                             </div>
                         </div>

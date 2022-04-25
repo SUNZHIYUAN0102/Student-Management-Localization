@@ -121,7 +121,7 @@
     <value>取消</value>
   </data>
   <data name="title" xml:space="preserve">
-    <value>添加或移动用户</value>
+    <value>添加或移除用户</value>
   </data>
   <data name="update" xml:space="preserve">
     <value>更新</value>

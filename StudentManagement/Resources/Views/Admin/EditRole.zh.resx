@@ -117,17 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="add" xml:space="preserve">
-    <value>添加或移除角色</value>
+  <data name="cardText" xml:space="preserve">
+    <value>当前角色不包含任何用户</value>
   </data>
-  <data name="cancel" xml:space="preserve">
-    <value>取消</value>
+  <data name="cardTitle" xml:space="preserve">
+    <value>当前角色用户</value>
   </data>
-  <data name="exception" xml:space="preserve">
-    <value>当前为空</value>
-  </data>
-  <data name="id" xml:space="preserve">
-    <value>编号</value>
+  <data name="manage" xml:space="preserve">
+    <value>管理角色中的用户</value>
   </data>
   <data name="rolename" xml:space="preserve">
     <value>角色名称</value>
@@ -136,9 +133,6 @@
     <value>更改角色</value>
   </data>
   <data name="update" xml:space="preserve">
-    <value>更新</value>
-  </data>
-  <data name="userinrole" xml:space="preserve">
-    <value>当前角色中的用户</value>
+    <value>更新角色</value>
   </data>
 </root>

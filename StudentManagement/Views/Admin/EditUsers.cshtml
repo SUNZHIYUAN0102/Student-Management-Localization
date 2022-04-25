@@ -14,7 +14,7 @@
                         <div class="col-lg">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1>Edit User</h1>
+                                    <h1>@localizer["title"]</h1>
                                 </div>
                                 <form method="post" class="user">
                                     <div asp-validation-summary="All" class="text-danger"></div>
@@ -27,22 +27,22 @@
 
                                     <div class="form-group row">
                                         <div class="col-md-6">
-                                            <label>First Name</label>
+                                            <label>@localizer["firstname"]</label>
                                             <input asp-for="FirstName" class="form-control" />
                                             <span asp-validation-for="FirstName" class="text-danger"></span>
                                         </div>
                                         <div class="col-md-6">
-                                            <label>Last Name</label>
+                                            <label>@localizer["lastname"]</label>
                                             <input asp-for="LastName" class="form-control" />
                                             <span asp-validation-for="LastName" class="text-danger"></span>
                                         </div>
                                     </div>
 
-                                    <button type="submit" class="mb-3 btn btn-primary btn-user btn-block">Update User</button>
+                                    <button type="submit" class="mb-3 btn btn-primary btn-user btn-block">@localizer["update"]</button>
 
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3>@localizer["userroles"]</h3>
+                                            <h3>@localizer["cardTitle"]</h3>
                                         </div>
                                         <div class="card-body">
                                             @if (Model.Roles.Any())
@@ -54,11 +54,11 @@
                                             }
                                             else
                                             {
-                                                <h5 class="crad-title">User doesn't have any role yet.</h5>
+                                                <h5 class="crad-title">@localizer["cardText"]</h5>
                                             }
                                         </div>
                                         <div class="card-footer">
-                                            <a class="btn btn-primary" asp-action="ManageUserRoles" asp-controller="Admin" asp-route-userId="@Model.Id" style="width:auto">Manage User's Roles</a>
+                                            <a class="btn btn-primary" asp-action="ManageUserRoles" asp-controller="Admin" asp-route-userId="@Model.Id" style="width:auto">@localizer["manage"]</a>
                                         </div>
                                     </div>
                                 </form>
