@@ -19,26 +19,20 @@ namespace StudentManagement.Service
     {
         public readonly static List<UserViewModel> _Connections = new List<UserViewModel>();
         private readonly static Dictionary<string, string> _ConnectionsMap = new Dictionary<string, string>();
-
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
-
         public ChatHub(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
-
         public async Task SendPrivate(string receiverName, string message)
         {
             if (_ConnectionsMap.TryGetValue(receiverName, out string userId))
             {
-                // Who is the sender;
                 var sender = _Connections.Where(u => u.Username == IdentityName).First();
-
                 if (!string.IsNullOrEmpty(message.Trim()))
                 {
-                    // Build the message
                     var messageViewModel = new MessageViewModel()
                     {
                         Content = Regex.Replace(message, @"<.*?>", string.Empty),
@@ -47,8 +41,6 @@ namespace StudentManagement.Service
                         Room = "",
                         Timestamp = DateTime.Now.ToLongTimeString()
                     };
-
-                    // Send the message
                     await Clients.Client(userId).SendAsync("newMessage", messageViewModel);
                     await Clients.Caller.SendAsync("newMessage", messageViewModel);
                 }
@@ -62,16 +54,11 @@ namespace StudentManagement.Service
                 var user = _Connections.Where(u => u.Username == IdentityName).FirstOrDefault();
                 if (user != null && user.CurrentRoom != roomName)
                 {
-                    // Remove user from others list
                     if (!string.IsNullOrEmpty(user.CurrentRoom))
                         await Clients.OthersInGroup(user.CurrentRoom).SendAsync("removeUser", user);
-
-                    // Join to new chat room
                     await Leave(user.CurrentRoom);
                     await Groups.AddToGroupAsync(Context.ConnectionId, roomName);
                     user.CurrentRoom = roomName;
-
-                    // Tell others to update their list of users
                     await Clients.OthersInGroup(roomName).SendAsync("addUser", user);
                 }
             }
@@ -121,11 +108,7 @@ namespace StudentManagement.Service
             {
                 var user = _Connections.Where(u => u.Username == IdentityName).First();
                 _Connections.Remove(user);
-
-                // Tell other users to remove you from their list
                 Clients.OthersInGroup(user.CurrentRoom).SendAsync("removeUser", user);
-
-                // Remove mapping
                 _ConnectionsMap.Remove(user.Username);
             }
             catch (Exception ex)

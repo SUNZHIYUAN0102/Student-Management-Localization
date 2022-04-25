@@ -64,7 +64,6 @@
 
     function AppViewModel() {
         var self = this;
-
         self.message = ko.observable("");
         self.chatRooms = ko.observableArray([]);
         self.chatUsers = ko.observableArray([]);
@@ -200,7 +199,6 @@
                             isMine,
                             data[i].avatar))
                     }
-
                     $(".chat-body").animate({ scrollTop: $(".chat-body")[0].scrollHeight }, 1000);
                 });
         }

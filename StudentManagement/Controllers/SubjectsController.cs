@@ -51,7 +51,7 @@ namespace StudentManagement.Controllers
                 .Include(x => x.Attendances).ThenInclude(x => x.Student)
                 .SingleOrDefaultAsync(x => x.Id == id);
 
-            ViewBag.users = subject.UserSubjects.GroupBy(x => x.Role);
+            ViewBag.users = subject.UserSubjects.OrderBy(x=>x.Role=="Teacher").GroupBy(x => x.Role);
 
             var students = subject.UserSubjects.Where(x => x.Role == "Student").Select(x => x.User);
 

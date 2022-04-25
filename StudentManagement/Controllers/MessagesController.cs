@@ -50,7 +50,6 @@ namespace StudentManagement.Controllers
             var room = _context.Rooms.FirstOrDefault(r => r.Name == roomName);
             if (room == null)
                 return BadRequest();
-
             var messages = _context.Messages.Where(m => m.ToRoomId == room.Id)
                 .Include(m => m.FromUser)
                 .Include(m => m.ToRoom)
@@ -59,9 +58,7 @@ namespace StudentManagement.Controllers
                 .AsEnumerable()
                 .Reverse()
                 .ToList();
-
             var messagesViewModel = _mapper.Map<IEnumerable<Message>, IEnumerable<MessageViewModel>>(messages);
-
             return Ok(messagesViewModel);
         }
 
@@ -80,14 +77,10 @@ namespace StudentManagement.Controllers
                 ToRoom = room,
                 Timestamp = DateTime.Now
             };
-
             _context.Messages.Add(msg);
             await _context.SaveChangesAsync();
-
-            // Broadcast the message
             var createdMessage = _mapper.Map<Message, MessageViewModel>(msg);
             await _hubContext.Clients.Group(room.Name).SendAsync("newMessage", createdMessage);
-
             return CreatedAtAction(nameof(Get), new { id = msg.Id }, createdMessage);
         }
 

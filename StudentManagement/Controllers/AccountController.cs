@@ -124,7 +124,6 @@ namespace StudentManagement.Controllers
             if (remoteError != null)
             {
                 ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
-
                 return View("Login", loginViewModel);
             }
 
@@ -151,7 +150,6 @@ namespace StudentManagement.Controllers
             // table) then sign-in the user with this external login provider
             var signInResult = await signInManager.ExternalLoginSignInAsync(info.LoginProvider,
                 info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
-
             if (signInResult.Succeeded)
             {
                 return LocalRedirect(returnUrl);
@@ -178,9 +176,7 @@ namespace StudentManagement.Controllers
                         await userManager.CreateAsync(user);
                         var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
                         var confirmationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, Request.Scheme);
-                        logger.Log(LogLevel.Warning, confirmationLink);
-
-                        return this.View();
+                        await SendEmailConfirmationEmail(user, confirmationLink);
                     }
 
                     // Add a login (i.e insert a row for the user in AspNetUserLogins table)

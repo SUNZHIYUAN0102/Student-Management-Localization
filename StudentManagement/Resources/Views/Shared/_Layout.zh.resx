@@ -117,46 +117,73 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="addPassword" xml:space="preserve">
-    <value>添加密码</value>
+  <data name="activityLog" xml:space="preserve">
+    <value>活动日志</value>
   </data>
-  <data name="contact" xml:space="preserve">
-    <value>联系我们</value>
+  <data name="addons" xml:space="preserve">
+    <value>附加组件</value>
   </data>
-  <data name="en" xml:space="preserve">
+  <data name="adminScreen" xml:space="preserve">
+    <value>管理员页面</value>
+  </data>
+  <data name="allRoles" xml:space="preserve">
+    <value>所有角色</value>
+  </data>
+  <data name="allSubjects" xml:space="preserve">
+    <value>所有学科</value>
+  </data>
+  <data name="allUsers" xml:space="preserve">
+    <value>所有用户</value>
+  </data>
+  <data name="availableLanguages" xml:space="preserve">
+    <value>所有语言</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="chatRoom" xml:space="preserve">
+    <value>聊天室</value>
+  </data>
+  <data name="chinese" xml:space="preserve">
+    <value>简体中文</value>
+  </data>
+  <data name="dashboard" xml:space="preserve">
+    <value>仪表盘</value>
+  </data>
+  <data name="english" xml:space="preserve">
     <value>英语</value>
   </data>
   <data name="language" xml:space="preserve">
     <value>语言</value>
   </data>
-  <data name="manage" xml:space="preserve">
-    <value>管理</value>
+  <data name="logout" xml:space="preserve">
+    <value>登出</value>
   </data>
-  <data name="note" xml:space="preserve">
-    <value>评论</value>
+  <data name="logoutNotification" xml:space="preserve">
+    <value>点击登出按钮来完成退出操作</value>
+  </data>
+  <data name="logoutTitle" xml:space="preserve">
+    <value>确认退出？</value>
+  </data>
+  <data name="myEvents" xml:space="preserve">
+    <value>我的活动</value>
+  </data>
+  <data name="myPages" xml:space="preserve">
+    <value>我的页面</value>
+  </data>
+  <data name="mySubjects" xml:space="preserve">
+    <value>我的学科</value>
+  </data>
+  <data name="pages" xml:space="preserve">
+    <value>页面</value>
   </data>
   <data name="profile" xml:space="preserve">
     <value>主页</value>
   </data>
-  <data name="project" xml:space="preserve">
-    <value>项目</value>
+  <data name="settings" xml:space="preserve">
+    <value>设置</value>
   </data>
-  <data name="record" xml:space="preserve">
-    <value>记录</value>
-  </data>
-  <data name="role" xml:space="preserve">
-    <value>角色</value>
-  </data>
-  <data name="student" xml:space="preserve">
-    <value>学生</value>
-  </data>
-  <data name="title" xml:space="preserve">
-    <value>学生管理系统</value>
-  </data>
-  <data name="user" xml:space="preserve">
-    <value>用户</value>
-  </data>
-  <data name="zh" xml:space="preserve">
-    <value>简体中文</value>
+  <data name="tables" xml:space="preserve">
+    <value>表格</value>
   </data>
 </root>
