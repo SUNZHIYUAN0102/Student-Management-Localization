@@ -144,8 +144,8 @@
   <data name="December" xml:space="preserve">
     <value>December</value>
   </data>
-  <data name="Detail" xml:space="preserve">
-    <value>go to detail page</value>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit Project</value>
   </data>
   <data name="February" xml:space="preserve">
     <value>February</value>

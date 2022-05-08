@@ -144,8 +144,8 @@
   <data name="December" xml:space="preserve">
     <value>十二月</value>
   </data>
-  <data name="Detail" xml:space="preserve">
-    <value>详情页面</value>
+  <data name="Edit" xml:space="preserve">
+    <value>更改页面</value>
   </data>
   <data name="February" xml:space="preserve">
     <value>二月</value>

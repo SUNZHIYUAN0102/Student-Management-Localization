@@ -8,5 +8,7 @@ namespace StudentManagement.Models
     public static class UserRoles
     {
         public const String Administrator = nameof(UserRoles.Administrator);
+
+        public const String Teacher = nameof(UserRoles.Teacher);
     }
 }

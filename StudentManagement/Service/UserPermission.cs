@@ -21,67 +21,14 @@ namespace StudentManagement.Service
         }
         private HttpContext HttpContext => this.httpContextAccessor.HttpContext;
 
-        public bool CanAddNote(Models.Project project)
-        {
-            var currentUser = this.userManager.GetUserId(this.httpContextAccessor.HttpContext.User);
-            return !project.Notes.Any(x => x.CreatorId == currentUser);
-            
-        }
-
-        public bool CanChangePrivate(Models.Project project)
-        {
-            if ((this.HttpContext.User.IsInRole(UserRoles.Administrator)))
-            {
-                return true;
-            }
-
-            var currentUser = this.userManager.GetUserId(this.httpContextAccessor.HttpContext.User);
-
-            if(currentUser == project.CreatorId)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         public Boolean CanEditNote(Note note)
         {
-            if (!this.HttpContext.User.Identity.IsAuthenticated)
-            {
-                return false;
-            }
-
-            if ((this.HttpContext.User.IsInRole(UserRoles.Administrator)))
+            if ((this.HttpContext.User.IsInRole(UserRoles.Administrator))|| (this.HttpContext.User.IsInRole(UserRoles.Teacher)))
             {
                 return true;
             }
 
             return this.userManager.GetUserId(this.httpContextAccessor.HttpContext.User) == note.CreatorId;
         }
-
-        public bool CanSeeProject(Models.Project project)
-        {
-            if(project.IsPrivate == false)
-            {
-                return true;
-            }
-
-            if ((this.HttpContext.User.IsInRole(UserRoles.Administrator)))
-            {
-                return true;
-            }
-
-            var currentUser = this.userManager.GetUserId(this.httpContextAccessor.HttpContext.User);
-
-            if ((project.IsPrivate == true) && (currentUser == project.CreatorId))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        
     }
 }

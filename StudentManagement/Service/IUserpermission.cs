@@ -10,12 +10,6 @@ namespace StudentManagement.Service
     public interface IUserPermission
     {
         Boolean CanEditNote(Note note);
-
-        Boolean CanAddNote(Models.Project project);
-
-        Boolean CanSeeProject(Models.Project project);
-
-        Boolean CanChangePrivate(Models.Project project);
     }
 }
 

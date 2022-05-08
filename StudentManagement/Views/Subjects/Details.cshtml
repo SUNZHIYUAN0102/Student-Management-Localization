@@ -46,8 +46,8 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                                 <div class="dropdown-header">@localizer["Action"]:</div>
-                                <a class="dropdown-item" asp-action="Edit" asp-controller="Projects" asp-route-id="@item.Id">@localizer["Detail"]</a>
-                                <a class="dropdown-item" href="#" onclick="shareLink(@item.Created)">@localizer["Share"]</a>
+                                <a class="dropdown-item" asp-action="Edit" asp-controller="Projects" asp-route-id="@item.Id">@localizer["Edit"]</a>
+                                <a class="dropdown-item" href="#" onclick="copyUrl()">@localizer["Share"]</a>
                             </div>
                         </div>
                     </div>
@@ -215,8 +215,6 @@
                 position: myLatlng,
             });
 
-            console.log(infoWindow.position);
-
             infoWindow.open(map);
             // Configure the click listener.
             map.addListener("click", (mapsMouseEvent) => {
@@ -234,6 +232,12 @@
             });
 
 
+        }
+    </script>
+    <script>
+        var copyUrl = function () {
+
+            document.execCommand('copy')
         }
     </script>
 
