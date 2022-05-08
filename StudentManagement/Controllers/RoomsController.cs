@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace StudentManagement.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     [Route("api/[controller]")]
     [ApiController]
     public class RoomsController : ControllerBase

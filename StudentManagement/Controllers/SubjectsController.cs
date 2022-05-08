@@ -28,6 +28,8 @@ namespace StudentManagement.Controllers
             this.userManager = userManager;
             this.roleManager = roleManager;
         }
+
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
         {
             var subject = this.context.Subjects

@@ -15,6 +15,7 @@ namespace StudentManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class EventsController : Controller
     {
         private readonly ApplicationDbContext dbcontext;

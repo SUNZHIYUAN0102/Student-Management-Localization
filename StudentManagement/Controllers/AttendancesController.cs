@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace StudentManagement.Controllers
 {
+    [Authorize(Roles = "Administrator, Teacher")]
     public class AttendancesController : Controller
     {
         private readonly ApplicationDbContext context;
@@ -21,10 +23,6 @@ namespace StudentManagement.Controllers
         {
             this.context = context;
             this.userManager = userManager;
-        }
-        public IActionResult Index()
-        {
-            return View();
         }
 
         [HttpPost]

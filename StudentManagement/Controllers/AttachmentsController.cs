@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace StudentManagement.Controllers
 {
+    [Authorize]
     public class AttachmentsController : Controller
     {
         private readonly ApplicationDbContext dbcontext;
@@ -25,6 +27,7 @@ namespace StudentManagement.Controllers
             this.unitOfWork = unitOfWork;
         }
 
+        [Authorize(Roles = "Administrator, Teacher")]
         [HttpGet]
         public async Task<IActionResult> Index(Guid? projectId)
         {
@@ -85,6 +88,7 @@ namespace StudentManagement.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrator, Teacher")]
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> AssignScore(Guid? attachmentId, int score)
